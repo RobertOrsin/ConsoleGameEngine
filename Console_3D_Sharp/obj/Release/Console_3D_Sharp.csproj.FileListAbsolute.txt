@@ -8,3 +8,11 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Cons
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Topshelf.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Topshelf.xml
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Console_3D_Sharp.csproj.CopyComplete
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Buffers.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Memory.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Numerics.Vectors.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Buffers.xml
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Memory.xml
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Numerics.Vectors.xml
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
