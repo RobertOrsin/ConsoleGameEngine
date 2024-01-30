@@ -84,9 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="FPSSprites\fps_fireball1.spr" />
-    <None Include="FPSSprites\fps_lamp1.spr" />
-    <None Include="FPSSprites\fps_wall1.spr" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

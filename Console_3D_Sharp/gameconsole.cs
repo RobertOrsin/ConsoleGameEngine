@@ -98,7 +98,6 @@ namespace ConsoleEngine
           [In, Out] CONSOLE_FONT_INFOEX ConsoleCurrentFontEx
         );
         #endregion
-
         public struct KeyState
         {
             public bool Pressed;
@@ -129,8 +128,6 @@ namespace ConsoleEngine
             PIXEL_THREEQUARTERS = 0x2593,
             PIXEL_HALF = 0x2592,
             PIXEL_QUARTER = 0x2591
-
-            //   ░▒▓█
         }
 
         public enum COLOR
@@ -407,11 +404,6 @@ namespace ConsoleEngine
                 }
                 _oldkeystate[i] = _newkeystate[i];
             }
-        }
-
-        private void GetMouseState()
-        {
-
         }
 
         #region IDisposable Support

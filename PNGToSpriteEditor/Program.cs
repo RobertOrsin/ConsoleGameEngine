@@ -3,10 +3,6 @@ using System.IO;
 using BigGustave;
 using System.Drawing;
 using ConsoleEngine;
-using Microsoft.Win32.SafeHandles;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Text;
 
@@ -299,23 +295,16 @@ namespace PNGToSpriteEditor
 
             drawingArea = new Rectangle(1,4,Width - 2,Height - 8);
 
-
             //headline
-            Print(1, 1, "                 PNG to Sprite Editor                   ");
-
+            Print(1, 1, "                                               PNG to Sprite Editor                                                            ");
             //legend
             Print(2, Height - 4, "move cursor:  apply change:  fill:  delete:  Foreground:  Background:  Brush:  MoveSprite:");
             Print(2, Height - 3, "-->  W,A,S,D       Spacebar      F        R       7/8           4/5     1/2      ArrowKeys");
             SetChar(57, Height - 3, (char)PIXELS.PIXEL_SOLID, selectedFG);
             SetChar(68, Height - 3, (char)PIXELS.PIXEL_SOLID, (short)(selectedBG));
 
-
-
             short color = (short)(selectedBG << 4);
             color += selectedFG;
-
-
-
 
             switch (selectedBrush)
             {
@@ -331,8 +320,6 @@ namespace PNGToSpriteEditor
                     SetChar(78, Height - 3, (char)(PIXELS.PIXEL_SOLID), color); break;
 
             }
-
-            //SetChar(78, Height - 3, (char)((PIXELS)selectedBrush), 0x00AC);// (short)(selectedFG | (short)(selectedBG << 4)));
             #endregion
 
             #region sprite
@@ -527,10 +514,6 @@ namespace PNGToSpriteEditor
                     return 0x000F;
 
             }
-
-
-
-           
         }
     }
     internal class Program
@@ -540,20 +523,6 @@ namespace PNGToSpriteEditor
         static void Main(string[] args)
         {
             Encoding cp437 = Encoding.GetEncoding(437);
-            byte[] source = new byte[1];
-            AnsiLookup = new Dictionary<byte, string>();
-
-            //Console.WriteLine("The shit i got");
-            for (byte i = 0x20; i < 0xFE; i++)
-            {
-                source[0] = i;
-
-                AnsiLookup.Add(i, cp437.GetString(source));
-
-                //Console.Write((char)i);
-            }
-
-
 
             Console.WriteLine("Drag and drop a PNG- or Sprite (.txt)-File in here and press Enter");
             Console.WriteLine("For a new file type New:Width;Height");
