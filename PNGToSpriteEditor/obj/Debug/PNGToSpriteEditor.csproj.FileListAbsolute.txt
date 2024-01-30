@@ -1,0 +1,12 @@
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\PNGToSpriteEditor.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\PNGToSpriteEditor.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\PNGToSpriteEditor.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\BigGustave.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\Console_3D_Sharp.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\Console_3D_Sharp.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\Console_3D_Sharp.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.csproj.CopyComplete
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.pdb

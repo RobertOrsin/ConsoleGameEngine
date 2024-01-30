@@ -1,0 +1,10 @@
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Console_3D_Sharp.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Console_3D_Sharp.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Console_3D_Sharp.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Console_3D_Sharp.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Console_3D_Sharp.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Console_3D_Sharp.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Console_3D_Sharp.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Topshelf.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Release\Topshelf.xml
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Release\Console_3D_Sharp.csproj.CopyComplete
