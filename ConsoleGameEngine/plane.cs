@@ -1,4 +1,4 @@
-namespace ConsoleEngine
+namespace ConsoleGameEngine
 {
     public class Plane<T>
     {

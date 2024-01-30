@@ -2,9 +2,9 @@
 using System.IO;
 using BigGustave;
 using System.Drawing;
-using ConsoleEngine;
 using System.Collections.Generic;
 using System.Text;
+using ConsoleGameEngine;
 
 namespace PNGToSpriteEditor
 {

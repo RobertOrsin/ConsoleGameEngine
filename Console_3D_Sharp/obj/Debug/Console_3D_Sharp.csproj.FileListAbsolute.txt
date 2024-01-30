@@ -16,3 +16,5 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System.Memory.xml
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\ConsoleGameEngine.pdb

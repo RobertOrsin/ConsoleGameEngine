@@ -3,9 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Windows.Media.Converters;
 
-namespace ConsoleEngine
+namespace ConsoleGameEngine
 {
     public class Sprite
     {

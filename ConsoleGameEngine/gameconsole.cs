@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 
-namespace ConsoleEngine
+namespace ConsoleGameEngine
 {
     public abstract class GameConsole : IDisposable
     {

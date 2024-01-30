@@ -1,0 +1,6 @@
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\bin\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.pdb
