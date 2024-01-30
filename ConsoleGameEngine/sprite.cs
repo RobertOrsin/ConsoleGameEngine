@@ -57,6 +57,20 @@ namespace ConsoleGameEngine
             Create(w, h);
         }
 
+        public Sprite ReturnPartialSprite(int x, int y, int w, int h)
+        {
+            Sprite returnSprite = new Sprite(w, h);
+
+            for(int i = x; i < w; i++)
+            {
+                for(int j = 0; j < h; j++)
+                {
+                    returnSprite.SetPixel(i - x, j, _spritedata.GetData(i, j), _spritecolors.GetData(i, j));
+                }
+            }
+            return returnSprite;
+        }
+
         #region setter/getter
         public char GetChar(int x, int y)
         {

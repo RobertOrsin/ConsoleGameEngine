@@ -14,6 +14,8 @@ namespace ConsoleGameEngine
         TimeSpan frameDelay;
         DateTime lastUpdate;
         int shownFrame;
+        int frameWidth, frameHeight;
+        private bool animationFromOneFrame = false;
 
         public animation(List<Sprite> sprites, TimeSpan frameDelay)
         {
@@ -21,6 +23,17 @@ namespace ConsoleGameEngine
             this.frameDelay = frameDelay;
             this.shownFrame = 0;
             lastUpdate = DateTime.Now;
+        }
+        public animation(Sprite sprite, TimeSpan frameDelay, int frameWidth, int frameHeight)
+        {
+            animationFromOneFrame = true;
+            sprites = new List<Sprite> { sprite };
+            this.frameDelay = frameDelay;
+            this.shownFrame = 0;
+            lastUpdate = DateTime.Now;
+            this.frameWidth = frameWidth;
+            this.frameHeight = frameHeight;
+            outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, frameHeight, frameWidth, frameHeight);
         }
 
         public animation(List<string> sprites, TimeSpan frameDelay)
@@ -43,15 +56,21 @@ namespace ConsoleGameEngine
                 lastUpdate = DateTime.Now;
                 shownFrame++;
 
-                if(shownFrame >= sprites.Count)
-                    shownFrame = 0;
 
-                outputSprite = sprites[shownFrame];
+
+                if (!animationFromOneFrame)
+                {
+                    if (shownFrame >= sprites.Count)
+                        shownFrame = 0;
+                    outputSprite = sprites[shownFrame];
+                }
+                else
+                {
+                    if (shownFrame >= sprites[0].Width / frameWidth)
+                        shownFrame = 0;
+                    outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, 0, frameWidth, frameHeight);
+                }
             }
         }
-
-
-
-
     }
 }
