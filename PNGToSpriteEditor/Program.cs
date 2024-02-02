@@ -57,7 +57,11 @@ namespace PNGToSpriteEditor
 
                             short col = ClosedConsoleColor3Bit(red, green, blue, out char pixel);
 
-                            sprite.SetPixel(x, y, pixel, col);
+                            //use white as alpha value
+                            if (col == 0x00F0 || col == 0x0007)
+                                sprite.SetPixel(x, y, ' ', 0x0000);
+                            else
+                                sprite.SetPixel(x, y, pixel, col);
                         }
                     }
                     break;
@@ -87,19 +91,21 @@ namespace PNGToSpriteEditor
                 using (StreamWriter outputfile = new StreamWriter(exportPath))
                 {
                     outputfile.Write($"{sprite.Width};{sprite.Height};");
-                    for (int i = 0; i < sprite.Width; i++)
+
+                    for (int j = 0; j < sprite.Height; j++)   
                     {
-                        for (int j = 0; j < sprite.Height; j++)
+                        for (int i = 0; i < sprite.Width; i++)
                         {
-                            outputfile.Write($"{sprite.GetChar(j, i)},");
+                            outputfile.Write($"{sprite.GetChar(i, j)},");
                         }
                     }
                     outputfile.Write(";");
-                    for (int i = 0; i < sprite.Width; i++)
+
+                    for (int j = 0; j < sprite.Height; j++)
                     {
-                        for (int j = 0; j < sprite.Height; j++)
+                        for (int i = 0; i < sprite.Width; i++)
                         {
-                            outputfile.Write($"{sprite.GetColor(j, i)},");
+                            outputfile.Write($"{sprite.GetColor(i, j)},");
                         }
                     }
                 }
@@ -256,7 +262,7 @@ namespace PNGToSpriteEditor
                 buttonDelay = new TimeSpan();
                 partialSpriteY += 5;
 
-                if (partialSpriteY > sprite.Height - maxDisplayedHeight)
+                if (partialSpriteY > sprite.Height - maxDisplayedHeight - 1)
                     partialSpriteY = sprite.Height - maxDisplayedHeight;
             }
             if (GetKeyState(ConsoleKey.LeftArrow).Held && buttonDelay >= buttonTime)
@@ -329,7 +335,7 @@ namespace PNGToSpriteEditor
                 DrawSprite(spriteXTop, spriteYTop, sprite);
 
             else //sprite is too big, show only a part
-                DrawPartialSprite(1, 3, sprite, partialSpriteX, partialSpriteY, maxDisplayedWidth, maxDisplayedHeight);
+                DrawPartialSprite(2, 4, sprite, partialSpriteX, partialSpriteY, maxDisplayedWidth, maxDisplayedHeight);
             
             //draw koordinates on x an y axis
             for (int x = 0; x < sprite.Width; x++)

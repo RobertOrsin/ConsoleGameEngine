@@ -1,0 +1,10 @@
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\bin\Debug\CGE_Mode7.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\bin\Debug\CGE_Mode7.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\bin\Debug\CGE_Mode7.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\bin\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\obj\Debug\CGE_Mode7.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\obj\Debug\CGE_Mode7.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\obj\Debug\CGE_Mode7.csproj.CopyComplete
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\obj\Debug\CGE_Mode7.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mode7\obj\Debug\CGE_Mode7.pdb

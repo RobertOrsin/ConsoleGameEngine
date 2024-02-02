@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace ConsoleGameEngine
         int shownFrame;
         int frameWidth, frameHeight;
         private bool animationFromOneFrame = false;
+        private int frameCount = 0;
 
         public animation(List<Sprite> sprites, TimeSpan frameDelay)
         {
@@ -24,7 +26,7 @@ namespace ConsoleGameEngine
             this.shownFrame = 0;
             lastUpdate = DateTime.Now;
         }
-        public animation(Sprite sprite, TimeSpan frameDelay, int frameWidth, int frameHeight)
+        public animation(Sprite sprite, TimeSpan frameDelay, int frameWidth, int frameHeight, int frameCount)
         {
             animationFromOneFrame = true;
             sprites = new List<Sprite> { sprite };
@@ -33,7 +35,8 @@ namespace ConsoleGameEngine
             lastUpdate = DateTime.Now;
             this.frameWidth = frameWidth;
             this.frameHeight = frameHeight;
-            outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, frameHeight, frameWidth, frameHeight);
+            outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, 0, frameWidth, frameHeight);
+            this.frameCount = frameCount;
         }
 
         public animation(List<string> sprites, TimeSpan frameDelay)
@@ -47,6 +50,18 @@ namespace ConsoleGameEngine
             this.frameDelay = frameDelay;
             this.shownFrame = 0;
             lastUpdate = DateTime.Now;
+        }
+
+        public animation(string sprite, TimeSpan frameDelay, int frameWidth, int frameHeight)
+        {
+            animationFromOneFrame = true;
+            sprites = new List<Sprite> { new Sprite(sprite) };
+            this.frameDelay = frameDelay;
+            this.shownFrame = 0;
+            lastUpdate = DateTime.Now;
+            this.frameWidth = frameWidth;
+            this.frameHeight = frameHeight;
+            outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, frameHeight, frameWidth, frameHeight);
         }
 
         public void Update()
@@ -66,7 +81,7 @@ namespace ConsoleGameEngine
                 }
                 else
                 {
-                    if (shownFrame >= sprites[0].Width / frameWidth)
+                    if (shownFrame >= sprites[0].Width / frameWidth || shownFrame >= frameCount)
                         shownFrame = 0;
                     outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, 0, frameWidth, frameHeight);
                 }

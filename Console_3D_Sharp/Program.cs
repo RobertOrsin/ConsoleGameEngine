@@ -9,8 +9,6 @@ class Program
 {
     const int RAND_MAX = 2;
 
-    static Dictionary<byte, string> AnsiLookup;
-
     class ConsoleFPS : GameConsole
     {
         public ConsoleFPS()
@@ -26,7 +24,7 @@ class Program
         private double fDepth = 16.0;            // Maximum rendering distance
         private double fSpeed = 5.0;             // Walking Speed
         private string map = "";
-        private Sprite wall, lamp, fireball, ground, diddySprite;
+        private Sprite wall, lamp, fireball;
         private double[] fDepthBuffer;
         private struct sObject
         {
@@ -81,12 +79,10 @@ class Program
             wall = new Sprite(@"wall2.txt");//("FPSSprites\\fps_wall1.spr");
             lamp = new Sprite(@"Imp.txt");
             fireball = new Sprite(@"FireBall.txt");
-            ground = new Sprite("mk_track.txt");
-            diddySprite = new Sprite("diddy_victory.txt");
             fDepthBuffer = new double[Width];
 
             coinAnim = new animation(new List<string> { @"Coin1.txt", @"Coin2.txt", @"Coin3.txt", @"Coin4.txt" }, new TimeSpan(0, 0, 0, 0, 500));
-            diddy = new animation(diddySprite, new TimeSpan(0, 0, 0, 0, 200), 70, 70);
+            diddy = new animation("mario_cape_run.txt", new TimeSpan(0, 0, 0, 0, 200), 32, 28);
             listObjects = new List<sObject>
             {
                 new sObject() { x = 8.5f, y = 8.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = lamp },
@@ -167,7 +163,6 @@ class Program
             }
             #endregion
 
-            Mode7(fPlayerY / 128, fPlayerX / 128, fPlayerA, 0.005, 0.01, 3.14159 / 4, ground, false);
             #region Main-View
             for (int x = 0; x < Width; x++)
             {
@@ -257,7 +252,7 @@ class Program
                     else // Floor
                     {
                         //Commented for mode7
-                        //SetChar(x, y, (char)GameConsole.PIXELS.PIXEL_HALF,  (short)GameConsole.COLOR.FG_DARK_GREEN); //,(char)GameConsole.PIXELS.PIXEL_SOLID //encs.GetString(new byte[1] { 176 })[0]
+                        SetChar(x, y, (char)GameConsole.PIXELS.PIXEL_HALF,  (short)GameConsole.COLOR.FG_DARK_GREEN); //,(char)GameConsole.PIXELS.PIXEL_SOLID //encs.GetString(new byte[1] { 176 })[0]
                     }
                 }
             }

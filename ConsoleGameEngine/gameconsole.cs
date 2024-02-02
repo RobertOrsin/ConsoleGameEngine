@@ -230,14 +230,15 @@ namespace ConsoleGameEngine
             });
         }
 
-        public void DrawSprite(int x, int y, Sprite sprite, char alphaChar = '\0')
+        public void DrawSprite(int x, int y, Sprite sprite, char alphaChar = '\0', short alphaColor = 0x0000)
         {
             for (int py = 0; py < sprite.Height; py++)
             {
                 for (int px = 0; px < sprite.Width; px++)
                 {
                     var c = sprite.GetChar(px, py);
-                    if (c != alphaChar)
+                    var col = sprite.GetColor(px, py);
+                    if (c != alphaChar && col != alphaColor)
                         SetChar(x + px, y + py, sprite.GetChar(px, py), sprite.GetColor(px, py));
                 }
             }
@@ -325,7 +326,8 @@ namespace ConsoleGameEngine
         {
             for (int xp = x; xp < width; xp++)
                 for (int yp = y; yp < height; yp++)
-                    SetChar(xp, yp, (char)PIXELS.PIXEL_NONE, 0);
+                    SetChar(xp, yp, c, attributes);
+            
         }
 
         public void Print(int x, int y, string text, short attributes = (int)COLOR.FG_WHITE)

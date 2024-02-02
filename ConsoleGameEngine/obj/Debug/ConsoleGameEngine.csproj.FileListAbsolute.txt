@@ -4,3 +4,5 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\Conso
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.csproj.CoreCompileInputs.cache
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\bin\Debug\BigGustave.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Debug\ConsoleGameEngine.csproj.CopyComplete

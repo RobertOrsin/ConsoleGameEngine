@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BigGustave, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BigGustave.1.0.6\lib\netstandard2.0\BigGustave.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,9 +46,13 @@
   <ItemGroup>
     <Compile Include="animation.cs" />
     <Compile Include="gameconsole.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="plane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sprite.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

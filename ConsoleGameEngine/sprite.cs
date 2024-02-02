@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BigGustave;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using static ConsoleGameEngine.GameConsole;
 
 namespace ConsoleGameEngine
 {
@@ -48,7 +50,6 @@ namespace ConsoleGameEngine
 
         public Sprite(string file)
         {
-
             if (!Load(file)) Create(8, 8);
         }
 
@@ -57,15 +58,20 @@ namespace ConsoleGameEngine
             Create(w, h);
         }
 
+        public Sprite(string file, int w, int h, int startRow, int count)
+        {
+            if(!Load(file, w, h , startRow, count)) Create(8,8);
+        }
+
         public Sprite ReturnPartialSprite(int x, int y, int w, int h)
         {
             Sprite returnSprite = new Sprite(w, h);
 
-            for(int i = x; i < w; i++)
+            for(int i = x; i < x + w; i++)
             {
-                for(int j = 0; j < h; j++)
+                for(int j = y; j < y +h; j++)
                 {
-                    returnSprite.SetPixel(i - x, j, _spritedata.GetData(i, j), _spritecolors.GetData(i, j));
+                    returnSprite.SetPixel(i - x, j - y, _spritedata.GetData(i, j), _spritecolors.GetData(i, j));
                 }
             }
             return returnSprite;
@@ -131,11 +137,41 @@ namespace ConsoleGameEngine
                 }
 
             }
-
-
             return true;
         }
 
+        public bool Load(string file, int w, int h, int startRow, int count)
+        {
+            _width = w; _height = h;
+
+            using (var sr = new StreamReader(file))
+            {
+                string content = sr.ReadToEnd();
+
+                string[] splits = content.Split(';');
+
+                _width = int.Parse(splits[0]);
+
+                _spritedata = new Plane<char>(_width, _height);
+                _spritecolors = new Plane<short>(_width, _height);
+
+                int i = 0;
+
+                var pixelSplits = splits[2].Split(',');
+                var colorSplits = splits[3].Split(',');
+
+                for (int j = startRow * w; j < (startRow + h) * w; j++)
+                {
+                    if (pixelSplits[j] != "")
+                    {
+                        _spritedata.SetData(i, pixelSplits[j][0]);
+                        _spritecolors.SetData(i, Convert.ToByte(colorSplits[j]));
+                    }
+                    i++;
+                }
+            }
+            return true;
+        }
         public bool Save(string file)
         {
             System.IO.BinaryWriter sw = null;
