@@ -82,14 +82,12 @@ class Program
             fDepthBuffer = new double[Width];
 
             coinAnim = new animation(new List<string> { @"Coin1.txt", @"Coin2.txt", @"Coin3.txt", @"Coin4.txt" }, new TimeSpan(0, 0, 0, 0, 500));
-            diddy = new animation("mario_cape_run.txt", new TimeSpan(0, 0, 0, 0, 200), 32, 28);
             listObjects = new List<sObject>
             {
                 new sObject() { x = 8.5f, y = 8.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = lamp },
                 new sObject() { x = 7.5f, y = 7.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = lamp },
                 new sObject() { x = 10.5f, y = 3.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = lamp },
                 new sObject() { x = 9.5f, y = 2.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = coinAnim.outputSprite },
-                new sObject() { x = 11.5f, y = 2.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = diddy.outputSprite },
             };
 
             return true;
@@ -265,10 +263,6 @@ class Program
             coin.sprite = coinAnim.outputSprite;
             listObjects[3] = coin;
 
-            diddy.Update();
-            var didd = listObjects.ElementAt(4);
-            didd.sprite = diddy.outputSprite;
-            listObjects[4] = didd;
 
             // Update & Draw Objects	
             for (int i = 0; i < listObjects.Count; i++)
