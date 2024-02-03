@@ -58,9 +58,9 @@ namespace PNGToSpriteEditor
                             short col = ClosedConsoleColor3Bit(red, green, blue, out char pixel);
 
                             //use white as alpha value
-                            if (col == 0x00F0 || col == 0x0007)
-                                sprite.SetPixel(x, y, ' ', 0x0000);
-                            else
+                            //if (col == 0x00F0 || col == 0x0007)
+                            //    sprite.SetPixel(x, y, ' ', 0x0000);
+                            //else
                                 sprite.SetPixel(x, y, pixel, col);
                         }
                     }

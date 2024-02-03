@@ -51,6 +51,7 @@
     <Compile Include="plane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sprite.cs" />
+    <Compile Include="TextWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

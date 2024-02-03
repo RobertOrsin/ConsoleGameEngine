@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
+using static ConsoleGameEngine.NativeMethods;
 
 namespace CGE_MouseControll
 {
@@ -11,10 +12,13 @@ namespace CGE_MouseControll
     {
 
         IntPtr inHandle;
+        delegate void MyDelegate();
+
+        int cursorX = 0, cursorY = 0;
 
 
         public MouseControll()
-          : base(200, 120, "MouseControll", fontwidth: 4, fontheight: 4)
+          : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
         { }
         public override bool OnUserCreate()
         {
@@ -26,7 +30,12 @@ namespace CGE_MouseControll
             mode |= NativeMethods.ENABLE_MOUSE_INPUT; //enable
             NativeMethods.SetConsoleMode(inHandle, mode);
 
+
+            ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
+
             ConsoleListener.Start();
+
+            TextWriter.LoadFont("fontsheet.txt", 7 , 9);
 
             return true;
         }
@@ -35,12 +44,17 @@ namespace CGE_MouseControll
         {
             Clear();
 
-            SetChar(ConsoleListener.record[0].MouseEvent.dwMousePosition.X, ConsoleListener.record[0].MouseEvent.dwMousePosition.Y, 'X');
-
-
-
-
+            DrawSprite(0, 0, TextWriter.GenerateTextSprite("Size: 1", TextWriter.Textalignment.Left, 1));
+            DrawSprite(0, 10, TextWriter.GenerateTextSprite("Size: 2", TextWriter.Textalignment.Left, 2));
+            DrawSprite(0, 29, TextWriter.GenerateTextSprite("Size: 3", TextWriter.Textalignment.Left, 3));
+            DrawSprite(0, 57, TextWriter.GenerateTextSprite("Size: 4", TextWriter.Textalignment.Left, 4));
             return true;
+        }
+
+        private void ConsoleListener_MouseEvent(MOUSE_EVENT_RECORD r)
+        {
+            cursorX = r.dwMousePosition.X;
+            cursorY = r.dwMousePosition.Y;
         }
     }
 

@@ -102,6 +102,17 @@ namespace ConsoleGameEngine
             _spritedata.SetData(x, y, c);
             _spritecolors.SetData(x, y, col);
         }
+
+        public void SetBlock(int x, int y, int w, int h, char c, short col)
+        {
+            for(int i = 0; i < w; i++)
+            {
+                for(int j = 0; j < h; j++)
+                {
+                    SetPixel(x + i, y + j, c, col);
+                }
+            }
+        }
         #endregion
 
         #region load/save/create

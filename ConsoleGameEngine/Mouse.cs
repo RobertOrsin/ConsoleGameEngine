@@ -62,7 +62,6 @@ namespace ConsoleGameEngine
 
         public static void Stop() => Run = false;
 
-
         public delegate void ConsoleMouseEvent(MOUSE_EVENT_RECORD r);
 
         public delegate void ConsoleKeyEvent(KEY_EVENT_RECORD r);
