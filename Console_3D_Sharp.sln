@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_GameObject", "CGE_GameO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_Fonts", "CGE_MouseControll\CGE_Fonts.csproj", "{A5361FB4-5214-4E71-8AE6-490456CAA972}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_Mouse", "CGE_Mouse\CGE_Mouse.csproj", "{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{A5361FB4-5214-4E71-8AE6-490456CAA972}.Release|x64.Build.0 = Release|Any CPU
 		{A5361FB4-5214-4E71-8AE6-490456CAA972}.Release|x86.ActiveCfg = Release|Any CPU
 		{A5361FB4-5214-4E71-8AE6-490456CAA972}.Release|x86.Build.0 = Release|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Debug|x64.Build.0 = Debug|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Debug|x86.Build.0 = Debug|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Release|x64.ActiveCfg = Release|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Release|x64.Build.0 = Release|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Release|x86.ActiveCfg = Release|Any CPU
+		{46512CC7-C6C6-4C48-A8BE-DB3C700FB851}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,37 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
-using static ConsoleGameEngine.NativeMethods;
 
 namespace CGE_Fonts
 {
     class Fonts : GameConsole
     {
-
-        IntPtr inHandle;
-        delegate void MyDelegate();
-
-        int cursorX = 0, cursorY = 0;
-
-
         public Fonts()
           : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
         { }
         public override bool OnUserCreate()
         {
-            inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
-            uint mode = 0;
-            NativeMethods.GetConsoleMode(inHandle, ref mode);
-            mode &= ~NativeMethods.ENABLE_QUICK_EDIT_MODE; //disable
-            mode |= NativeMethods.ENABLE_WINDOW_INPUT; //enable (if you want)
-            mode |= NativeMethods.ENABLE_MOUSE_INPUT; //enable
-            NativeMethods.SetConsoleMode(inHandle, mode);
-
-
-            ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
-
-            ConsoleListener.Start();
-
             TextWriter.LoadFont("fontsheet.txt", 7 , 9);
 
             return true;
@@ -50,12 +29,6 @@ namespace CGE_Fonts
             DrawSprite(0, 57, TextWriter.GenerateTextSprite("Size: 4", TextWriter.Textalignment.Left, 4));
             DrawSprite(20, 65, TextWriter.GenerateTextSprite("Alphatext", TextWriter.Textalignment.Left, 2, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
             return true;
-        }
-
-        private void ConsoleListener_MouseEvent(MOUSE_EVENT_RECORD r)
-        {
-            cursorX = r.dwMousePosition.X;
-            cursorY = r.dwMousePosition.Y;
         }
     }
 
