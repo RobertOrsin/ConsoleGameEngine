@@ -1,0 +1,10 @@
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\bin\Debug\CGE_MouseControll.exe.config
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\bin\Debug\CGE_MouseControll.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\bin\Debug\CGE_MouseControll.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\bin\Debug\ConsoleGameEngine.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\obj\Debug\CGE_Fonts.csproj.AssemblyReference.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\obj\Debug\CGE_Fonts.csproj.CoreCompileInputs.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\obj\Debug\CGE_Fonts.csproj.CopyComplete
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\obj\Debug\CGE_MouseControll.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_MouseControll\obj\Debug\CGE_MouseControll.pdb

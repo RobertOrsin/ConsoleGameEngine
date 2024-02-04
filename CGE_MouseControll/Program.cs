@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using ConsoleGameEngine;
 using static ConsoleGameEngine.NativeMethods;
 
-namespace CGE_MouseControll
+namespace CGE_Fonts
 {
-    class MouseControll : GameConsole
+    class Fonts : GameConsole
     {
 
         IntPtr inHandle;
@@ -17,7 +17,7 @@ namespace CGE_MouseControll
         int cursorX = 0, cursorY = 0;
 
 
-        public MouseControll()
+        public Fonts()
           : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
         { }
         public override bool OnUserCreate()
@@ -44,10 +44,11 @@ namespace CGE_MouseControll
         {
             Clear();
 
-            DrawSprite(0, 0, TextWriter.GenerateTextSprite("Size: 1", TextWriter.Textalignment.Left, 1));
+            DrawSprite(0, 0, TextWriter.GenerateTextSprite("Size: 1", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.FG_YELLOW, foregroundColor: (short)COLOR.FG_RED));
             DrawSprite(0, 10, TextWriter.GenerateTextSprite("Size: 2", TextWriter.Textalignment.Left, 2));
             DrawSprite(0, 29, TextWriter.GenerateTextSprite("Size: 3", TextWriter.Textalignment.Left, 3));
             DrawSprite(0, 57, TextWriter.GenerateTextSprite("Size: 4", TextWriter.Textalignment.Left, 4));
+            DrawSprite(20, 65, TextWriter.GenerateTextSprite("Alphatext", TextWriter.Textalignment.Left, 2, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
             return true;
         }
 
@@ -65,7 +66,7 @@ namespace CGE_MouseControll
         {
             Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
 
-            using (var f = new MouseControll())
+            using (var f = new Fonts())
                 f.Start();
         }
     }

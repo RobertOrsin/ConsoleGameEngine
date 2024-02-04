@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_Mode7", "CGE_Mode7\CGE_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_GameObject", "CGE_GameObject\CGE_GameObject.csproj", "{F18B45B2-B8F5-4C49-BAC8-02711453F07D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_MouseControll", "CGE_MouseControll\CGE_MouseControll.csproj", "{A5361FB4-5214-4E71-8AE6-490456CAA972}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CGE_Fonts", "CGE_MouseControll\CGE_Fonts.csproj", "{A5361FB4-5214-4E71-8AE6-490456CAA972}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

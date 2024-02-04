@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using BigGustave;
 using ConsoleGameEngine;
 
 namespace ConsoleGameEngine
@@ -120,7 +121,7 @@ namespace ConsoleGameEngine
             dictionary = _dictionary;
         }
 
-        public static Sprite GenerateTextSprite(string text, Textalignment textalignment, int fontSize)
+        public static Sprite GenerateTextSprite(string text, Textalignment textalignment, int fontSize, short backgroundColor = (short)GameConsole.COLOR.FG_WHITE, short foregroundColor = (short)GameConsole.COLOR.FG_BLACK)
         {
             Sprite sprite;
 
@@ -142,7 +143,22 @@ namespace ConsoleGameEngine
                     {
                         for (int y = 0; y < letter.Height; y++)
                         {
-                            sprite.SetBlock(i * width * fontSize + x*fontSize, y * row + y*fontSize, fontSize, fontSize, letter.GetChar(x,y), letter.GetColor(x,y));
+                            short spritesColor = letter.GetColor(x, y);
+                            char spritesChar = '\0';
+                            if (spritesColor == (short)GameConsole.COLOR.FG_BLACK)
+                            {
+                                if (foregroundColor != (short)GameConsole.COLOR.TRANSPARENT)
+                                    spritesChar = letter.GetChar(x, y);
+                                spritesColor = foregroundColor;
+                            }
+                            else if (spritesColor == (short)GameConsole.COLOR.FG_GREY)
+                            {
+                                if (backgroundColor != (short)GameConsole.COLOR.TRANSPARENT)
+                                    spritesChar = letter.GetChar(x, y);
+                                spritesColor = backgroundColor;
+                            }
+
+                            sprite.SetBlock(i * width * fontSize + x*fontSize, y * row + y*fontSize, fontSize, fontSize, spritesChar, spritesColor);
                         }
                     }
                 }

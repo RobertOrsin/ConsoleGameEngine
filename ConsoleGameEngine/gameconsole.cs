@@ -164,6 +164,7 @@ namespace ConsoleGameEngine
             BG_MAGENTA = 0x00D0,
             BG_YELLOW = 0x00E0,
             BG_WHITE = 0x00F0,
+            TRANSPARENT = 0x00FF,
         }
 
         public GameConsole(short width, short height, string title = null, string font = "Consolas", short fontwidth = 8, short fontheight = 8)
