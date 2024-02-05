@@ -135,6 +135,7 @@ To use the mouse create a new Event on ConsoleListener.MouseEvent. Evaluate what
 
 ```
 IntPtr inHandle;
+delegate void MyDelegate();
 
 int cursorX = 0, cursorY = 0;
 bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
@@ -195,6 +196,46 @@ If Textsprites are static, define them in OnUserCreate and just call DrawSprite 
 Text can be left, right and center-alligned.
 
 Textsize can be changed with sizes 1 to 4.
+
+## Buttons
+To use buttons do the following and use the setup-code for Mouseinput.
+
+```
+Button button;
+
+ public override bool OnUserCreate()
+ {
+     //mouse-setup here..
+
+     TextWriter.LoadFont("fontsheet.txt", 7, 9);
+
+     button = new Button(40, 40, TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1));
+     button.OnButtonClicked(ButtonClicked);
+
+     return true;
+ }
+public override bool OnUserUpdate(TimeSpan elapsedTime)
+{
+    Clear();
+
+    DrawSprite(button.x, button.y, button.sprite);
+
+    return true;
+}
+private void ConsoleListener_MouseEvent(MOUSE_EVENT_RECORD r)
+{
+    button.Update(r);
+}
+
+public bool ButtonClicked()
+{
+    //do something
+    return true;
+}
+
+```
+It is possible to create invibisle buttons, by not drawing its sprite.
+
 
 # PNGToSpriteEditor
 
