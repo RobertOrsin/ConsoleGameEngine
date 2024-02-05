@@ -57,6 +57,10 @@ namespace ConsoleGameEngine
         {
             Create(w, h);
         }
+        public Sprite(int w, int h, COLOR color)
+        {
+            Create(w, h, color);
+        }
 
         public Sprite(string file, int w, int h, int startRow, int count)
         {
@@ -75,6 +79,17 @@ namespace ConsoleGameEngine
                 }
             }
             return returnSprite;
+        }
+
+        public void AddSpriteToSprite(int x, int y, Sprite sprite)
+        {
+            for(int i = x; i < x + sprite.Width; i++)
+            {
+                for(int j = y; j < y + sprite.Height; j++)
+                {
+                    SetPixel(i,j, sprite.GetChar(i - x, j - y), sprite.GetColor(i - x, j - y));
+                }
+            }
         }
 
         #region setter/getter
@@ -209,6 +224,20 @@ namespace ConsoleGameEngine
                 _spritedata.SetData(i, ' ');//m_Glyphs.Add(br.ReadChar());
             for (int i = 0; i < _height * _width; i++)
                 _spritecolors.SetData(i, (short)GameConsole.COLOR.BG_BLACK);//m_Colours.Add(br.ReadSByte());
+        }
+
+        private void Create(int w, int h, COLOR color)
+        {
+            _width = w;
+            _height = h;
+
+            _spritedata = new Plane<char>(_width, _height);
+            _spritecolors = new Plane<short>(_width, _height);
+
+            for (int i = 0; i < _width * _height; i++)
+                _spritedata.SetData(i, ' ');
+            for (int i = 0; i < _height * _width; i++)
+                _spritecolors.SetData(i, (short)color);
         }
         #endregion
 

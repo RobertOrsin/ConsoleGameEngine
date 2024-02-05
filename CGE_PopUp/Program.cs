@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 using ConsoleGameEngine;
 using static ConsoleGameEngine.NativeMethods;
 
-namespace CGE_Button
+namespace CGE_PopUp
 {
-
-    class CGE_Button : GameConsole
+    class CGE_PopUp : GameConsole
     {
-
         IntPtr inHandle;
         delegate void MyDelegate();
 
         Button button;
-        int counter = 0;
+        PopUp popUp;
+        Sprite popUpSprite;
+        PopUpState popUpState;
 
-        public CGE_Button()
+        public CGE_PopUp()
           : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
         { }
         public override bool OnUserCreate()
@@ -31,14 +31,16 @@ namespace CGE_Button
             mode |= NativeMethods.ENABLE_MOUSE_INPUT; //enable
             NativeMethods.SetConsoleMode(inHandle, mode);
 
-            ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
-
             ConsoleListener.Start();
 
             TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
-            button = new Button(40, 40, TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1), feedbackSprite: TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor:15));
+            button = new Button(0, 0, TextWriter.GenerateTextSprite("open PopUp", TextWriter.Textalignment.Left, 1));
             button.OnButtonClicked(ButtonClicked);
+
+            popUp = new PopUp(40, 40, "Are you sure?", out popUpSprite);
+
+            ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
 
             return true;
         }
@@ -46,22 +48,28 @@ namespace CGE_Button
         {
             Clear();
 
-            DrawSprite(button.x, button.y, button.outputSprite);
+            DrawSprite(0, 0, button.outputSprite);
 
-            DrawSprite(0, 0, TextWriter.GenerateTextSprite($"Counter: {counter}", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_WHITE));
+            if (popUp.visible)
+                DrawSprite(40, 40, popUpSprite);
+
+            if(popUpState != PopUpState.none)
+            {
+                popUp.visible = false;
+            }
 
             return true;
         }
 
         private void ConsoleListener_MouseEvent(MOUSE_EVENT_RECORD r)
         {
+            popUpState = popUp.Update(r);
             button.Update(r);
         }
 
-        public bool ButtonClicked()
+        private bool ButtonClicked()
         {
-            counter++;
-
+            popUp.visible = true;
             return true;
         }
     }
@@ -72,7 +80,7 @@ namespace CGE_Button
         {
             Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
 
-            using (var f = new CGE_Button())
+            using (var f = new CGE_PopUp())
                 f.Start();
         }
     }
