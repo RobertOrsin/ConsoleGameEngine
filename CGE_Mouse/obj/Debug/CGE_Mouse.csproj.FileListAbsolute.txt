@@ -8,3 +8,13 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Mouse\bin\Debug\ConsoleGame
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.csproj.CopyComplete
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.exe
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\bin\Debug\CGE_Mouse.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\bin\Debug\CGE_Mouse.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\bin\Debug\CGE_Mouse.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\bin\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.csproj.CopyComplete
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Mouse\obj\Debug\CGE_Mouse.pdb

@@ -17,6 +17,7 @@ namespace CGE_Mouse
             delegate void MyDelegate();
 
             int cursorX = 0, cursorY = 0;
+            bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
 
 
             public CGE_Mouse()
@@ -44,9 +45,19 @@ namespace CGE_Mouse
 
             public override bool OnUserUpdate(TimeSpan elapsedTime)
             {
-                Clear();
+                //Clear();
 
                 DrawSprite(0, 0, TextWriter.GenerateTextSprite($"X: {cursorX}; Y: {cursorY}", TextWriter.Textalignment.Left, 1));
+
+                if(leftMousebuttonClicked)
+                {
+                    SetChar(cursorX, cursorY, 'X');
+                }
+
+                if(mouseWheelClicked || rightMousebuttonClicked)
+                {
+                    Clear();
+                }
 
                 return true;
             }
@@ -55,6 +66,10 @@ namespace CGE_Mouse
             {
                 cursorX = r.dwMousePosition.X;
                 cursorY = r.dwMousePosition.Y;
+
+                leftMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED;
+                mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
+                rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
             }
         }
 
