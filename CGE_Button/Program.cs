@@ -37,7 +37,7 @@ namespace CGE_Button
 
             TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
-            button = new Button(40, 40, TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1));
+            button = new Button(40, 40, TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1), feedbackSprite: TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor:15));
             button.OnButtonClicked(ButtonClicked);
 
             return true;
@@ -46,7 +46,7 @@ namespace CGE_Button
         {
             Clear();
 
-            DrawSprite(button.x, button.y, button.sprite);
+            DrawSprite(button.x, button.y, button.outputSprite);
 
             DrawSprite(0, 0, TextWriter.GenerateTextSprite($"Counter: {counter}", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_WHITE));
 

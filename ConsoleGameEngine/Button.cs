@@ -10,24 +10,28 @@ namespace ConsoleGameEngine
     public class Button
     {
         public int x, y, width, height;
-        public Sprite sprite;
+        public Sprite outputSprite, sprite, feedbackSprite;
         Func<bool> method;
 
-        public Button(int x, int y, int width, int height, Sprite sprite)
+        public Button(int x, int y, int width, int height, Sprite sprite, Sprite feedbackSprite = null)
         {
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
             this.sprite = sprite;
+            outputSprite = this.sprite;
+            this.feedbackSprite = feedbackSprite;
         }
-        public Button(int x, int y, Sprite sprite)
+        public Button(int x, int y, Sprite sprite, Sprite feedbackSprite = null)
         {
             this.x = x;
             this.y = y;
             this.sprite = sprite;
             width = sprite.Width;
             height = sprite.Height;
+            outputSprite = this.sprite;
+            this.feedbackSprite = feedbackSprite;
         }
 
         public void OnButtonClicked(Func<bool> method)
@@ -44,9 +48,15 @@ namespace ConsoleGameEngine
             {
                 if(mouseX <= x + width && mouseX >= x && mouseY <= y + height && mouseY > y) 
                 {
+                    if(feedbackSprite != null)
+                        outputSprite = feedbackSprite;
                     method();
                 }
-            }   
+            }
+            else
+            {
+                outputSprite = sprite;
+            }
         }
     }
 }
