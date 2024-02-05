@@ -250,7 +250,7 @@ As the name says. Drag and drop a PNG-File into the console and it converts it t
 - Arrowkeys - navigate through bigger sprites
 
 
-Colors are too dark and it has trouble with yellow and brown-tones.
+Colors are too dark in some areas.
 
 ![Example](/ReadMeRessources/Grafikkonverter.PNG)
 
