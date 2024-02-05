@@ -28,6 +28,10 @@ namespace CGE_Fonts
             DrawSprite(0, 29, TextWriter.GenerateTextSprite("Size: 3", TextWriter.Textalignment.Left, 3));
             DrawSprite(0, 57, TextWriter.GenerateTextSprite("Size: 4", TextWriter.Textalignment.Left, 4));
             DrawSprite(20, 65, TextWriter.GenerateTextSprite("Alphatext", TextWriter.Textalignment.Left, 2, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
+
+            DrawSprite(10, 90, TextWriter.GenerateTextSprite("Centered\ntext", TextWriter.Textalignment.Center, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
+            DrawSprite(90, 90, TextWriter.GenerateTextSprite("Text on the\nright", TextWriter.Textalignment.Right, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
+
             return true;
         }
     }

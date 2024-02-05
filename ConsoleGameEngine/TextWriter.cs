@@ -132,13 +132,24 @@ namespace ConsoleGameEngine
 
             int row = 0;
             foreach (string str in text.Split('\n'))
-            { 
-                for (int i = 0; i < text.Length; i += 1)
+            {
+                int allignmentOffset = 0;
+                //offsets for right and center
+                if (textalignment == Textalignment.Center)
+                {
+                    allignmentOffset = (longesLineLength - str.Length) * width * fontSize / 2;
+                }
+                else if (textalignment == Textalignment.Right)
+                {
+                    allignmentOffset = (longesLineLength - str.Length) * width * fontSize;
+                }
+
+                for (int i = 0; i < str.Length; i += 1)
                 {
                     Coords coords = dictionary[str[i]];
 
                     Sprite letter = spriteSheet.ReturnPartialSprite(coords.x * width, coords.y * height, width, height);
-                   
+
                     for(int x = 0; x < letter.Width; x++)
                     {
                         for (int y = 0; y < letter.Height; y++)
@@ -158,12 +169,16 @@ namespace ConsoleGameEngine
                                 spritesColor = backgroundColor;
                             }
 
-                            sprite.SetBlock(i * width * fontSize + x*fontSize, y * row + y*fontSize, fontSize, fontSize, spritesChar, spritesColor);
+                            sprite.SetBlock(i * width * fontSize + x*fontSize + allignmentOffset,row*height*fontSize + y *fontSize, fontSize, fontSize, spritesChar, spritesColor);
                         }
                     }
                 }
                 row++;
             }
+            
+            
+            
+            
             return sprite;
         }
         
