@@ -22,14 +22,14 @@ namespace PNGToSpriteEditor
         TimeSpan buttonDelay = new TimeSpan();
         TimeSpan buttonTime;
 
-        int maxDisplayedWidth = 158;
-        int maxDisplayedHeight = 76;
+        int maxDisplayedWidth = 200; //158;
+        int maxDisplayedHeight = 160; //76;
 
         int partialSpriteX = 0;
         int partialSpriteY = 0;
 
         public PNGToSpriteEditor(string file)
-            : base(160, 84, "Editor", fontwidth: 12, fontheight: 12) //80,60,12
+            : base(200, 160, "Editor", fontwidth: 4, fontheight: 4) //80,60,12
         {
             importPath = file;
             exportPath = Path.ChangeExtension(file, ".txt");
@@ -498,7 +498,7 @@ namespace PNGToSpriteEditor
 
                 case 0x24: //brown
                     pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
-                    return 0x0095;
+                    return 0x0096;
                 case 0x29: //skintone'ish?
                     pixel = (char)PIXELS.PIXEL_QUARTER;
                     return 0x00EC;
