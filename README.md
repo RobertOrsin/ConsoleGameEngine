@@ -236,6 +236,8 @@ public bool ButtonClicked()
 ```
 It is possible to create invibisle buttons, by not drawing its sprite.
 
+The constructor has an optional parameter for a feedback-sprite which is shown, when the button is clicked.
+
 
 # PNGToSpriteEditor
 
