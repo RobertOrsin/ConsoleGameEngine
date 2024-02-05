@@ -386,7 +386,6 @@ namespace ConsoleGameEngine
         {
             for (int i = 0; i < KEYSTATES; i++)
             {
-
                 _newkeystate[i] = GetAsyncKeyState(i);
 
                 KeyStates[i].Pressed = false;

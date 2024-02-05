@@ -12,7 +12,6 @@ namespace CGE_Mouse
     {
         class CGE_Mouse : GameConsole
         {
-
             IntPtr inHandle;
             delegate void MyDelegate();
 
@@ -72,7 +71,6 @@ namespace CGE_Mouse
                 rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
             }
         }
-
 
         static void Main(string[] args)
         {
