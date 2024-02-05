@@ -238,6 +238,35 @@ It is possible to create invibisle buttons, by not drawing its sprite.
 
 The constructor has an optional parameter for a feedback-sprite which is shown, when the button is clicked.
 
+##PopUps
+The culmination of Buttons, Textwriter and MouseInput!
+
+Add all the code of Mouse and Fonts to your project.
+
+Define a Button object. Initialise in OnUserCreate as follows.
+
+```
+popUp = new PopUp(40, 40, "Are you sure?", out popUpSprite);
+```
+Save the outed sprite for OnUserUpdate and draw it if visisble = true.
+
+```
+ if (popUp.visible)
+     DrawSprite(40, 40, popUpSprite);
+```
+
+Note: Only use the x,y-Parameters of the init-function. Otherwise the Buttons on the PopUp detect wrong inputs!
+
+Add the Update-Function to your MouseEvent-Listener and save the state for evaluation inside OnUserUpdate.
+States are
+- none
+- OK clicked
+- Cancle clicked
+
+```
+popUpState = popUp.Update(r);
+```
+
 
 # PNGToSpriteEditor
 
