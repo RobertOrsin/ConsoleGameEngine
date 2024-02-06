@@ -325,8 +325,8 @@ namespace ConsoleGameEngine
 
         public void Fill(int x, int y, int width, int height, char c = (char)PIXELS.PIXEL_NONE, short attributes = (short)COLOR.BG_BLACK)
         {
-            for (int xp = x; xp < width; xp++)
-                for (int yp = y; yp < height; yp++)
+            for (int xp = x; xp < x + width; xp++)
+                for (int yp = y; yp < y + height; yp++)
                     SetChar(xp, yp, c, attributes);
             
         }
@@ -336,6 +336,22 @@ namespace ConsoleGameEngine
             for (int i = 0; i < text.Length; ++i)
             {
                 SetChar(x + i, y, text[i], attributes);
+            }
+        }
+
+        public void DrawRectangle(int x, int y, int width, int height, short color =  (short)COLOR.FG_WHITE)
+        {
+            short drawingcolor = (short)(color << 4);
+            drawingcolor += color;
+            for(int i = x; i <= x+width; i++)
+            {
+                SetChar(i, y, '█', drawingcolor);
+                SetChar(i, y + height, '█', drawingcolor);
+            }
+            for (int j = y; j <= y + height; j++)
+            {
+                SetChar(x, j, '█', drawingcolor);
+                SetChar(x+width, j, '█', drawingcolor);
             }
         }
 
