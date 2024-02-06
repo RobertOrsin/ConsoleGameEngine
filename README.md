@@ -79,6 +79,10 @@ Initialising an animation-object leaves you with these options:
 
 If initialised with Sprite or string, it is required to add width and height of a single frame.
 
+Make sure that all frames are the same width and height, or you end up like Diddy:
+
+![Example](/ReadMeRessources/fuckingframes.gif)
+
 Also every call needs a TimeSpan for the frames delay.
 
 Update the sprite and draw its outputed frame.
@@ -102,6 +106,16 @@ Update the sprite and draw its outputed frame.
      return true;
   }
 ```
+
+## Use GameObjects
+Most of the time, stuff needs more then one animation. Do make things easier to handle the GameObject-Class handles a spriteSheet containg more then one animation.
+
+One animation per row. Through a selector-variable the animation is choosen and the actual frame is outputed according to the update-method.
+
+Each animation can have a different frame-count.
+
+...TBC....
+
 
 ## Keyboard-Input
 The thread calling OnUserUpdate updates all Keyboard-Keys. Checks each Key-State as follows.
@@ -238,7 +252,7 @@ It is possible to create invibisle buttons, by not drawing its sprite.
 
 The constructor has an optional parameter for a feedback-sprite which is shown, when the button is clicked.
 
-##PopUps
+## PopUps
 The culmination of Buttons, Textwriter and MouseInput!
 
 Add all the code of Mouse and Fonts to your project.
