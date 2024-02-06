@@ -252,7 +252,7 @@ It is possible to create invibisle buttons, by not drawing its sprite.
 
 The constructor has an optional parameter for a feedback-sprite which is shown, when the button is clicked.
 
-##PopUps
+## PopUps
 The culmination of Buttons, Textwriter and MouseInput!
 
 Add all the code of Mouse and Fonts to your project.
