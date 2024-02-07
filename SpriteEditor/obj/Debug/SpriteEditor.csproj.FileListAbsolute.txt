@@ -8,3 +8,13 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEdit
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\SpriteEditor.exe.config
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\SpriteEditor.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\SpriteEditor.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\ConsoleGameEngine.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.csproj.AssemblyReference.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.csproj.CoreCompileInputs.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.csproj.CopyComplete
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.pdb

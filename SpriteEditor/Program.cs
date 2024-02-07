@@ -22,6 +22,9 @@ namespace SpriteEditor
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
         Button btnClear, btnSave;
         TextBox tb_Width, tb_Height;
+        ListBox lb_SavedFiles;
+
+        List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie" };
 
         public SpriteEditor()
           : base(140, 60, "Fonts", fontwidth: 12, fontheight: 12)
@@ -31,14 +34,14 @@ namespace SpriteEditor
             TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
             btnClear = new Button(115, 1, "clear / new");
-            //btnClear = new Button(110, 8, TextWriter.GenerateTextSprite("clr", TextWriter.Textalignment.Left, 1), TextWriter.GenerateTextSprite("clr", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor: 15));
             btnClear.OnButtonClicked(BtnClearClicked);
             btnSave = new Button(115, 10, " save ");
-            //btnSave = new Button(110, 18, TextWriter.GenerateTextSprite("sav", TextWriter.Textalignment.Left, 1), TextWriter.GenerateTextSprite("sav", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor: 15));
             btnSave.OnButtonClicked(BtnSaveClicked);
 
             tb_Width = new TextBox(115, 5, 7, "Width:");
             tb_Height = new TextBox(125, 5, 7, "Height:", simple:true);
+
+            lb_SavedFiles = new ListBox(115, 15, 25, 15, sampleEntries, simple: true);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -85,7 +88,8 @@ namespace SpriteEditor
             DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
             DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
 
-            //game loop, draw and evaluate inputs
+            DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
+
             return true;
         }
 
@@ -97,6 +101,8 @@ namespace SpriteEditor
             tb_Width.UpdateSelection(r);
             tb_Height.UpdateSelection(r);
             tb_Height.UpdateSelection(r);
+
+            lb_SavedFiles.Update(r);
 
             cursorX = r.dwMousePosition.X;
             cursorY = r.dwMousePosition.Y;
