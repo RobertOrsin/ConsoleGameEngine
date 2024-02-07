@@ -62,6 +62,11 @@ namespace ConsoleGameEngine
             Create(w, h, color);
         }
 
+        public Sprite(int w, int h, char c, COLOR color)
+        {
+            Create(w, h, c, color);
+        }
+
         public Sprite(string file, int w, int h, int startRow, int count)
         {
             if(!Load(file, w, h , startRow, count)) Create(8,8);
@@ -236,6 +241,20 @@ namespace ConsoleGameEngine
 
             for (int i = 0; i < _width * _height; i++)
                 _spritedata.SetData(i, ' ');
+            for (int i = 0; i < _height * _width; i++)
+                _spritecolors.SetData(i, (short)color);
+        }
+
+        public void Create(int w, int h, char c, COLOR color)
+        {
+            _width = w;
+            _height = h;
+
+            _spritedata = new Plane<char>(_width, _height);
+            _spritecolors = new Plane<short>(_width, _height);
+
+            for (int i = 0; i < _width * _height; i++)
+                _spritedata.SetData(i, c);
             for (int i = 0; i < _height * _width; i++)
                 _spritecolors.SetData(i, (short)color);
         }

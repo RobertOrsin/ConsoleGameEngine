@@ -108,7 +108,7 @@ namespace ConsoleGameEngine
                                                                                     { '|', new Coords {x= 2, y=5 } },
                                                                                     { '}', new Coords {x= 3, y=5 } },
                                                                                     { '~', new Coords {x= 4, y=5 } }};
-
+        
 
         public static void LoadFont(string fileName, int w, int h)
         {

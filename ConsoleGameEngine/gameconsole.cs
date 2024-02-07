@@ -116,7 +116,7 @@ namespace ConsoleGameEngine
         private readonly short[] _newkeystate = new short[KEYSTATES];
         private readonly short[] _oldkeystate = new short[KEYSTATES];
 
-        public KeyState[] KeyStates { get; private set; }
+        public static KeyState[] KeyStates { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public string Title { get { return Console.Title; } set { Console.Title = value ?? "GameConsole"; } }
@@ -374,7 +374,7 @@ namespace ConsoleGameEngine
             _gamethread.Join();
         }
 
-        public KeyState GetKeyState(ConsoleKey key)
+        public static KeyState GetKeyState(ConsoleKey key)
         {
             return KeyStates[(int)key];
         }

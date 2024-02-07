@@ -12,16 +12,16 @@ namespace SpriteEditor
     {
         IntPtr inHandle;
         delegate void MyDelegate();
-
+ 
         int cursorX = 0, cursorY = 0;
         bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
 
         short foregroundColor = 0x03, backgroundColor = 0x0F;
         char brush = '▓';
 
-        Sprite sprite = new Sprite(16, 16);
+        Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
         Button btnClear, btnSave;
-
+        TextBox tb_Width, tb_Height;
 
         public SpriteEditor()
           : base(140, 60, "Fonts", fontwidth: 12, fontheight: 12)
@@ -30,11 +30,15 @@ namespace SpriteEditor
         {
             TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
-            btnClear = new Button(110, 8, TextWriter.GenerateTextSprite("clr", TextWriter.Textalignment.Left, 1), TextWriter.GenerateTextSprite("clr", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor: 15));
+            btnClear = new Button(115, 1, "clear / new");
+            //btnClear = new Button(110, 8, TextWriter.GenerateTextSprite("clr", TextWriter.Textalignment.Left, 1), TextWriter.GenerateTextSprite("clr", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor: 15));
             btnClear.OnButtonClicked(BtnClearClicked);
-            btnSave = new Button(110, 18, TextWriter.GenerateTextSprite("sav", TextWriter.Textalignment.Left, 1), TextWriter.GenerateTextSprite("sav", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor: 15));
+            btnSave = new Button(115, 10, " save ");
+            //btnSave = new Button(110, 18, TextWriter.GenerateTextSprite("sav", TextWriter.Textalignment.Left, 1), TextWriter.GenerateTextSprite("sav", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor: 15));
             btnSave.OnButtonClicked(BtnSaveClicked);
 
+            tb_Width = new TextBox(115, 5, 7, "Width:");
+            tb_Height = new TextBox(125, 5, 7, "Height:", simple:true);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -53,9 +57,10 @@ namespace SpriteEditor
         }
         public override bool OnUserUpdate(TimeSpan elapsedTime)
         {
+            tb_Width.UpdateInput(KeyStates, elapsedTime);
+            tb_Height.UpdateInput(KeyStates, elapsedTime);
 
-
-
+            EvaluateGUIClick();
 
             Clear();
 
@@ -68,7 +73,7 @@ namespace SpriteEditor
             //DrawArea
             DrawRectangle(3, 8, 100, 50, (short)COLOR.FG_WHITE);
             DrawRectangle(4, 9, 98, 48, (short)COLOR.FG_DARK_GREY);
-            Fill(5, 10, 96, 46, c:'█',  attributes: (short)COLOR.FG_GREY);
+            Fill(5, 10, 96, 46, c:'█',  attributes: (short)COLOR.FG_DARK_GREY);
 
             DrawSprite(5, 10, sprite);
 
@@ -76,6 +81,9 @@ namespace SpriteEditor
 
             DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
             DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
+
+            DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
+            DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
 
             //game loop, draw and evaluate inputs
             return true;
@@ -86,14 +94,16 @@ namespace SpriteEditor
             btnClear.Update(r);
             btnSave.Update(r);
 
+            tb_Width.UpdateSelection(r);
+            tb_Height.UpdateSelection(r);
+            tb_Height.UpdateSelection(r);
+
             cursorX = r.dwMousePosition.X;
             cursorY = r.dwMousePosition.Y;
 
             leftMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED;
             mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
             rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
-
-            EvaluateGUIClick();
         }
 
 
@@ -258,7 +268,8 @@ namespace SpriteEditor
 
         private bool BtnClearClicked()
         {
-            sprite = new Sprite(16, 16);
+            if (tb_Width.content != "" && tb_Height.content != "")
+                sprite = new Sprite(Convert.ToInt32(tb_Width.content), Convert.ToInt32(tb_Height.content), '█', COLOR.BG_BLACK);
             return true;
         }
         private bool BtnSaveClicked()

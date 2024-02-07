@@ -1,0 +1,10 @@
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\bin\Debug\CGE_Textbox.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\bin\Debug\CGE_Textbox.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\bin\Debug\CGE_Textbox.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\bin\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\obj\Debug\CGE_Textbox.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\obj\Debug\CGE_Textbox.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\obj\Debug\CGE_Textbox.csproj.CopyComplete
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\obj\Debug\CGE_Textbox.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Textbox\obj\Debug\CGE_Textbox.pdb
