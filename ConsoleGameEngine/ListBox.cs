@@ -35,8 +35,11 @@ namespace ConsoleGameEngine
             this.foregroundColor = foregroundColor;
             this.showOnlyFileName = showOnlyFileName;
 
-            btn_MoveDOWN = new Button(w - 3, 0, "v", this.backgroundColor, this.foregroundColor);
-            btn_MoveUP = new Button(w - 3, h - 2, "^", this.backgroundColor, this.foregroundColor);
+            btn_MoveDOWN = new Button(x+ w - 3, y + h - 4, "v", this.backgroundColor, this.foregroundColor);
+            btn_MoveUP = new Button(x +w - 3, y + 1, "^", this.backgroundColor, this.foregroundColor);
+
+            btn_MoveDOWN.OnButtonClicked(Btn_MoveDOWNClicked);
+            btn_MoveUP.OnButtonClicked(Btn_MoveUPClicked);
 
             outputSprite = BuildSprite();
         }
@@ -48,12 +51,14 @@ namespace ConsoleGameEngine
 
             if (mouseState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
             {
-                if(mouseX >= x && mouseY >= y && mouseX <= x + w && mouseY <= y + h - 2)
+                if(mouseX >= x && mouseY >= y && mouseX <= x + w - 4 && mouseY <= y + h - 2)
                 {
-                    selectedEntry = mouseY - y - 1;
-                    outputSprite = BuildSprite();
+                    selectedEntry = mouseY - y - 1 + firstEntry;
                 }
             }
+
+            btn_MoveDOWN.Update(r);
+            btn_MoveUP.Update(r);
 
             outputSprite = BuildSprite();
         }
@@ -87,27 +92,28 @@ namespace ConsoleGameEngine
                 //scrollbar
                 if (entries.Count > retSprite.Height - 2)
                 {
-                    retSprite.AddSpriteToSprite(btn_MoveUP.x, btn_MoveUP.y, btn_MoveUP.outputSprite);
-                    retSprite.AddSpriteToSprite(btn_MoveDOWN.x, btn_MoveDOWN.y, btn_MoveDOWN.outputSprite);
+                    retSprite.AddSpriteToSprite(w - 3, 1, btn_MoveUP.outputSprite);
+                    retSprite.AddSpriteToSprite(w - 3, h - 4, btn_MoveDOWN.outputSprite);
+
+                    int scrollbarHeight = h - 8;
+
+                    int scrollbarPosition = (int)((double)scrollbarHeight * (((double)firstEntry / (((double)entries.Count) - ((double)h - 2.0)))));
+
+                    retSprite.SetPixel(w - 2, scrollbarPosition + 4, '█', (short)COLOR.FG_DARK_GREY);
                 }
 
                 int entryCount = 0;
                 //entrys
-                for(int i = firstEntry; i < entries.Count && i < h - 2; i++)
+                for(int i = firstEntry; i < entries.Count && (i - firstEntry) < h - 2; i++)
                 {
                     color = i == selectedEntry ? (short)((foregroundColor << 4) + backgroundColor) : (short)((backgroundColor << 4) + foregroundColor);
 
                     for (int j = 0; j < entries[i].Length && j < w - 4; j++)
                     {
-                   
                         retSprite.SetPixel(j + 1, entryCount + 1, entries[i][j], color);
                     }
 
                     entryCount++;
-                }
-                foreach(string entry in entries)
-                {
-                    
                 }
             }
             else
@@ -120,6 +126,25 @@ namespace ConsoleGameEngine
             }
 
             return retSprite;
+        }
+
+        private bool Btn_MoveUPClicked()
+        {
+            firstEntry -= 1;
+            if(firstEntry < 0)
+                firstEntry = 0;
+
+            outputSprite = BuildSprite();
+            return true;
+        }
+        private bool Btn_MoveDOWNClicked()
+        {
+            firstEntry += 1;
+            if( firstEntry > entries.Count - (h - 2) )
+                firstEntry = entries.Count - (h - 2);
+
+            outputSprite = BuildSprite();
+            return true;
         }
     }
 }

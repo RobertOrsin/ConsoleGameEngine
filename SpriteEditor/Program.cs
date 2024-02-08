@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,28 +22,48 @@ namespace SpriteEditor
         char brush = '▓';
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave;
-        TextBox tb_Width, tb_Height;
+        Button btnClear, btnSave, btnLoad;
+        TextBox tb_Width, tb_Height, tb_SaveName;
         ListBox lb_SavedFiles;
 
-        List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie" };
+        List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie1", "SampleEntrie2", "SampleEntrie3", "SampleEntrie4", "SampleEntrie5", "SampleEntrie6", "SampleEntrie7", "SampleEntrie8", "SampleEntrie9", "SampleEntrie10", "SampleEntrie11", "SampleEntrie12", "SampleEntrie13", "SampleEntrie14", "SampleEntrie15", "SampleEntrie16", "SampleEntrie17", "SampleEntrie18", "SampleEntrie19" };
+        List<string> saveFiles = new List<string>();
+
+        int spriteAreaW = 95, spriteAreaH = 47;
+        int spriteCursorX = 0, spriteCursorY = 0;
+        int spriteDrawX = 5, spriteDrawY = 10;
+
+        TimeSpan keyInputDelay = new TimeSpan(), keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
+
 
         public SpriteEditor()
-          : base(140, 60, "Fonts", fontwidth: 12, fontheight: 12)
+          : base(140, 70, "Fonts", fontwidth: 12, fontheight: 12)
         { }
         public override bool OnUserCreate()
         {
-            TextWriter.LoadFont("fontsheet.txt", 7, 9);
+            ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
-            btnClear = new Button(115, 1, "clear / new");
+            btnClear = new Button(105, 8, "clear / new");
             btnClear.OnButtonClicked(BtnClearClicked);
-            btnSave = new Button(115, 10, " save ");
+
+            tb_Width = new TextBox(119, 7, 6, "Width:");
+            tb_Height = new TextBox(129, 7, 6, "Height:", simple: true);
+
+            btnSave = new Button(105, 12, " save ");
             btnSave.OnButtonClicked(BtnSaveClicked);
 
-            tb_Width = new TextBox(115, 5, 7, "Width:");
-            tb_Height = new TextBox(125, 5, 7, "Height:", simple:true);
+            tb_SaveName = new TextBox(105, 16, 30, "Save Name:");
 
-            lb_SavedFiles = new ListBox(115, 15, 25, 15, sampleEntries, simple: true);
+
+            //load savefiles from savefile-folder
+            foreach(string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
+                saveFiles.Add(Path.GetFileName(file));
+
+
+            lb_SavedFiles = new ListBox(105, 22, 32, 15, saveFiles, simple: true);
+
+            btnLoad = new Button(129, 38, " load ");
+            btnLoad.OnButtonClicked(BtnLoadClicked);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -60,8 +82,48 @@ namespace SpriteEditor
         }
         public override bool OnUserUpdate(TimeSpan elapsedTime)
         {
+            keyInputDelay += elapsedTime;
+
             tb_Width.UpdateInput(KeyStates, elapsedTime);
             tb_Height.UpdateInput(KeyStates, elapsedTime);
+            tb_SaveName.UpdateInput(KeyStates, elapsedTime);
+
+            //evaluate keyinputs of no textbox is selected
+            if(!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected)
+            {
+                if (GetKeyState(ConsoleKey.W).Held && keyInputDelay >= keyInputTime)
+                {
+                    spriteCursorY -= 5;
+                    if (spriteCursorY < 0)
+                        spriteCursorY = 0;
+
+                    keyInputDelay = new TimeSpan();
+                }
+                if (GetKeyState(ConsoleKey.A).Held && keyInputDelay >= keyInputTime)
+                {
+                    spriteCursorX -= 5;
+                    if (spriteCursorX < 0)
+                        spriteCursorX = 0;
+
+                    keyInputDelay = new TimeSpan();
+                }
+                if (GetKeyState(ConsoleKey.S).Held && keyInputDelay >= keyInputTime)
+                {
+                    spriteCursorY += 5;
+                    if (spriteCursorY >= sprite.Height - spriteAreaH)
+                        spriteCursorY = sprite.Height - 1;
+
+                    keyInputDelay = new TimeSpan();
+                }
+                if (GetKeyState(ConsoleKey.D).Held && keyInputDelay >= keyInputTime)
+                {
+                    spriteCursorX += 5;
+                    if (spriteCursorX >= sprite.Width - spriteAreaW)
+                        spriteCursorX = sprite.Width - 1;
+
+                    keyInputDelay = new TimeSpan();
+                }
+            }
 
             EvaluateGUIClick();
 
@@ -76,17 +138,23 @@ namespace SpriteEditor
             //DrawArea
             DrawRectangle(3, 8, 100, 50, (short)COLOR.FG_WHITE);
             DrawRectangle(4, 9, 98, 48, (short)COLOR.FG_DARK_GREY);
-            Fill(5, 10, 96, 46, c:'█',  attributes: (short)COLOR.FG_DARK_GREY);
+            //Fill(5, 10, 96, 46, c:'█',  attributes: (short)COLOR.FG_DARK_GREY);
 
-            DrawSprite(5, 10, sprite);
+            if (sprite.Width > spriteAreaW || sprite.Height > spriteAreaH)
+                DrawPartialSprite(spriteDrawX, spriteDrawY, sprite, spriteCursorX, spriteCursorY, spriteAreaW, spriteAreaH);
+            else
+                DrawSprite(spriteDrawX, spriteDrawY, sprite);
 
             Print(3, 7, $"{cursorX};{cursorY}");
 
             DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
             DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
+            DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
+            
 
             DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
             DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
+            DrawSprite(tb_SaveName.x, tb_SaveName.y, tb_SaveName.outputSprite);
 
             DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
 
@@ -97,10 +165,11 @@ namespace SpriteEditor
         {
             btnClear.Update(r);
             btnSave.Update(r);
+            btnLoad.Update(r);
 
             tb_Width.UpdateSelection(r);
             tb_Height.UpdateSelection(r);
-            tb_Height.UpdateSelection(r);
+            tb_SaveName.UpdateSelection(r);
 
             lb_SavedFiles.Update(r);
 
@@ -266,7 +335,7 @@ namespace SpriteEditor
                     {
                         short color = (short)(backgroundColor << 4);
                         color += foregroundColor;
-                        sprite.SetPixel(cursorX - 5, cursorY - 10, brush, color);
+                        sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
                     }
                 }
             }
@@ -276,10 +345,23 @@ namespace SpriteEditor
         {
             if (tb_Width.content != "" && tb_Height.content != "")
                 sprite = new Sprite(Convert.ToInt32(tb_Width.content), Convert.ToInt32(tb_Height.content), '█', COLOR.BG_BLACK);
+
+            spriteCursorX = 0;
+            spriteCursorY = 0;
+
+            tb_Width.content = "";
+            tb_Height.content = "";
+
             return true;
         }
         private bool BtnSaveClicked()
         {
+            return true;
+        }
+        private bool BtnLoadClicked()
+        {
+            sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+
             return true;
         }
     }

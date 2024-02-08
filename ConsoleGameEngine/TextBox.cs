@@ -20,7 +20,7 @@ namespace ConsoleGameEngine
 
         public string content = "";
         string tag;
-        bool selected = false;
+        public bool selected = false;
         bool simple = true; // simple - ascii-charcters, advanced - sprites
         short foregroundColor, backgroundColor;
         ObjectPosition tagPosition;
