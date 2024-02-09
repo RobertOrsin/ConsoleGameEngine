@@ -30,7 +30,7 @@ namespace ConsoleGameEngine
         TimeSpan buttonDelay = new TimeSpan();
         TimeSpan buttonTime = new TimeSpan(0, 0, 0, 0, 120);
 
-        public TextBox(int x, int y, int length, string tag, bool simple = true, ObjectPosition tagPosition = ObjectPosition.Top, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE)
+        public TextBox(int x, int y, int length, string tag, bool simple = true, ObjectPosition tagPosition = ObjectPosition.Top, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE, string content = "")
         {
             this.x = x;
             this.y = y;
@@ -41,6 +41,7 @@ namespace ConsoleGameEngine
             this.foregroundColor = foregroundColor;
             this.backgroundColor = backgroundColor;
             this.tagPosition = tagPosition;
+            this.content = content;
         }
         
         public void UpdateSelection(MOUSE_EVENT_RECORD r)
@@ -139,6 +140,7 @@ namespace ConsoleGameEngine
 
                     case ObjectPosition.Right: break;
                 }
+
                 body = new Sprite(length + 2, 4); //length of input + 2 for frame; height for tag, frame and content
                 //frame
                 for(int i = 1; i < body.Width - 1; i++)

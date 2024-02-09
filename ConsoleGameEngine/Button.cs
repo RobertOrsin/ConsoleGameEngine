@@ -37,7 +37,7 @@ namespace ConsoleGameEngine
             outputSprite = this.sprite;
             this.feedbackSprite = feedbackSprite;
         }
-        public Button(int x, int y, string text, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE)
+        public Button(int x, int y, string text, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE, Func<bool> method = null)
         {
             this.x = x;
             this.y = y;
@@ -48,6 +48,7 @@ namespace ConsoleGameEngine
             simple = true;
             this.foregroundColor = foregroundColor;
             this.backgroundColor = backgroundColor;
+            this.method = method;
         }
 
         public void OnButtonClicked(Func<bool> method)

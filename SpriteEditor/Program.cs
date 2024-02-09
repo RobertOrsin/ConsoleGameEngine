@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace SpriteEditor
         Button btnClear, btnSave, btnLoad;
         TextBox tb_Width, tb_Height, tb_SaveName;
         ListBox lb_SavedFiles;
+        AnimationPreview animationPreview;
 
         List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie1", "SampleEntrie2", "SampleEntrie3", "SampleEntrie4", "SampleEntrie5", "SampleEntrie6", "SampleEntrie7", "SampleEntrie8", "SampleEntrie9", "SampleEntrie10", "SampleEntrie11", "SampleEntrie12", "SampleEntrie13", "SampleEntrie14", "SampleEntrie15", "SampleEntrie16", "SampleEntrie17", "SampleEntrie18", "SampleEntrie19" };
         List<string> saveFiles = new List<string>();
@@ -53,6 +55,8 @@ namespace SpriteEditor
             btnSave.OnButtonClicked(BtnSaveClicked);
 
             tb_SaveName = new TextBox(105, 16, 30, "Save Name:");
+
+            animationPreview = new AnimationPreview(105, 43);
 
 
             //load savefiles from savefile-folder
@@ -87,6 +91,7 @@ namespace SpriteEditor
             tb_Width.UpdateInput(KeyStates, elapsedTime);
             tb_Height.UpdateInput(KeyStates, elapsedTime);
             tb_SaveName.UpdateInput(KeyStates, elapsedTime);
+            animationPreview.UpdateKeyInput(KeyStates, elapsedTime, sprite);
 
             //evaluate keyinputs of no textbox is selected
             if(!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected)
@@ -145,7 +150,7 @@ namespace SpriteEditor
             else
                 DrawSprite(spriteDrawX, spriteDrawY, sprite);
 
-            Print(3, 7, $"{cursorX};{cursorY}");
+            Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
 
             DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
             DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
@@ -158,9 +163,12 @@ namespace SpriteEditor
 
             DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
 
+            DrawSprite(animationPreview.x, animationPreview.y, animationPreview.outputSprite);
+
             return true;
         }
 
+        #region INPUTS
         private void ConsoleListener_MouseEvent(MOUSE_EVENT_RECORD r)
         {
             btnClear.Update(r);
@@ -173,6 +181,8 @@ namespace SpriteEditor
 
             lb_SavedFiles.Update(r);
 
+            animationPreview.UpdateMouseInput(r);
+
             cursorX = r.dwMousePosition.X;
             cursorY = r.dwMousePosition.Y;
 
@@ -180,8 +190,170 @@ namespace SpriteEditor
             mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
             rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
         }
+        private void EvaluateGUIClick()
+        {
+            if (leftMousebuttonClicked)
+            {
+                //color or brush picking
+                if (cursorY == 2 || cursorY == 3)
+                {
+                    //foreground color
+                    if (cursorX >= 1 && cursorX <= 30)
+                    {
+                        switch (cursorX)
+                        {
+                            case 1:
+                            case 2: foregroundColor = (short)COLOR.FG_BLACK; break;
+                            case 3:
+                            case 4: foregroundColor = (short)COLOR.FG_DARK_BLUE; break;
+                            case 5:
+                            case 6: foregroundColor = (short)COLOR.FG_DARK_GREEN; break;
+                            case 7:
+                            case 8: foregroundColor = (short)COLOR.FG_DARK_CYAN; break;
+                            case 9:
+                            case 10: foregroundColor = (short)COLOR.FG_DARK_RED; break;
+                            case 11:
+                            case 12: foregroundColor = (short)COLOR.FG_DARK_MAGENTA; break;
+                            case 13:
+                            case 14: foregroundColor = (short)COLOR.FG_DARK_YELLOW; break;
+                            case 15:
+                            case 16: foregroundColor = (short)COLOR.FG_GREY; break;
+                            case 17:
+                            case 18: foregroundColor = (short)COLOR.FG_DARK_GREY; break;
+                            case 19:
+                            case 20: foregroundColor = (short)COLOR.FG_BLUE; break;
+                            case 21:
+                            case 22: foregroundColor = (short)COLOR.FG_GREEN; break;
+                            case 23:
+                            case 24: foregroundColor = (short)COLOR.FG_CYAN; break;
+                            case 25:
+                            case 26: foregroundColor = (short)COLOR.FG_RED; break;
+                            case 27:
+                            case 28: foregroundColor = (short)COLOR.FG_MAGENTA; break;
+                            case 29:
+                            case 30: foregroundColor = (short)COLOR.FG_YELLOW; break;
+                            case 31:
+                            case 32: foregroundColor = (short)COLOR.FG_WHITE; break;
+                        }
+                    }
+                    //background color
+                    else if (cursorX >= 40 && cursorX <= 69)
+                    {
+                        switch (cursorX)
+                        {
+                            case 40:
+                            case 41: backgroundColor = (short)COLOR.FG_BLACK; break;
+                            case 42:
+                            case 43: backgroundColor = (short)COLOR.FG_DARK_BLUE; break;
+                            case 44:
+                            case 45: backgroundColor = (short)COLOR.FG_DARK_GREEN; break;
+                            case 46:
+                            case 47: backgroundColor = (short)COLOR.FG_DARK_CYAN; break;
+                            case 48:
+                            case 49: backgroundColor = (short)COLOR.FG_DARK_RED; break;
+                            case 50:
+                            case 51: backgroundColor = (short)COLOR.FG_DARK_MAGENTA; break;
+                            case 52:
+                            case 53: backgroundColor = (short)COLOR.FG_DARK_YELLOW; break;
+                            case 54:
+                            case 55: backgroundColor = (short)COLOR.FG_GREY; break;
+                            case 56:
+                            case 57: backgroundColor = (short)COLOR.FG_DARK_GREY; break;
+                            case 58:
+                            case 59: backgroundColor = (short)COLOR.FG_BLUE; break;
+                            case 60:
+                            case 61: backgroundColor = (short)COLOR.FG_GREEN; break;
+                            case 62:
+                            case 63: backgroundColor = (short)COLOR.FG_CYAN; break;
+                            case 64:
+                            case 65: backgroundColor = (short)COLOR.FG_RED; break;
+                            case 66:
+                            case 67: backgroundColor = (short)COLOR.FG_MAGENTA; break;
+                            case 68:
+                            case 69: backgroundColor = (short)COLOR.FG_YELLOW; break;
+                            case 70:
+                            case 71: backgroundColor = (short)COLOR.FG_WHITE; break;
+                        }
+                    }
+                    //brush
+                    else if (cursorX >= 80 && cursorX <= 87)
+                    {
+                        switch (cursorX)
+                        {
+                            case 80:
+                            case 81: brush = '░'; break;
+                            case 82:
+                            case 83: brush = '▒'; break;
+                            case 84:
+                            case 85: brush = '▓'; break;
+                            case 86:
+                            case 87: brush = '█'; break;
+                        }
+                    }
+                }
+                //draw on sprite
+                if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
+                {
+                    if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
+                    {
+                        short color = (short)(backgroundColor << 4);
+                        color += foregroundColor;
+                        sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
+                    }
+                }
+            }
+        }
+        private bool BtnClearClicked()
+        {
+            if (tb_Width.content != "" && tb_Height.content != "")
+                sprite = new Sprite(Convert.ToInt32(tb_Width.content), Convert.ToInt32(tb_Height.content), '█', COLOR.BG_BLACK);
 
+            spriteCursorX = 0;
+            spriteCursorY = 0;
 
+            tb_Width.content = "";
+            tb_Height.content = "";
+
+            return true;
+        }
+        private bool BtnSaveClicked()
+        {
+            string exportPath = tb_SaveName.content != "" ? @"Savefiles\" + tb_SaveName.content + ".txt" : @"Savefiles\" + "NewFile" + ".txt";
+
+            using (StreamWriter outputfile = new StreamWriter(exportPath))
+            {
+                outputfile.Write($"{sprite.Width};{sprite.Height};");
+
+                for (int j = 0; j < sprite.Height; j++)
+                {
+                    for (int i = 0; i < sprite.Width; i++)
+                    {
+                        outputfile.Write($"{sprite.GetChar(i, j)},");
+                    }
+                }
+                outputfile.Write(";");
+
+                for (int j = 0; j < sprite.Height; j++)
+                {
+                    for (int i = 0; i < sprite.Width; i++)
+                    {
+                        outputfile.Write($"{sprite.GetColor(i, j)},");
+                    }
+                }
+            }
+
+            saveFiles.Add(Path.GetFileName(exportPath));
+            return true;
+        }
+        private bool BtnLoadClicked()
+        {
+            sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+
+            return true;
+        }
+        #endregion
+
+        #region DRAWING UI
         private void DrawColorPalette(int x, int y, string headline)
         {
             Print(x,y,headline);
@@ -226,143 +398,151 @@ namespace SpriteEditor
             }
 
         }
+        #endregion
 
-        private void EvaluateGUIClick()
-        { 
-            if(leftMousebuttonClicked)
+        private class AnimationPreview
+        {
+            public int x, y;
+            private int spriteW, spriteH;
+
+            short foregroundColor, backgroundColor;
+
+            Button btn_Start, btn_Stop, btn_Forward, btn_Backwards;
+            TextBox tb_SpriteW, tb_SpriteH, tb_FrameDelay, tb_FrameCount;
+
+            public Sprite outputSprite;
+            int frameCounter = 0;
+            bool loop = false;
+
+            TimeSpan frameDelay = new TimeSpan(0, 0, 0, 0, 0);
+            DateTime lastUpdate = DateTime.Now;
+
+            public AnimationPreview(int x, int y, int spriteW = 16, int spriteH = 16, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE)
             {
-                //color or brush picking
-                if (cursorY == 2 || cursorY == 3)
-                {
-                    //foreground color
-                    if(cursorX >= 1 && cursorX <= 30)
-                    {
-                        switch(cursorX)
-                        {
-                            case 1:
-                            case 2: foregroundColor = (short)COLOR.FG_BLACK; break;
-                            case 3:
-                            case 4: foregroundColor = (short)COLOR.FG_DARK_BLUE; break;
-                            case 5:
-                            case 6: foregroundColor = (short)COLOR.FG_DARK_GREEN; break;
-                            case 7:
-                            case 8: foregroundColor = (short)COLOR.FG_DARK_CYAN; break;
-                            case 9:
-                            case 10: foregroundColor = (short)COLOR.FG_DARK_RED; break;
-                            case 11:
-                            case 12: foregroundColor = (short)COLOR.FG_DARK_MAGENTA; break;
-                            case 13:
-                            case 14: foregroundColor = (short)COLOR.FG_DARK_YELLOW; break;
-                            case 15:
-                            case 16: foregroundColor = (short)COLOR.FG_GREY; break;
-                            case 17:
-                            case 18: foregroundColor = (short)COLOR.FG_DARK_GREY; break;
-                            case 19:
-                            case 20: foregroundColor = (short)COLOR.FG_BLUE; break;
-                            case 21:
-                            case 22: foregroundColor = (short)COLOR.FG_GREEN; break;
-                            case 23:
-                            case 24: foregroundColor = (short)COLOR.FG_CYAN; break;
-                            case 25:
-                            case 26: foregroundColor = (short)COLOR.FG_RED; break;
-                            case 27:
-                            case 28: foregroundColor = (short)COLOR.FG_MAGENTA; break;
-                            case 29:
-                            case 30: foregroundColor = (short)COLOR.FG_YELLOW; break;
-                            case 31:
-                            case 32: foregroundColor = (short)COLOR.FG_WHITE; break;
-                        }
-                    }
-                    //background color
-                    else if(cursorX >= 40 && cursorX <= 69)
-                    {
-                        switch (cursorX)
-                        {
-                            case 40:
-                            case 41: backgroundColor = (short)COLOR.FG_BLACK; break;
-                            case 42:
-                            case 43: backgroundColor = (short)COLOR.FG_DARK_BLUE; break;
-                            case 44:
-                            case 45: backgroundColor = (short)COLOR.FG_DARK_GREEN; break;
-                            case 46:
-                            case 47: backgroundColor = (short)COLOR.FG_DARK_CYAN; break;
-                            case 48:
-                            case 49: backgroundColor = (short)COLOR.FG_DARK_RED; break;
-                            case 50:
-                            case 51: backgroundColor = (short)COLOR.FG_DARK_MAGENTA; break;
-                            case 52:
-                            case 53: backgroundColor = (short)COLOR.FG_DARK_YELLOW; break;
-                            case 54:
-                            case 55: backgroundColor = (short)COLOR.FG_GREY; break;
-                            case 56:
-                            case 57: backgroundColor = (short)COLOR.FG_DARK_GREY; break;
-                            case 58:
-                            case 59: backgroundColor = (short)COLOR.FG_BLUE; break;
-                            case 60:
-                            case 61: backgroundColor = (short)COLOR.FG_GREEN; break;
-                            case 62:
-                            case 63: backgroundColor = (short)COLOR.FG_CYAN; break;
-                            case 64:
-                            case 65: backgroundColor = (short)COLOR.FG_RED; break;
-                            case 66:
-                            case 67: backgroundColor = (short)COLOR.FG_MAGENTA; break;
-                            case 68:
-                            case 69: backgroundColor = (short)COLOR.FG_YELLOW; break;
-                            case 70:
-                            case 71: backgroundColor = (short)COLOR.FG_WHITE; break;
-                        }
-                    }
-                    //brush
-                    else if(cursorX >= 80 && cursorX <= 87)
-                    {
-                        switch(cursorX)
-                        {
-                            case 80:
-                            case 81: brush = '░'; break;
-                            case 82:
-                            case 83: brush = '▒'; break;
-                            case 84:
-                            case 85: brush = '▓'; break;
-                            case 86:
-                            case 87: brush = '█'; break;
-                        }
-                    }
-                }
-                //draw on sprite
-                if(cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
-                {
-                    if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
-                    {
-                        short color = (short)(backgroundColor << 4);
-                        color += foregroundColor;
-                        sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
-                    }
-                }
+                this.x = x;
+                this.y = y;
+                this.spriteW = spriteW;
+                this.spriteH = spriteH;
+                this.backgroundColor = backgroundColor;
+                this.foregroundColor = foregroundColor;
+
+                btn_Backwards = new Button(x + 1, y + spriteH + 2, "<", method: BtnBackwardsClick);
+                btn_Start = new Button(x + 5, y + spriteH + 2, "»", method: BtnStartClick);
+                btn_Stop = new Button(x + 9, y + spriteH + 2, "■", method: BtnStopClick);
+                btn_Forward = new Button(x + 13, y + spriteH + 2, ">", method: BtnForwardClick);
+
+                tb_SpriteW = new TextBox(x + spriteW + 3, y, 3, "Width");
+                tb_SpriteH = new TextBox(x + spriteW + 3, y + 5, 3, "Height");
+                tb_FrameDelay = new TextBox(x + spriteW + 3, y + 10, 3, "Delay", content:"100");
+                tb_FrameCount = new TextBox(x + spriteW + 3, y + 15, 5 , "#Frms", content:"1");
             }
-        }
 
-        private bool BtnClearClicked()
-        {
-            if (tb_Width.content != "" && tb_Height.content != "")
-                sprite = new Sprite(Convert.ToInt32(tb_Width.content), Convert.ToInt32(tb_Height.content), '█', COLOR.BG_BLACK);
+            public void UpdateMouseInput(MOUSE_EVENT_RECORD r)
+            {
+                btn_Backwards.Update(r);
+                btn_Start.Update(r);
+                btn_Stop.Update(r);
+                btn_Forward.Update(r);
 
-            spriteCursorX = 0;
-            spriteCursorY = 0;
+                tb_SpriteW.UpdateSelection(r);
+                tb_SpriteH.UpdateSelection(r);
+                tb_FrameDelay.UpdateSelection(r);
+                tb_FrameCount.UpdateSelection(r);
+            }
+            public void UpdateKeyInput(KeyState[] KeyStates, TimeSpan elapsedTime, Sprite sprite)
+            {
+                if(tb_FrameDelay.content != "")
+                    frameDelay = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(tb_FrameDelay.content));
 
-            tb_Width.content = "";
-            tb_Height.content = "";
+                if (frameDelay < DateTime.Now - lastUpdate)
+                {
+                    lastUpdate = DateTime.Now;
+                    frameCounter++;
 
-            return true;
-        }
-        private bool BtnSaveClicked()
-        {
-            return true;
-        }
-        private bool BtnLoadClicked()
-        {
-            sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+                    if(tb_FrameCount.content != "")
+                        if (frameCounter > Convert.ToInt32(tb_FrameCount.content))
+                            frameCounter = 0;
+                }
+                tb_SpriteW.UpdateInput(KeyStates, elapsedTime);
+                tb_SpriteH.UpdateInput(KeyStates, elapsedTime);
+                tb_FrameDelay.UpdateInput(KeyStates, elapsedTime);
+                tb_FrameCount.UpdateInput(KeyStates, elapsedTime);
 
-            return true;
+                BuildSprite(sprite);
+            }
+
+            private void BuildSprite(Sprite sprite)
+            {
+                short color = (short)((foregroundColor << 4) + backgroundColor);
+                outputSprite = new Sprite(8 + spriteW, 8 + spriteH);
+
+                #region frame around spriteFrame
+                //corners
+                outputSprite.SetPixel(0, 0, '┌', color);
+                outputSprite.SetPixel(spriteW + 1, 0, '┐', color);
+                outputSprite.SetPixel(0, spriteH + 1, '└', color);
+                outputSprite.SetPixel(spriteW + 1, spriteH + 1, '┘', color);
+
+                for(int i = 0; i < spriteW; i++)
+                {
+                    //horizontal lines
+                    outputSprite.SetPixel(1 + i, 0, '─', color);
+                    outputSprite.SetPixel(1 + i, spriteH + 1, '─', color);
+                    for (int j = 0; j < spriteH; j++)
+                    {
+                        //vertical lines
+                        outputSprite.SetPixel(0, 1 + j, '│', color);
+                        outputSprite.SetPixel(spriteW + 1, 1 + j, '│', color);
+                    }
+                }
+                #endregion
+
+                #region UI-Elements
+                outputSprite.AddSpriteToSprite(1, spriteH + 2, btn_Backwards.outputSprite);
+                outputSprite.AddSpriteToSprite(5, spriteH + 2, btn_Start.outputSprite);
+                outputSprite.AddSpriteToSprite(9, spriteH + 2, btn_Stop.outputSprite);
+                outputSprite.AddSpriteToSprite(13, spriteH + 2, btn_Forward.outputSprite);
+
+                outputSprite.AddSpriteToSprite(spriteW + 3, 0, tb_SpriteW.outputSprite);
+                outputSprite.AddSpriteToSprite(spriteW + 3, 5, tb_SpriteH.outputSprite);
+                outputSprite.AddSpriteToSprite(spriteW + 3, 10, tb_FrameDelay.outputSprite);
+                outputSprite.AddSpriteToSprite(spriteW + 3, 15, tb_FrameCount.outputSprite);
+                #endregion
+
+                #region animationFrame
+                outputSprite.AddSpriteToSprite(1, 1, sprite.ReturnPartialSprite(frameCounter * spriteW, 0, spriteW, spriteH));
+
+                #endregion
+            }
+            #region BtnClicks
+            private bool BtnBackwardsClick()
+            {
+                frameCounter--;
+
+                if (frameCounter < 0)
+                    frameCounter = Convert.ToInt32(tb_FrameCount.content) - 1;
+                return true;
+            }
+            private bool BtnStartClick()
+            {
+                loop = true;
+                return true;
+            }
+            private bool BtnForwardClick()
+            {
+                frameCounter++;
+
+                if (frameCounter > Convert.ToInt32(tb_FrameCount.content))
+                    frameCounter = 0;
+
+                return true;
+            }
+            private bool BtnStopClick()
+            {
+                loop = false;
+                return true;
+            }
+            #endregion
         }
     }
 
