@@ -23,10 +23,12 @@ namespace SpriteEditor
         char brush = '▓';
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave, btnLoad;
+        Button btnClear, btnSave, btnLoad, btnColorPicker;
         TextBox tb_Width, tb_Height, tb_SaveName;
         ListBox lb_SavedFiles;
         AnimationPreview animationPreview;
+
+        bool colorPickerActive = false;
 
         List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie1", "SampleEntrie2", "SampleEntrie3", "SampleEntrie4", "SampleEntrie5", "SampleEntrie6", "SampleEntrie7", "SampleEntrie8", "SampleEntrie9", "SampleEntrie10", "SampleEntrie11", "SampleEntrie12", "SampleEntrie13", "SampleEntrie14", "SampleEntrie15", "SampleEntrie16", "SampleEntrie17", "SampleEntrie18", "SampleEntrie19" };
         List<string> saveFiles = new List<string>();
@@ -45,29 +47,26 @@ namespace SpriteEditor
         {
             ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
-            btnClear = new Button(105, 8, "clear / new");
-            btnClear.OnButtonClicked(BtnClearClicked);
+            btnClear = new Button(105, 8, "clear / new", method: BtnClearClicked);
 
             tb_Width = new TextBox(119, 7, 6, "Width:");
             tb_Height = new TextBox(129, 7, 6, "Height:", simple: true);
 
-            btnSave = new Button(105, 12, " save ");
-            btnSave.OnButtonClicked(BtnSaveClicked);
+            btnSave = new Button(105, 12, " save ", method: BtnSaveClicked);
 
             tb_SaveName = new TextBox(105, 16, 30, "Save Name:");
 
             animationPreview = new AnimationPreview(105, 43);
 
+            btnColorPicker = new Button(115, 2, "pick color", method: BtnColorPickerClicked);
 
             //load savefiles from savefile-folder
             foreach(string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
                 saveFiles.Add(Path.GetFileName(file));
 
-
             lb_SavedFiles = new ListBox(105, 22, 32, 15, saveFiles, simple: true);
 
-            btnLoad = new Button(129, 38, " load ");
-            btnLoad.OnButtonClicked(BtnLoadClicked);
+            btnLoad = new Button(129, 38, " load ", method: BtnLoadClicked);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -155,6 +154,13 @@ namespace SpriteEditor
             DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
             DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
             DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
+
+            if(colorPickerActive)
+            {
+                //apply border
+                DrawRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 1, btnColorPicker.height + 1, (short)COLOR.FG_RED);
+            }
+            DrawSprite(btnColorPicker.x, btnColorPicker.y, btnColorPicker.outputSprite);
             
 
             DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
@@ -174,6 +180,7 @@ namespace SpriteEditor
             btnClear.Update(r);
             btnSave.Update(r);
             btnLoad.Update(r);
+            btnColorPicker.Update(r);
 
             tb_Width.UpdateSelection(r);
             tb_Height.UpdateSelection(r);
@@ -198,7 +205,7 @@ namespace SpriteEditor
                 if (cursorY == 2 || cursorY == 3)
                 {
                     //foreground color
-                    if (cursorX >= 1 && cursorX <= 30)
+                    if (cursorX >= 1 && cursorX <= 32)
                     {
                         switch (cursorX)
                         {
@@ -237,7 +244,7 @@ namespace SpriteEditor
                         }
                     }
                     //background color
-                    else if (cursorX >= 40 && cursorX <= 69)
+                    else if (cursorX >= 40 && cursorX <= 71)
                     {
                         switch (cursorX)
                         {
@@ -296,11 +303,21 @@ namespace SpriteEditor
                 {
                     if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
                     {
-                        short color = (short)(backgroundColor << 4);
-                        color += foregroundColor;
-                        sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
+                        if (!colorPickerActive)
+                        {
+                            short color = (short)(backgroundColor << 4);
+                            color += foregroundColor;
+                            sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
+                        }
+                        else
+                        {
+                            short colorToPick = sprite.GetColor(cursorX - 5 + spriteCursorX, cursorY - 10);
+                            foregroundColor = (short)(colorToPick & 0x0F);
+                            backgroundColor = (short)(colorToPick >> 4);
+                        }
                     }
                 }
+                //colorPickerActive = false;
             }
         }
         private bool BtnClearClicked()
@@ -349,6 +366,11 @@ namespace SpriteEditor
         {
             sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
 
+            return true;
+        }
+        private bool BtnColorPickerClicked()
+        {
+            colorPickerActive = !colorPickerActive;
             return true;
         }
         #endregion
