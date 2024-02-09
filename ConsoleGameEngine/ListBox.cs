@@ -74,20 +74,20 @@ namespace ConsoleGameEngine
                 //frame
                 for (int i = 1; i < retSprite.Width - 1; i++)
                 {
-                    retSprite.SetPixel(i, 0, '-', color); //top
-                    retSprite.SetPixel(i, retSprite.Height - 1, '-', color); //bottom
+                    retSprite.SetPixel(i, 0, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, color); //top
+                    retSprite.SetPixel(i, retSprite.Height - 1, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, color); //bottom
                     for (int j = 1; j < retSprite.Height - 1; j++)
                     {
-                        retSprite.SetPixel(0, j, '|', color); //left
+                        retSprite.SetPixel(0, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color); //left
                         if (entries.Count > retSprite.Height - 2)
-                            retSprite.SetPixel(retSprite.Width - 3, j, '|', color); //border between entries and scrollbar
-                        retSprite.SetPixel(retSprite.Width - 1, j, '|', color); //right
+                            retSprite.SetPixel(retSprite.Width - 3, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color); //border between entries and scrollbar
+                        retSprite.SetPixel(retSprite.Width - 1, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color); //right
                     }
                 }
-                retSprite.SetPixel(0, 0, '+', color);
-                retSprite.SetPixel(0, retSprite.Height - 1, '+', color);
-                retSprite.SetPixel(retSprite.Width , 0, '+', color);
-                retSprite.SetPixel(retSprite.Width - 1, retSprite.Height, '+', color);
+                retSprite.SetPixel(0, 0, (char)PIXELS.LINE_CORNER_TOP_LEFT, color);
+                retSprite.SetPixel(0, retSprite.Height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_LEFT, color);
+                retSprite.SetPixel(retSprite.Width , 0, (char)PIXELS.LINE_CORNER_TOP_RIGHT, color);
+                retSprite.SetPixel(retSprite.Width - 1, retSprite.Height, (char)PIXELS.LINE_CORNER_BOTTOM_RIGHT, color);
 
                 //scrollbar
                 if (entries.Count > retSprite.Height - 2)

@@ -93,19 +93,19 @@ namespace ConsoleGameEngine
 
             for (int i = 1; i < retSprite.Width - 1; i++)
             {
-                retSprite.SetPixel(i, 0, '-', color);
-                retSprite.SetPixel(i, retSprite.Height - 1, '-', color);
+                retSprite.SetPixel(i, 0, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, color);
+                retSprite.SetPixel(i, retSprite.Height - 1, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, color);
                 for (int j = 1; j < retSprite.Height - 1; j++)
                 {
-                    retSprite.SetPixel(0, j, '|', color);
-                    retSprite.SetPixel(retSprite.Width - 1, j, '|', color);
+                    retSprite.SetPixel(0, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color);
+                    retSprite.SetPixel(retSprite.Width - 1, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color);
                 }
             }
             //corners
-            retSprite.SetPixel(0, 0, '+', color);
-            retSprite.SetPixel(0, retSprite.Height - 1, '+', color);
-            retSprite.SetPixel(retSprite.Width - 1, 0, '+', color);
-            retSprite.SetPixel(retSprite.Width - 1, retSprite.Height - 1, '+', color);
+            retSprite.SetPixel(0, 0, (char)PIXELS.LINE_CORNER_TOP_LEFT, color);
+            retSprite.SetPixel(0, retSprite.Height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_LEFT, color);
+            retSprite.SetPixel(retSprite.Width - 1, 0, (char)PIXELS.LINE_CORNER_TOP_RIGHT, color);
+            retSprite.SetPixel(retSprite.Width - 1, retSprite.Height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_RIGHT, color);
 
             //text
             for(int i = 0; i < text.Length; i++)

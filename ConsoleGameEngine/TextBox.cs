@@ -145,19 +145,19 @@ namespace ConsoleGameEngine
                 //frame
                 for(int i = 1; i < body.Width - 1; i++)
                 {
-                    body.SetPixel(i, 1, '-', color);
-                    body.SetPixel(i, body.Height - 1, '-', color);
+                    body.SetPixel(i, 1, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, color);
+                    body.SetPixel(i, body.Height - 1, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, color);
                     for (int j = 1; j < body.Height - 1; j++)
                     {
-                        body.SetPixel(0, j, '|', color);
-                        body.SetPixel(body.Width - 1, j, '|', color);
+                        body.SetPixel(0, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color);
+                        body.SetPixel(body.Width - 1, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, color);
                     }
                 }
                 //corners
-                body.SetPixel(0, 1, '+', color);
-                body.SetPixel(0, body.Height - 1, '+', color);
-                body.SetPixel(body.Width - 1, 1, '+', color);
-                body.SetPixel(body.Width - 1, body.Height, '+', color);
+                body.SetPixel(0, 1, (char)PIXELS.LINE_CORNER_TOP_LEFT, color);
+                body.SetPixel(0, body.Height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_LEFT, color);
+                body.SetPixel(body.Width - 1, 1, (char)PIXELS.LINE_CORNER_TOP_RIGHT, color);
+                body.SetPixel(body.Width - 1, body.Height, (char)PIXELS.LINE_CORNER_BOTTOM_RIGHT, color);
 
                 for(int i = 0; i < content.Length; i++)
                     body.SetPixel(i+1,2, content[i], color);
