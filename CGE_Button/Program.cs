@@ -31,14 +31,16 @@ namespace CGE_Button
             mode |= NativeMethods.ENABLE_MOUSE_INPUT; //enable
             NativeMethods.SetConsoleMode(inHandle, mode);
 
-            ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
-
-            ConsoleListener.Start();
+            
 
             TextWriter.LoadFont("fontsheet.txt", 7, 9);
 
-            button = new Button(40, 40, TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1), feedbackSprite: TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor:15));
+            button = new Button(40, 40, TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1), feedbackSprite: TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1, backgroundColor: 0, foregroundColor:15), hooverSprite: TextWriter.GenerateTextSprite("Click me!", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.FG_DARK_GREY, foregroundColor: 15));
             button.OnButtonClicked(ButtonClicked);
+
+            ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
+
+            ConsoleListener.Start();
 
             return true;
         }

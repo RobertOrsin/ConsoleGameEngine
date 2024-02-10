@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="animation.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="ComboBox.cs" />
     <Compile Include="gameconsole.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="ListBox.cs" />

@@ -314,6 +314,7 @@ namespace SpriteEditor
                             short colorToPick = sprite.GetColor(cursorX - 5 + spriteCursorX, cursorY - 10);
                             foregroundColor = (short)(colorToPick & 0x0F);
                             backgroundColor = (short)(colorToPick >> 4);
+                            brush = sprite.GetChar(cursorX - 5 + spriteCursorX, cursorY - 10);
                         }
                     }
                 }
@@ -476,7 +477,7 @@ namespace SpriteEditor
                 if(tb_FrameDelay.content != "")
                     frameDelay = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(tb_FrameDelay.content));
 
-                if (frameDelay < DateTime.Now - lastUpdate)
+                if (frameDelay < DateTime.Now - lastUpdate && loop)
                 {
                     lastUpdate = DateTime.Now;
                     frameCounter++;

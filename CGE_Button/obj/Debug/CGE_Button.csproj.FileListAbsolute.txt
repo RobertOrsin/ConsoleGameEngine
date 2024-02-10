@@ -8,3 +8,13 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.c
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\bin\Debug\CGE_Button.exe.config
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\bin\Debug\CGE_Button.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\bin\Debug\CGE_Button.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\bin\Debug\ConsoleGameEngine.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.csproj.AssemblyReference.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.csproj.CoreCompileInputs.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.csproj.CopyComplete
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_Button\obj\Debug\CGE_Button.pdb

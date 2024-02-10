@@ -11,13 +11,13 @@ namespace ConsoleGameEngine
     public class Button
     {
         public int x, y, width, height;
-        public Sprite outputSprite, sprite, feedbackSprite;
+        public Sprite outputSprite, sprite, feedbackSprite, hooverSprite;
         string text;
         Func<bool> method;
         bool simple = false;
-        short foregroundColor, backgroundColor;
+        short foregroundColor, backgroundColor, hooverColor;
 
-        public Button(int x, int y, int width, int height, Sprite sprite, Sprite feedbackSprite = null)
+        public Button(int x, int y, int width, int height, Sprite sprite, Sprite feedbackSprite = null, Sprite hooverSprite = null, Func<bool> method = null)
         {
             this.x = x;
             this.y = y;
@@ -26,8 +26,10 @@ namespace ConsoleGameEngine
             this.sprite = sprite;
             outputSprite = this.sprite;
             this.feedbackSprite = feedbackSprite;
+            this.hooverSprite = hooverSprite;
+            this.method = method;
         }
-        public Button(int x, int y, Sprite sprite, Sprite feedbackSprite = null)
+        public Button(int x, int y, Sprite sprite, Sprite feedbackSprite = null, Sprite hooverSprite = null, Func<bool> method = null)
         {
             this.x = x;
             this.y = y;
@@ -36,19 +38,23 @@ namespace ConsoleGameEngine
             height = sprite.Height;
             outputSprite = this.sprite;
             this.feedbackSprite = feedbackSprite;
+            this.hooverSprite= hooverSprite;
+            this.method = method;
         }
-        public Button(int x, int y, string text, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE, Func<bool> method = null)
+        public Button(int x, int y, string text, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE, short hooverColor = (short)COLOR.FG_DARK_GREY, Func<bool> method = null)
         {
             this.x = x;
             this.y = y;
             this.text = text;
             width = text.Length + 2;
             height = 3;
-            outputSprite = BuildSimpleSprite(false);
             simple = true;
             this.foregroundColor = foregroundColor;
             this.backgroundColor = backgroundColor;
+            this.hooverColor = hooverColor;
             this.method = method;
+
+            outputSprite = BuildSimpleSprite(false, false);
         }
 
         public void OnButtonClicked(Func<bool> method)
@@ -61,9 +67,9 @@ namespace ConsoleGameEngine
             int mouseX = r.dwMousePosition.X, mouseY = r.dwMousePosition.Y;
             uint mouseState = r.dwButtonState;
 
-            if(mouseState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
+            if (mouseX <= x + width && mouseX >= x && mouseY <= y + height && mouseY > y) 
             {
-                if(mouseX <= x + width && mouseX >= x && mouseY <= y + height && mouseY > y) 
+                if (mouseState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
                 {
                     if (!simple)
                     {
@@ -71,9 +77,19 @@ namespace ConsoleGameEngine
                             outputSprite = feedbackSprite;
                     }
                     else
-                        outputSprite = BuildSimpleSprite(true);
+                        outputSprite = BuildSimpleSprite(true, false);
 
                     method();
+                }
+                else
+                {
+                    if (!simple)
+                    {
+                        if(hooverSprite != null)
+                            outputSprite = hooverSprite;
+                    }
+                    else
+                        outputSprite = BuildSimpleSprite(false, true);
                 }
             }
             else
@@ -81,15 +97,17 @@ namespace ConsoleGameEngine
                 if(!simple)
                     outputSprite = sprite;
                 else
-                    outputSprite = BuildSimpleSprite(false);
+                    outputSprite = BuildSimpleSprite(false, false);
             }      
         }
 
-        private Sprite BuildSimpleSprite(bool clicked)
+        private Sprite BuildSimpleSprite(bool clicked, bool hoovered)
         {
             Sprite retSprite = new Sprite(text.Length + 2, 3);
 
             short color = clicked ? (short)((foregroundColor << 4) + backgroundColor) : (short)((backgroundColor << 4) + foregroundColor);
+
+            color = hoovered ? (short)((hooverColor << 4) + backgroundColor) : color;
 
             for (int i = 1; i < retSprite.Width - 1; i++)
             {
