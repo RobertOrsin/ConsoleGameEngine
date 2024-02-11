@@ -11,11 +11,10 @@ namespace ConsoleGameEngine
     public class ListBox
     {
         public int x, y;
-        int w, h;
+        public int w, h;
         public List<string> entries = new List<string>();
         bool simple = false;
         short foregroundColor, backgroundColor;
-        bool showOnlyFileName;
         public Sprite outputSprite = new Sprite(1, 1);
         int firstEntry = 0;
 
@@ -23,7 +22,7 @@ namespace ConsoleGameEngine
 
         Button btn_MoveUP, btn_MoveDOWN;
 
-        public ListBox(int x, int y, int w, int h, List<string> entries, bool simple = false, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE, bool showOnlyFileName = false)
+        public ListBox(int x, int y, int w, int h, List<string> entries, bool simple = false, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE)
         {
             this.x = x;
             this.y = y;
@@ -33,7 +32,6 @@ namespace ConsoleGameEngine
             this.simple = simple;
             this.backgroundColor = backgroundColor;
             this.foregroundColor = foregroundColor;
-            this.showOnlyFileName = showOnlyFileName;
 
             btn_MoveDOWN = new Button(x+ w - 3, y + h - 4, "v", this.backgroundColor, this.foregroundColor);
             btn_MoveUP = new Button(x +w - 3, y + 1, "^", this.backgroundColor, this.foregroundColor);
