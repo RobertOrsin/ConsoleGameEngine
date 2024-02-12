@@ -38,6 +38,10 @@ namespace ConsoleGameEngine
             this.w = w;
             this.h = h;
 
+            btn_Select = new Button(x + w - 3, y + 1, "v", method: BtnSelectClicked);
+            tb_Selection = new TextBlock(x, y, w - btn_Select.width, tag, tagPosition: TextBox.ObjectPosition.Top, backgroundColor: backgroundColor, foregroundColor: foregroundColor, content: entries[shownEntry]);
+            lb_Entries = new ListBox(x, y + tb_Selection.height, w, entriesToShow + 2, entries, simple: simple, backgroundColor: backgroundColor, foregroundColor: foregroundColor);
+
             outputSprite = BuildSprite();
 
         }
@@ -53,6 +57,7 @@ namespace ConsoleGameEngine
                 if(lb_Entries.selectedEntry != shownEntry)
                 {
                     shownEntry = lb_Entries.selectedEntry;
+                    tb_Selection.SetContent(entries[shownEntry]);
                     lbShown = false;
                 }
             }
@@ -61,15 +66,10 @@ namespace ConsoleGameEngine
 
         private Sprite BuildSprite()
         {
-            btn_Select = new Button(x + w - 3, y + 1, "v", method: BtnSelectClicked);
-            tb_Selection = new TextBlock(x, y, w - btn_Select.width, tag, tagPosition:TextBox.ObjectPosition.Top, backgroundColor:backgroundColor, foregroundColor:foregroundColor, content: entries[shownEntry]);
-
             Sprite retSprite = null;
 
             if (lbShown)
             {
-                lb_Entries = new ListBox(x, y - tb_Selection.height, w, h - tb_Selection.height, entries, simple: simple, backgroundColor: backgroundColor, foregroundColor: foregroundColor);
-
                 retSprite = new Sprite(btn_Select.width + tb_Selection.width, tb_Selection.height + lb_Entries.h);
 
                 retSprite.AddSpriteToSprite(0, 0, tb_Selection.outputSprite);
@@ -84,11 +84,6 @@ namespace ConsoleGameEngine
                 retSprite.AddSpriteToSprite(w-3, 1, btn_Select.outputSprite);
 
             }
-
-
-
-            
-
 
             return retSprite;
 

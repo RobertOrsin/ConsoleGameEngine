@@ -111,5 +111,11 @@ namespace ConsoleGameEngine
             width = body.Width; height = body.Height;
             return body;
         }
+
+        public void SetContent(string content)
+        {
+            this.content = content;
+            outputSprite = BuildSprite();
+        }
     }
 }

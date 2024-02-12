@@ -8,3 +8,13 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_ComboBox\bin\Debug\ConsoleG
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.csproj.CopyComplete
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.exe
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\bin\Debug\CGE_ComboBox.exe.config
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\bin\Debug\CGE_ComboBox.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\bin\Debug\CGE_ComboBox.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\bin\Debug\ConsoleGameEngine.dll
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.csproj.AssemblyReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.csproj.CoreCompileInputs.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.csproj.CopyComplete
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.exe
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\CGE_ComboBox\obj\Debug\CGE_ComboBox.pdb
