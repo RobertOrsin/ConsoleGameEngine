@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using static ConsoleGameEngine.GameConsole;
 
 
 namespace ConsoleGameEngine
@@ -134,6 +135,11 @@ namespace ConsoleGameEngine
             LINE_CORNER_TOP_RIGHT = '┐',
             LINE_CORNER_BOTTOM_LEFT = '└',
             LINE_CORNER_BOTTOM_RIGHT = '┘',
+            LINE_TSECTION_TOP = '┬',
+            LINE_TSECTION_BOTTOM = '┴',
+            LINE_TSECTION_LEFT = '├',
+            LINE_TSECTION_RIGHT = '┤',
+            LINE_CROSSSECTION = '┼',
         }
 
         public enum COLOR
@@ -360,6 +366,30 @@ namespace ConsoleGameEngine
                 SetChar(x+width, j, '█', drawingcolor);
             }
         }
+
+        public void DrawASCIIRectangle(int x, int y, int width, int height, short background = (short)COLOR.BG_BLACK, short foreground = (short)COLOR.FG_WHITE)
+        {
+            short drawingColor = (short)(background + foreground);
+
+            for(int i = x; i < x+width; i++)
+            {
+                SetChar(i, y, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, drawingColor);
+                SetChar(i, y + height - 1, (char)PIXELS.LINE_STRAIGHT_HORIZONTAL, drawingColor);
+
+                for(int j = y; j < y+height; j++)
+                {
+                    SetChar(x, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, drawingColor);
+                    SetChar(x + width - 1, j, (char)PIXELS.LINE_STRAIGHT_VERTICAL, drawingColor);
+                }
+            }
+            //corners
+            SetChar(x,y, (char)PIXELS.LINE_CORNER_TOP_LEFT, drawingColor);
+            SetChar(x, y + height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_LEFT, drawingColor);
+            SetChar(x + width - 1, y, (char)PIXELS.LINE_CORNER_TOP_RIGHT, drawingColor);
+            SetChar(x + width - 1, y + height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_RIGHT, drawingColor);
+        }
+
+
 
         public void SetChar(int x, int y, char c, short attributes = (short)COLOR.FG_WHITE)
         {
