@@ -86,6 +86,23 @@ namespace ConsoleGameEngine
             return returnSprite;
         }
 
+        public Sprite ReturnPartialSpriteInverted(int x, int y, int w, int h)
+        {
+            Sprite returnSprite = new Sprite(w, h);
+
+            for (int i = x; i < x + w; i++)
+            {
+                for (int j = y; j < y + h; j++)
+                {
+                    short color = _spritecolors.GetData(i, j);
+                    short invertedColor = (short)((short)(color >> 4) + (short)((color & 0x0F) << 4));
+
+                    returnSprite.SetPixel(i - x, j - y, _spritedata.GetData(i, j), invertedColor);
+                }
+            }
+            return returnSprite;
+        }
+
         public void AddSpriteToSprite(int x, int y, Sprite sprite)
         {
             for(int i = x; i < x + sprite.Width; i++)

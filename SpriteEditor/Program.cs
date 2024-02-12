@@ -17,18 +17,18 @@ namespace SpriteEditor
         delegate void MyDelegate();
  
         int cursorX = 0, cursorY = 0;
-        bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
+        bool leftMousebuttonClicked = false, leftMousebuttonHeld = false, leftMouseButtonReleased = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
 
         short foregroundColor = 0x03, backgroundColor = 0x0F;
         char brush = '▓';
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave, btnLoad, btnColorPicker;
+        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy;
         TextBox tb_Width, tb_Height, tb_SaveName;
         ListBox lb_SavedFiles;
         AnimationPreview animationPreview;
 
-        bool colorPickerActive = false;
+        bool colorPickerActive = false, markingActive = false;
 
         List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie1", "SampleEntrie2", "SampleEntrie3", "SampleEntrie4", "SampleEntrie5", "SampleEntrie6", "SampleEntrie7", "SampleEntrie8", "SampleEntrie9", "SampleEntrie10", "SampleEntrie11", "SampleEntrie12", "SampleEntrie13", "SampleEntrie14", "SampleEntrie15", "SampleEntrie16", "SampleEntrie17", "SampleEntrie18", "SampleEntrie19" };
         List<string> saveFiles = new List<string>();
@@ -36,6 +36,10 @@ namespace SpriteEditor
         int spriteAreaW = 95, spriteAreaH = 47;
         int spriteCursorX = 0, spriteCursorY = 0;
         int spriteDrawX = 5, spriteDrawY = 10;
+
+        bool marking_visible = false, markingDraging = false;
+        int markingStartX, markingStartY, markingEndX, markingEndY;
+        Sprite markingSprite;
 
         TimeSpan keyInputDelay = new TimeSpan(), keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
 
@@ -59,6 +63,10 @@ namespace SpriteEditor
             animationPreview = new AnimationPreview(105, 43);
 
             btnColorPicker = new Button(115, 2, "pick color", method: BtnColorPickerClicked);
+
+            btnMark = new Button(3, 61, " Mark ", method:BtnMarkClicked);
+            btnCopy = new Button(12, 61, " Copy ", method: BtnCopyClicked);
+            btnAbortMarkAndCopy = new Button(21, 61, "Abort", method:BtnAbortClicked);
 
             //load savefiles from savefile-folder
             foreach(string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
@@ -142,12 +150,17 @@ namespace SpriteEditor
             //DrawArea
             DrawRectangle(3, 8, 100, 50, (short)COLOR.FG_WHITE);
             DrawRectangle(4, 9, 98, 48, (short)COLOR.FG_DARK_GREY);
-            //Fill(5, 10, 96, 46, c:'█',  attributes: (short)COLOR.FG_DARK_GREY);
 
             if (sprite.Width > spriteAreaW || sprite.Height > spriteAreaH)
                 DrawPartialSprite(spriteDrawX, spriteDrawY, sprite, spriteCursorX, spriteCursorY, spriteAreaW, spriteAreaH);
             else
                 DrawSprite(spriteDrawX, spriteDrawY, sprite);
+
+            if(marking_visible)
+            {
+                markingSprite = sprite.ReturnPartialSpriteInverted(markingStartX, markingStartY, markingEndX - markingStartX + 1, markingEndY - markingStartY + 1);
+                DrawSprite(markingStartX + 5 , markingStartY + 10, markingSprite);
+            }
 
             Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
 
@@ -156,13 +169,9 @@ namespace SpriteEditor
             DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
 
             if(colorPickerActive)
-            {
-                //apply border
-                DrawRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 1, btnColorPicker.height + 1, (short)COLOR.FG_RED);
-            }
+                DrawASCIIRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 2, btnColorPicker.height + 2, foreground: (short)COLOR.FG_RED);
             DrawSprite(btnColorPicker.x, btnColorPicker.y, btnColorPicker.outputSprite);
             
-
             DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
             DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
             DrawSprite(tb_SaveName.x, tb_SaveName.y, tb_SaveName.outputSprite);
@@ -170,6 +179,12 @@ namespace SpriteEditor
             DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
 
             DrawSprite(animationPreview.x, animationPreview.y, animationPreview.outputSprite);
+
+            DrawSprite(btnMark.x, btnMark.y, btnMark.outputSprite);
+            if (markingActive)
+                DrawASCIIRectangle(btnMark.x - 1, btnMark.y - 1, btnMark.width + 2, btnMark.height + 2, foreground: (short)COLOR.FG_RED);
+            DrawSprite(btnCopy.x, btnCopy.y, btnCopy.outputSprite);
+            DrawSprite(btnAbortMarkAndCopy.x, btnAbortMarkAndCopy.y, btnAbortMarkAndCopy.outputSprite);
 
             return true;
         }
@@ -182,6 +197,11 @@ namespace SpriteEditor
             btnLoad.Update(r);
             btnColorPicker.Update(r);
 
+            btnMark.Update(r);
+            btnCopy.Update(r);
+            btnAbortMarkAndCopy.Update(r);
+
+
             tb_Width.UpdateSelection(r);
             tb_Height.UpdateSelection(r);
             tb_SaveName.UpdateSelection(r);
@@ -193,13 +213,25 @@ namespace SpriteEditor
             cursorX = r.dwMousePosition.X;
             cursorY = r.dwMousePosition.Y;
 
-            leftMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED;
+            leftMousebuttonClicked = false;
+            leftMouseButtonReleased = false;
+            if (r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
+            {
+                leftMousebuttonClicked = !leftMousebuttonHeld;
+                leftMousebuttonHeld = true;
+            }
+            else
+            {
+                leftMouseButtonReleased = true;
+                leftMousebuttonHeld = false;
+            }
+
             mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
             rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
         }
         private void EvaluateGUIClick()
         {
-            if (leftMousebuttonClicked)
+            if (leftMousebuttonClicked || leftMousebuttonHeld)
             {
                 //color or brush picking
                 if (cursorY == 2 || cursorY == 3)
@@ -303,13 +335,36 @@ namespace SpriteEditor
                 {
                     if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
                     {
-                        if (!colorPickerActive)
+                        if (!colorPickerActive && !markingActive)
                         {
                             short color = (short)(backgroundColor << 4);
                             color += foregroundColor;
                             sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
                         }
-                        else
+                        else if(markingActive)
+                        {
+                            if(leftMousebuttonClicked)
+                            {
+                                markingStartX = cursorX - 5; 
+                                markingStartY = cursorY - 10;
+                                markingEndX = cursorX - 5;
+                                markingEndY = cursorY - 10;
+
+                                marking_visible = true;
+                            }
+
+                            if(leftMousebuttonHeld)
+                            {
+                                markingEndX = cursorX - 5;
+                                markingEndY = cursorY - 10;
+                            }
+
+                            if(leftMouseButtonReleased)
+                            {
+                                markingDraging = true;
+                            }
+                        }
+                        else if(colorPickerActive)
                         {
                             short colorToPick = sprite.GetColor(cursorX - 5 + spriteCursorX, cursorY - 10);
                             foregroundColor = (short)(colorToPick & 0x0F);
@@ -371,7 +426,25 @@ namespace SpriteEditor
         }
         private bool BtnColorPickerClicked()
         {
+            markingActive = false;
             colorPickerActive = !colorPickerActive;
+            return true;
+        }
+
+        private bool BtnMarkClicked()
+        {
+            colorPickerActive = false;
+            markingActive = !markingActive;
+            return true;
+        }
+        private bool BtnCopyClicked()
+        {
+            return true;
+        }
+        private bool BtnAbortClicked()
+        {
+            marking_visible = false;
+            markingSprite = null;
             return true;
         }
         #endregion

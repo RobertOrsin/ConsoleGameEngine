@@ -389,8 +389,6 @@ namespace ConsoleGameEngine
             SetChar(x + width - 1, y + height - 1, (char)PIXELS.LINE_CORNER_BOTTOM_RIGHT, drawingColor);
         }
 
-
-
         public void SetChar(int x, int y, char c, short attributes = (short)COLOR.FG_WHITE)
         {
             var offset = _screenbuf.GetOffset(x, y);
