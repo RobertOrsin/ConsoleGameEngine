@@ -11,7 +11,7 @@ namespace ConsoleGameEngine
     
     public class PopUp
     {
-        int x, y;
+        public int x, y;
         public bool visible = false;
         Button OKButton, CancleButton;
         String text;

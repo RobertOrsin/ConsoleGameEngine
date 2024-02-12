@@ -25,7 +25,6 @@ namespace MapEditor
         }
 
 
-
         class TileBox
         {
             int x, y;

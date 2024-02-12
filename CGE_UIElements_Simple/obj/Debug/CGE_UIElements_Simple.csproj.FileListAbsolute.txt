@@ -1,0 +1,10 @@
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\bin\Debug\CGE_UIElements_Simple.exe.config
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\bin\Debug\CGE_UIElements_Simple.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\bin\Debug\CGE_UIElements_Simple.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\bin\Debug\ConsoleGameEngine.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\bin\Debug\ConsoleGameEngine.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\obj\Debug\CGE_UIElements_Simple.csproj.AssemblyReference.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\obj\Debug\CGE_UIElements_Simple.csproj.CoreCompileInputs.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\obj\Debug\CGE_UIElements_Simple.csproj.CopyComplete
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\obj\Debug\CGE_UIElements_Simple.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\CGE_UIElements_Simple\obj\Debug\CGE_UIElements_Simple.pdb
