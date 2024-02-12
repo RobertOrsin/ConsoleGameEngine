@@ -21,7 +21,7 @@ namespace CGE_ComboBox
 
 
         public CGE_ComboBox()
-          : base(80, 40, "Fonts", fontwidth: 8, fontheight: 8)
+          : base(80, 40, "Fonts", fontwidth: 10, fontheight: 10)
         { }
         public override bool OnUserCreate()
         {
