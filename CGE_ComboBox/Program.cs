@@ -13,10 +13,6 @@ namespace CGE_ComboBox
         IntPtr inHandle;
         delegate void MyDelegate();
 
-        int cursorX = 0, cursorY = 0;
-        bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
-
-
         ComboBox cb_YourComboBox = new ComboBox(10, 10, 20, 30, "Combobox", new List<string> { "Entry 1", "Entry 2", "Entry 3", "Entry 4", "Entry 5" });
 
 
