@@ -15,7 +15,9 @@ namespace SpriteEditor
     {
         IntPtr inHandle;
         delegate void MyDelegate();
- 
+        MOUSE_EVENT_RECORD oldMouseState;
+
+
         int cursorX = 0, cursorY = 0;
         bool leftMousebuttonClicked = false, leftMousebuttonHeld = false, leftMouseButtonReleased = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
 
@@ -23,7 +25,7 @@ namespace SpriteEditor
         char brush = '▓';
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy;
+        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy;
         TextBox tb_Width, tb_Height, tb_SaveName;
         ListBox lb_SavedFiles;
         AnimationPreview animationPreview;
@@ -39,6 +41,7 @@ namespace SpriteEditor
 
         bool marking_visible = false, markingDraging = false;
         int markingStartX, markingStartY, markingEndX, markingEndY;
+        int markingSpriteX, markingSpriteY;
         Sprite markingSprite;
 
         TimeSpan keyInputDelay = new TimeSpan(), keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
@@ -67,9 +70,10 @@ namespace SpriteEditor
             btnMark = new Button(3, 61, " Mark ", method:BtnMarkClicked);
             btnCopy = new Button(12, 61, " Copy ", method: BtnCopyClicked);
             btnAbortMarkAndCopy = new Button(21, 61, "Abort", method:BtnAbortClicked);
+            btnConfirmMarkAndCopy = new Button(30, 61, " Set ", method: BtnConfirmClicked);
 
             //load savefiles from savefile-folder
-            foreach(string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
+            foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
                 saveFiles.Add(Path.GetFileName(file));
 
             lb_SavedFiles = new ListBox(105, 22, 32, 15, saveFiles, simple: true);
@@ -95,52 +99,54 @@ namespace SpriteEditor
         {
             keyInputDelay += elapsedTime;
 
-            tb_Width.UpdateInput(KeyStates, elapsedTime);
-            tb_Height.UpdateInput(KeyStates, elapsedTime);
-            tb_SaveName.UpdateInput(KeyStates, elapsedTime);
-            animationPreview.UpdateKeyInput(KeyStates, elapsedTime, sprite);
-
-            //evaluate keyinputs of no textbox is selected
-            if(!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected)
+            if (ApplicationIsActivated())
             {
-                if (GetKeyState(ConsoleKey.W).Held && keyInputDelay >= keyInputTime)
-                {
-                    spriteCursorY -= 5;
-                    if (spriteCursorY < 0)
-                        spriteCursorY = 0;
+                tb_Width.UpdateInput(KeyStates, elapsedTime);
+                tb_Height.UpdateInput(KeyStates, elapsedTime);
+                tb_SaveName.UpdateInput(KeyStates, elapsedTime);
+                animationPreview.UpdateKeyInput(KeyStates, elapsedTime, sprite);
 
-                    keyInputDelay = new TimeSpan();
-                }
-                if (GetKeyState(ConsoleKey.A).Held && keyInputDelay >= keyInputTime)
+                //evaluate keyinputs of no textbox is selected
+                if (!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected)
                 {
-                    spriteCursorX -= 5;
-                    if (spriteCursorX < 0)
-                        spriteCursorX = 0;
+                    if (GetKeyState(ConsoleKey.W).Held && keyInputDelay >= keyInputTime)
+                    {
+                        spriteCursorY -= 5;
+                        if (spriteCursorY < 0)
+                            spriteCursorY = 0;
 
-                    keyInputDelay = new TimeSpan();
-                }
-                if (GetKeyState(ConsoleKey.S).Held && keyInputDelay >= keyInputTime)
-                {
-                    spriteCursorY += 5;
-                    if (spriteCursorY >= sprite.Height - spriteAreaH)
-                        spriteCursorY = sprite.Height - 1;
+                        keyInputDelay = new TimeSpan();
+                    }
+                    if (GetKeyState(ConsoleKey.A).Held && keyInputDelay >= keyInputTime)
+                    {
+                        spriteCursorX -= 5;
+                        if (spriteCursorX < 0)
+                            spriteCursorX = 0;
 
-                    keyInputDelay = new TimeSpan();
-                }
-                if (GetKeyState(ConsoleKey.D).Held && keyInputDelay >= keyInputTime)
-                {
-                    spriteCursorX += 5;
-                    if (spriteCursorX >= sprite.Width - spriteAreaW)
-                        spriteCursorX = sprite.Width - 1;
+                        keyInputDelay = new TimeSpan();
+                    }
+                    if (GetKeyState(ConsoleKey.S).Held && keyInputDelay >= keyInputTime)
+                    {
+                        spriteCursorY += 5;
+                        if (spriteCursorY >= sprite.Height - spriteAreaH)
+                            spriteCursorY = sprite.Height - 1;
 
-                    keyInputDelay = new TimeSpan();
+                        keyInputDelay = new TimeSpan();
+                    }
+                    if (GetKeyState(ConsoleKey.D).Held && keyInputDelay >= keyInputTime)
+                    {
+                        spriteCursorX += 5;
+                        if (spriteCursorX >= sprite.Width - spriteAreaW)
+                            spriteCursorX = sprite.Width - 1;
+
+                        keyInputDelay = new TimeSpan();
+                    }
                 }
             }
-
             EvaluateGUIClick();
 
             Clear();
-
+            
             //GUI
             DrawColorPalette(1, 1, "Foregroundcolor");
             DrawColorPalette(40, 1, "Backgroundcolor");
@@ -159,7 +165,7 @@ namespace SpriteEditor
             if(marking_visible)
             {
                 markingSprite = sprite.ReturnPartialSpriteInverted(markingStartX, markingStartY, markingEndX - markingStartX + 1, markingEndY - markingStartY + 1);
-                DrawSprite(markingStartX + 5 , markingStartY + 10, markingSprite);
+                DrawSprite(markingSpriteX, markingSpriteY, markingSprite);
             }
 
             Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
@@ -185,6 +191,10 @@ namespace SpriteEditor
                 DrawASCIIRectangle(btnMark.x - 1, btnMark.y - 1, btnMark.width + 2, btnMark.height + 2, foreground: (short)COLOR.FG_RED);
             DrawSprite(btnCopy.x, btnCopy.y, btnCopy.outputSprite);
             DrawSprite(btnAbortMarkAndCopy.x, btnAbortMarkAndCopy.y, btnAbortMarkAndCopy.outputSprite);
+            DrawSprite(btnConfirmMarkAndCopy.x, btnConfirmMarkAndCopy.y, btnConfirmMarkAndCopy.outputSprite);
+
+
+            Print(0, Height - 1, $"marking active:{markingActive}; draging:{markingDraging}");
 
             return true;
         }
@@ -200,6 +210,7 @@ namespace SpriteEditor
             btnMark.Update(r);
             btnCopy.Update(r);
             btnAbortMarkAndCopy.Update(r);
+            btnConfirmMarkAndCopy.Update(r);
 
 
             tb_Width.UpdateSelection(r);
@@ -215,23 +226,67 @@ namespace SpriteEditor
 
             leftMousebuttonClicked = false;
             leftMouseButtonReleased = false;
-            if (r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
+
+            if(r.dwButtonState != oldMouseState.dwButtonState)
             {
-                leftMousebuttonClicked = !leftMousebuttonHeld;
-                leftMousebuttonHeld = true;
+                if (r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
+                {
+                    leftMousebuttonClicked = !leftMousebuttonHeld;
+                    leftMousebuttonHeld = true;
+                }
+                else
+                {
+                    leftMouseButtonReleased = true;
+                    leftMousebuttonHeld = false;
+                }
             }
-            else
-            {
-                leftMouseButtonReleased = true;
-                leftMousebuttonHeld = false;
-            }
+            oldMouseState = r;
 
             mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
             rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
         }
         private void EvaluateGUIClick()
         {
-            if (leftMousebuttonClicked || leftMousebuttonHeld)
+            if(markingActive && !markingDraging)
+            {
+                if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
+                {
+                    if (leftMousebuttonClicked)
+                    {
+                        markingStartX = cursorX - 5;
+                        markingStartY = cursorY - 10;
+
+                        markingSpriteX = cursorX;
+                        markingSpriteY = cursorY;
+
+                        markingEndX = cursorX - 5;
+                        markingEndY = cursorY - 10;
+
+                        marking_visible = true;
+                    }
+
+                    if (leftMousebuttonHeld && !markingDraging)
+                    {
+                        markingEndX = cursorX - 5;
+                        markingEndY = cursorY - 10;
+                    }
+                    else if (leftMouseButtonReleased)
+                    {
+                        markingDraging = true;
+                        markingSpriteX = markingStartX + 5;
+                        markingSpriteY = markingStartY + 10;
+                    }
+                }
+            }
+            else if(markingDraging)
+            {
+                if (leftMousebuttonClicked || leftMousebuttonHeld)
+                {
+                    markingSpriteX = cursorX - markingSprite.Width / 2;
+                    markingSpriteY = cursorY - markingSprite.Height / 2;
+                }
+            }
+            else if (leftMousebuttonClicked || leftMousebuttonHeld)
             {
                 //color or brush picking
                 if (cursorY == 2 || cursorY == 3)
@@ -331,7 +386,7 @@ namespace SpriteEditor
                     }
                 }
                 //draw on sprite
-                if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
+                else if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
                 {
                     if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
                     {
@@ -343,26 +398,7 @@ namespace SpriteEditor
                         }
                         else if(markingActive)
                         {
-                            if(leftMousebuttonClicked)
-                            {
-                                markingStartX = cursorX - 5; 
-                                markingStartY = cursorY - 10;
-                                markingEndX = cursorX - 5;
-                                markingEndY = cursorY - 10;
-
-                                marking_visible = true;
-                            }
-
-                            if(leftMousebuttonHeld)
-                            {
-                                markingEndX = cursorX - 5;
-                                markingEndY = cursorY - 10;
-                            }
-
-                            if(leftMouseButtonReleased)
-                            {
-                                markingDraging = true;
-                            }
+                            
                         }
                         else if(colorPickerActive)
                         {
@@ -430,7 +466,6 @@ namespace SpriteEditor
             colorPickerActive = !colorPickerActive;
             return true;
         }
-
         private bool BtnMarkClicked()
         {
             colorPickerActive = false;
@@ -445,6 +480,18 @@ namespace SpriteEditor
         {
             marking_visible = false;
             markingSprite = null;
+            markingDraging = false;
+            return true;
+        }
+        private bool BtnConfirmClicked()
+        {
+            if(markingSprite != null)
+                sprite.AddSpriteToSprite(markingSpriteX - 5, markingSpriteY - 10, markingSprite.ReturnPartialSpriteInverted(0, 0, markingSprite.Width, markingSprite.Height));
+            marking_visible = false;
+            markingSprite = null;
+            markingDraging = false;
+            markingActive = false;
+            
             return true;
         }
         #endregion
