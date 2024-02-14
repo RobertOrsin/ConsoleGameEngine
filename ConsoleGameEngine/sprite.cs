@@ -1,5 +1,6 @@
 ﻿using BigGustave;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -101,6 +102,22 @@ namespace ConsoleGameEngine
                 }
             }
             return returnSprite;
+        }
+
+        public List<Sprite> ReturnTileList(int w, int h, int rows, int columns)
+        {
+            List<Sprite> retList = new List<Sprite>();
+
+            for(int r = 0; r < rows; r++)
+            {
+                for(int c = 0; c < columns; c++)
+                {
+                    retList.Add(ReturnPartialSprite(c * w, r * h, w, h));
+                }
+            }
+
+
+            return retList;
         }
 
         public void AddSpriteToSprite(int x, int y, Sprite sprite)
