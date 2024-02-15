@@ -8,3 +8,4 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEd
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Release\BigGustave.dll
