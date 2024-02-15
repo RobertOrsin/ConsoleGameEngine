@@ -479,6 +479,171 @@ namespace ConsoleGameEngine
             }
         }
 
+        public short ClosedConsoleColor3Bit(byte r, byte g, byte b, out char pixel)
+        {
+            short sixBitValue = (short)((r / 85) << 4 | (g / 85) << 2 | (b / 85));
+
+            switch (sixBitValue)
+            {
+                case 0xFF: //white
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000F;
+
+                case 0x00:  //black
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0000;
+                case 0x15: //dark grey
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0008;
+                case 0x3F: //light grey
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0007;
+
+                case 0x30: //red
+                case 0x31:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000C;
+                case 0x20: //dark red
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0004;
+                case 0x10: //darker red
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x000C;
+                case 0x25: //blueish red
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x009C;
+
+                case 0x03: //blue
+                case 0x17:
+                case 0x07:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0009;
+                case 0x02: //dark blue
+                case 0x06:
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x0001;
+                case 0x01: //darker blue
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x0009;
+                case 0x2F: //cornflower blue
+                case 0x1B:
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x009F;
+                case 0x05: //petrol
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x009A;
+                case 0x0B: //light blue
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x00F9;
+
+                case 0x0C: //green
+                case 0x1C:
+                case 0x1D:
+                case 0x08:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000A;
+                case 0x18: //dark green
+                case 0x19:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0002;
+                case 0x04: //darker green
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x000A;
+                case 0x14: //darkest green
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x000A;
+                case 0x2C: //yellowish green
+                case 0x2D:
+                case 0x2E:
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x00EA;
+                case 0x0A: //blueish green
+                case 0x1A:
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x009A;
+
+                case 0x0D: //leaf green
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x009A;
+                case 0x0E: //frog green
+                case 0x1E:
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x001A;
+                case 0x0F: //cyan
+                case 0x1F:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000B;
+
+
+                case 0x28: //dark yellow
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0006;
+                case 0x3C: //yellow
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x00F6;
+                case 0x3D: //light yellow
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000E;
+                case 0x3E: //lighter yellow
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x00FE;
+
+                case 0x11: //dark purple
+                case 0x26:
+                    pixel = (char)PIXELS.PIXEL_HALF;
+                    return 0x001C;
+                case 0x12: //purple
+                case 0x16:
+                case 0x22:
+                    pixel = (char)PIXELS.PIXEL_HALF;
+                    return 0x009C;
+                case 0x13: //light purple
+                case 0x23:
+                case 0x27:
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x009C;
+
+                case 0x33: //magenta
+                case 0x37:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000D;
+                case 0x32: //dark magenta
+                case 0x36:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x0005;
+
+                case 0x38: //orange
+                case 0x34:
+                case 0x35:
+                    pixel = (char)PIXELS.PIXEL_HALF;
+                    return 0x00EC;
+
+                case 0x24: //brown
+                    pixel = (char)PIXELS.PIXEL_THREEQUARTERS;
+                    return 0x0096;
+                case 0x29: //skintone'ish?
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x00EC;
+
+                case 0x2A: //piggy colored
+                    pixel = (char)PIXELS.PIXEL_QUARTER;
+                    return 0x00FC;
+
+                case 0x2B: //pink
+                    pixel = (char)PIXELS.PIXEL_HALF;
+                    return 0x00FC;
+
+                case 0x21: //dark pink
+                    pixel = (char)PIXELS.PIXEL_HALF;
+                    return 0x00F4;
+
+                default:
+                    pixel = (char)PIXELS.PIXEL_SOLID;
+                    return 0x000F;
+
+            }
+        }
+
         #region IDisposable Support
         private bool _disposed = false;
 

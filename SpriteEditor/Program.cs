@@ -4,10 +4,13 @@ using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
 using static ConsoleGameEngine.NativeMethods;
+using BigGustave;
 
 namespace SpriteEditor
 {
@@ -32,7 +35,6 @@ namespace SpriteEditor
 
         bool colorPickerActive = false, markingActive = false;
 
-        List<string> sampleEntries = new List<string> { "SuperMario", "CoinAnimation", "Link SNES", "DiddyKongSpriteSheet", "InventoryIcons", "SampleEntrie", "SampleEntrie", "SampleEntrie", "SampleEntrie1", "SampleEntrie2", "SampleEntrie3", "SampleEntrie4", "SampleEntrie5", "SampleEntrie6", "SampleEntrie7", "SampleEntrie8", "SampleEntrie9", "SampleEntrie10", "SampleEntrie11", "SampleEntrie12", "SampleEntrie13", "SampleEntrie14", "SampleEntrie15", "SampleEntrie16", "SampleEntrie17", "SampleEntrie18", "SampleEntrie19" };
         List<string> saveFiles = new List<string>();
 
         int spriteAreaW = 95, spriteAreaH = 47;
@@ -45,7 +47,6 @@ namespace SpriteEditor
         Sprite markingSprite;
 
         TimeSpan keyInputDelay = new TimeSpan(), keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
-
 
         public SpriteEditor()
           : base(140, 70, "Fonts", fontwidth: 12, fontheight: 12)
@@ -63,7 +64,7 @@ namespace SpriteEditor
 
             tb_SaveName = new TextBox(105, 16, 30, "Save Name:");
 
-            animationPreview = new AnimationPreview(105, 43);
+            animationPreview = new AnimationPreview(105, 48);
 
             btnColorPicker = new Button(115, 2, "pick color", method: BtnColorPickerClicked);
 
@@ -75,10 +76,12 @@ namespace SpriteEditor
             //load savefiles from savefile-folder
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
                 saveFiles.Add(Path.GetFileName(file));
+            foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.png"))
+                saveFiles.Add(Path.GetFileName(file));
 
-            lb_SavedFiles = new ListBox(105, 22, 32, 15, saveFiles, simple: true);
+            lb_SavedFiles = new ListBox(106, 26, 32, 15, saveFiles, simple: true);
 
-            btnLoad = new Button(129, 38, " load ", method: BtnLoadClicked);
+            btnLoad = new Button(129, 42, " load ", method: BtnLoadClicked);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -153,6 +156,28 @@ namespace SpriteEditor
             DrawBrushes(80, 1, "Brushes");
             DrawActiveBrush(100, 1, "Active Brush");
 
+            DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
+            DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
+            DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
+
+            if (colorPickerActive)
+                DrawASCIIRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 2, btnColorPicker.height + 2, foreground: (short)COLOR.FG_RED);
+            DrawSprite(btnColorPicker.x, btnColorPicker.y, btnColorPicker.outputSprite);
+
+            DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
+            DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
+            DrawSprite(tb_SaveName.x, tb_SaveName.y, tb_SaveName.outputSprite);
+
+            DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
+
+            DrawSprite(animationPreview.x, animationPreview.y, animationPreview.outputSprite);
+
+            DrawSprite(btnMark.x, btnMark.y, btnMark.outputSprite);
+            
+            DrawSprite(btnCopy.x, btnCopy.y, btnCopy.outputSprite);
+            DrawSprite(btnAbortMarkAndCopy.x, btnAbortMarkAndCopy.y, btnAbortMarkAndCopy.outputSprite);
+            DrawSprite(btnConfirmMarkAndCopy.x, btnConfirmMarkAndCopy.y, btnConfirmMarkAndCopy.outputSprite);
+
             //DrawArea
             DrawRectangle(3, 8, 100, 50, (short)COLOR.FG_WHITE);
             DrawRectangle(4, 9, 98, 48, (short)COLOR.FG_DARK_GREY);
@@ -168,32 +193,10 @@ namespace SpriteEditor
                 DrawSprite(markingSpriteX, markingSpriteY, markingSprite);
             }
 
-            Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
-
-            DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
-            DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
-            DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
-
-            if(colorPickerActive)
-                DrawASCIIRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 2, btnColorPicker.height + 2, foreground: (short)COLOR.FG_RED);
-            DrawSprite(btnColorPicker.x, btnColorPicker.y, btnColorPicker.outputSprite);
-            
-            DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
-            DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
-            DrawSprite(tb_SaveName.x, tb_SaveName.y, tb_SaveName.outputSprite);
-
-            DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
-
-            DrawSprite(animationPreview.x, animationPreview.y, animationPreview.outputSprite);
-
-            DrawSprite(btnMark.x, btnMark.y, btnMark.outputSprite);
             if (markingActive)
                 DrawASCIIRectangle(btnMark.x - 1, btnMark.y - 1, btnMark.width + 2, btnMark.height + 2, foreground: (short)COLOR.FG_RED);
-            DrawSprite(btnCopy.x, btnCopy.y, btnCopy.outputSprite);
-            DrawSprite(btnAbortMarkAndCopy.x, btnAbortMarkAndCopy.y, btnAbortMarkAndCopy.outputSprite);
-            DrawSprite(btnConfirmMarkAndCopy.x, btnConfirmMarkAndCopy.y, btnConfirmMarkAndCopy.outputSprite);
 
-
+            Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
             Print(0, Height - 1, $"marking active:{markingActive}; draging:{markingDraging}");
 
             return true;
@@ -429,6 +432,11 @@ namespace SpriteEditor
         {
             string exportPath = tb_SaveName.content != "" ? @"Savefiles\" + tb_SaveName.content + ".txt" : @"Savefiles\" + "NewFile" + ".txt";
 
+            if(!File.Exists(exportPath))
+                saveFiles.Add(Path.GetFileName(exportPath));
+
+            tb_SaveName.content = Path.GetFileNameWithoutExtension(exportPath);
+
             using (StreamWriter outputfile = new StreamWriter(exportPath))
             {
                 outputfile.Write($"{sprite.Width};{sprite.Height};");
@@ -451,12 +459,43 @@ namespace SpriteEditor
                 }
             }
 
-            saveFiles.Add(Path.GetFileName(exportPath));
+            
             return true;
         }
         private bool BtnLoadClicked()
         {
-            sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+
+            string ext = Path.GetExtension(saveFiles[lb_SavedFiles.selectedEntry]);
+            //check extension of file
+            switch (Path.GetExtension(saveFiles[lb_SavedFiles.selectedEntry]))
+            {
+                case ".txt":
+                    sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+                    break;
+                case ".png":
+                    Png png = Png.Open("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+
+                    sprite = new Sprite(png.Width, png.Height);
+
+                    for (int x = 0; x < png.Width; x++)
+                    {
+                        for (int y = 0; y < png.Height; y++)
+                        {
+                            byte red = png.GetPixel(x, y).R;
+                            byte green = png.GetPixel(x, y).G;
+                            byte blue = png.GetPixel(x, y).B;
+
+                            short col = ClosedConsoleColor3Bit(red, green, blue, out char pixel);
+
+                            sprite.SetPixel(x, y, pixel, col);
+                        }
+                    }
+                    break;
+                default:
+                    return false;
+            }
+
+            tb_SaveName.content = Path.GetFileNameWithoutExtension(saveFiles[lb_SavedFiles.selectedEntry]);
 
             return true;
         }
