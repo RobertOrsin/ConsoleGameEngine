@@ -24,11 +24,12 @@ namespace SpriteEditor
         int cursorX = 0, cursorY = 0;
         bool leftMousebuttonClicked = false, leftMousebuttonHeld = false, leftMouseButtonReleased = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
 
-        short foregroundColor = 0x03, backgroundColor = 0x0F;
-        char brush = '▓';
+        short foregroundColor = 0x00, backgroundColor = 0x00;
+        short foregroundColorReplaceBrush = 0x00, backgroundColorReplaceBrush = 0x00;
+        char brush = '▓', replaceBrush = '▓';
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy;
+        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy, btnReplaceColor;
         TextBox tb_Width, tb_Height, tb_SaveName;
         ListBox lb_SavedFiles;
         AnimationPreview animationPreview;
@@ -66,12 +67,14 @@ namespace SpriteEditor
 
             animationPreview = new AnimationPreview(105, 48);
 
-            btnColorPicker = new Button(115, 2, "pick color", method: BtnColorPickerClicked);
+            
 
             btnMark = new Button(3, 61, " Mark ", method:BtnMarkClicked);
             btnCopy = new Button(12, 61, " Copy ", method: BtnCopyClicked);
             btnAbortMarkAndCopy = new Button(21, 61, "Abort", method:BtnAbortClicked);
             btnConfirmMarkAndCopy = new Button(30, 61, " Set ", method: BtnConfirmClicked);
+            btnColorPicker = new Button(39, 61, "pick color", method: BtnColorPickerClicked);
+            btnReplaceColor = new Button(120, 2, "replace", method: BtnReplaceClicked);
 
             //load savefiles from savefile-folder
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
@@ -154,8 +157,10 @@ namespace SpriteEditor
             DrawColorPalette(1, 1, "Foregroundcolor");
             DrawColorPalette(40, 1, "Backgroundcolor");
             DrawBrushes(80, 1, "Brushes");
-            DrawActiveBrush(100, 1, "Active Brush");
+            DrawActiveBrush(90, 1, "Active Brush", foregroundColor, backgroundColor, brush);
+            DrawActiveBrush(105, 1, "Replace with", foregroundColorReplaceBrush, backgroundColorReplaceBrush, replaceBrush);
 
+            DrawSprite(btnReplaceColor.x, btnReplaceColor.y, btnReplaceColor.outputSprite);
             DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
             DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
             DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
@@ -209,6 +214,7 @@ namespace SpriteEditor
             btnSave.Update(r);
             btnLoad.Update(r);
             btnColorPicker.Update(r);
+            btnReplaceColor.Update(r);
 
             btnMark.Update(r);
             btnCopy.Update(r);
@@ -289,7 +295,7 @@ namespace SpriteEditor
                     markingSpriteY = cursorY - markingSprite.Height / 2;
                 }
             }
-            else if (leftMousebuttonClicked || leftMousebuttonHeld)
+            else if (leftMousebuttonClicked || leftMousebuttonHeld || rightMousebuttonClicked)
             {
                 //color or brush picking
                 if (cursorY == 2 || cursorY == 3)
@@ -300,37 +306,118 @@ namespace SpriteEditor
                         switch (cursorX)
                         {
                             case 1:
-                            case 2: foregroundColor = (short)COLOR.FG_BLACK; break;
+                            case 2: 
+                                if(leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_BLACK; 
+                                else if(rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_BLACK;
+                                break;
+                                
                             case 3:
-                            case 4: foregroundColor = (short)COLOR.FG_DARK_BLUE; break;
+                            case 4:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_BLUE;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_BLUE;
+                                break;
                             case 5:
-                            case 6: foregroundColor = (short)COLOR.FG_DARK_GREEN; break;
+                            case 6: 
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_GREEN;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_GREEN;
+                                break;
                             case 7:
-                            case 8: foregroundColor = (short)COLOR.FG_DARK_CYAN; break;
+                            case 8:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_CYAN;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_CYAN;
+                                break;
                             case 9:
-                            case 10: foregroundColor = (short)COLOR.FG_DARK_RED; break;
+                            case 10:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_RED;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_RED;
+                                break;
                             case 11:
-                            case 12: foregroundColor = (short)COLOR.FG_DARK_MAGENTA; break;
+                            case 12:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_MAGENTA;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_MAGENTA;
+                                break;
                             case 13:
-                            case 14: foregroundColor = (short)COLOR.FG_DARK_YELLOW; break;
+                            case 14:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_YELLOW;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_YELLOW;
+                                break;
                             case 15:
-                            case 16: foregroundColor = (short)COLOR.FG_GREY; break;
+                            case 16:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_GREY;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_GREY;
+                                break;
                             case 17:
-                            case 18: foregroundColor = (short)COLOR.FG_DARK_GREY; break;
+                            case 18:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_DARK_GREY;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_GREY;
+                                break;
                             case 19:
-                            case 20: foregroundColor = (short)COLOR.FG_BLUE; break;
+                            case 20:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_BLUE;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_BLUE;
+                                break;
                             case 21:
-                            case 22: foregroundColor = (short)COLOR.FG_GREEN; break;
+                            case 22:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_GREEN;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_GREEN;
+                                break;
                             case 23:
-                            case 24: foregroundColor = (short)COLOR.FG_CYAN; break;
+                            case 24:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_CYAN;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_CYAN;
+                                break;
                             case 25:
-                            case 26: foregroundColor = (short)COLOR.FG_RED; break;
+                            case 26:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_RED;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_RED;
+                                break;
                             case 27:
-                            case 28: foregroundColor = (short)COLOR.FG_MAGENTA; break;
+                            case 28:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_MAGENTA;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_MAGENTA;
+                                break;
                             case 29:
-                            case 30: foregroundColor = (short)COLOR.FG_YELLOW; break;
+                            case 30:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_YELLOW; 
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_YELLOW;
+                                break;
                             case 31:
-                            case 32: foregroundColor = (short)COLOR.FG_WHITE; break;
+                            case 32:
+                                if (leftMousebuttonClicked)
+                                    foregroundColor = (short)COLOR.FG_WHITE;
+                                else if (rightMousebuttonClicked)
+                                    foregroundColorReplaceBrush = (short)COLOR.FG_WHITE;
+                                break;
                         }
                     }
                     //background color
@@ -339,37 +426,118 @@ namespace SpriteEditor
                         switch (cursorX)
                         {
                             case 40:
-                            case 41: backgroundColor = (short)COLOR.FG_BLACK; break;
+                            case 41:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_BLACK;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_BLACK;
+                                break;
+
                             case 42:
-                            case 43: backgroundColor = (short)COLOR.FG_DARK_BLUE; break;
+                            case 43:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_BLUE;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_BLUE;
+                                break;
                             case 44:
-                            case 45: backgroundColor = (short)COLOR.FG_DARK_GREEN; break;
+                            case 45:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_GREEN;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_GREEN;
+                                break;
                             case 46:
-                            case 47: backgroundColor = (short)COLOR.FG_DARK_CYAN; break;
+                            case 47:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_CYAN;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_CYAN;
+                                break;
                             case 48:
-                            case 49: backgroundColor = (short)COLOR.FG_DARK_RED; break;
+                            case 49:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_RED;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_RED;
+                                break;
                             case 50:
-                            case 51: backgroundColor = (short)COLOR.FG_DARK_MAGENTA; break;
+                            case 51:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_MAGENTA;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_MAGENTA;
+                                break;
                             case 52:
-                            case 53: backgroundColor = (short)COLOR.FG_DARK_YELLOW; break;
+                            case 53:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_YELLOW;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_YELLOW;
+                                break;
                             case 54:
-                            case 55: backgroundColor = (short)COLOR.FG_GREY; break;
+                            case 55:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_GREY;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_GREY;
+                                break;
                             case 56:
-                            case 57: backgroundColor = (short)COLOR.FG_DARK_GREY; break;
+                            case 57:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_DARK_GREY;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_GREY;
+                                break;
                             case 58:
-                            case 59: backgroundColor = (short)COLOR.FG_BLUE; break;
+                            case 59:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_BLUE;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_BLUE;
+                                break;
                             case 60:
-                            case 61: backgroundColor = (short)COLOR.FG_GREEN; break;
+                            case 61:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_GREEN;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_GREEN;
+                                break;
                             case 62:
-                            case 63: backgroundColor = (short)COLOR.FG_CYAN; break;
+                            case 63:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_CYAN;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_CYAN;
+                                break;
                             case 64:
-                            case 65: backgroundColor = (short)COLOR.FG_RED; break;
+                            case 65:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_RED;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_RED;
+                                break;
                             case 66:
-                            case 67: backgroundColor = (short)COLOR.FG_MAGENTA; break;
+                            case 67:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_MAGENTA;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_MAGENTA;
+                                break;
                             case 68:
-                            case 69: backgroundColor = (short)COLOR.FG_YELLOW; break;
+                            case 69:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_YELLOW;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_YELLOW;
+                                break;
                             case 70:
-                            case 71: backgroundColor = (short)COLOR.FG_WHITE; break;
+                            case 71:
+                                if (leftMousebuttonClicked)
+                                    backgroundColor = (short)COLOR.FG_WHITE;
+                                else if (rightMousebuttonClicked)
+                                    backgroundColorReplaceBrush = (short)COLOR.FG_WHITE;
+                                break;
                         }
                     }
                     //brush
@@ -378,13 +546,34 @@ namespace SpriteEditor
                         switch (cursorX)
                         {
                             case 80:
-                            case 81: brush = '░'; break;
+                            case 81:
+                                if (leftMousebuttonClicked) 
+                                    brush = '░';
+                                else if (rightMousebuttonClicked)
+                                    replaceBrush = '░';
+                                break;
                             case 82:
-                            case 83: brush = '▒'; break;
+                            case 83: 
+                                if (leftMousebuttonClicked)
+                                    brush = '▒';
+                                else if (rightMousebuttonClicked)
+                                    replaceBrush = '▒';
+                                break;
                             case 84:
-                            case 85: brush = '▓'; break;
+                            case 85:
+                                if (leftMousebuttonClicked)
+                                    brush = '▓';
+                                else if (rightMousebuttonClicked)
+                                    replaceBrush = '▓';
+                                break;
+
                             case 86:
-                            case 87: brush = '█'; break;
+                            case 87: 
+                                if (leftMousebuttonClicked)
+                                    brush = '█';
+                                else if (rightMousebuttonClicked)
+                                    replaceBrush = '█';
+                                break;
                         }
                     }
                 }
@@ -395,9 +584,18 @@ namespace SpriteEditor
                     {
                         if (!colorPickerActive && !markingActive)
                         {
-                            short color = (short)(backgroundColor << 4);
-                            color += foregroundColor;
-                            sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
+                            if (leftMousebuttonClicked || leftMousebuttonHeld)
+                            {
+                                short color = (short)(backgroundColor << 4);
+                                color += foregroundColor;
+                                sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
+                            }
+                            else if(rightMousebuttonClicked)
+                            {
+                                short color = (short)(backgroundColorReplaceBrush << 4);
+                                color += foregroundColorReplaceBrush;
+                                sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, replaceBrush, color);
+                            }
                         }
                         else if(markingActive)
                         {
@@ -533,6 +731,25 @@ namespace SpriteEditor
             
             return true;
         }
+
+        private bool BtnReplaceClicked()
+        {
+            short color = (short)((backgroundColor << 4) + foregroundColor);
+            short replaceColor = (short)((backgroundColorReplaceBrush << 4) + foregroundColorReplaceBrush);
+
+            for (int x = 0; x < sprite.Width; x++)
+            {
+                for(int y = 0; y < sprite.Height; y++)
+                {
+                    if(sprite.GetColor(x,y) == color && sprite.GetChar(x,y) == brush)
+                    {
+                        sprite.SetPixel(x, y, replaceBrush, replaceColor);
+                    }
+                }
+            }
+
+            return true;
+        }
         #endregion
 
         #region DRAWING UI
@@ -564,7 +781,7 @@ namespace SpriteEditor
             }
 
         }
-        private void DrawActiveBrush(int x, int y, string headline)
+        private void DrawActiveBrush(int x, int y, string headline, short foregroundColor, short backgroundColor, char brush)
         {
             Print(x,y,headline);
 
@@ -575,7 +792,7 @@ namespace SpriteEditor
             {
                 for(int j = 0; j < 3; j++)
                 {
-                    SetChar(x + i , y + j + 1, brush, color);
+                    SetChar(x + i + headline.Length / 2 , y + j + 1, brush, color);
                 }
             }
 
