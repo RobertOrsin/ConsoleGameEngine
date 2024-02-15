@@ -135,7 +135,7 @@ namespace SpriteEditor
                     {
                         spriteCursorY += 5;
                         if (spriteCursorY >= sprite.Height - spriteAreaH)
-                            spriteCursorY = sprite.Height - 1;
+                            spriteCursorY = sprite.Height - spriteAreaH - 1;
 
                         keyInputDelay = new TimeSpan();
                     }
@@ -143,7 +143,7 @@ namespace SpriteEditor
                     {
                         spriteCursorX += 5;
                         if (spriteCursorX >= sprite.Width - spriteAreaW)
-                            spriteCursorX = sprite.Width - 1;
+                            spriteCursorX = sprite.Width - spriteAreaW - 1;
 
                         keyInputDelay = new TimeSpan();
                     }
