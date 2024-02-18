@@ -9,3 +9,14 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEd
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Release\BigGustave.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Release\SpriteEditor.exe.config
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Release\SpriteEditor.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Release\SpriteEditor.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Release\BigGustave.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Release\ConsoleGameEngine.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Release\ConsoleGameEngine.pdb
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.AssemblyReference.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.CoreCompileInputs.cache
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.CopyComplete
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.exe
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.pdb

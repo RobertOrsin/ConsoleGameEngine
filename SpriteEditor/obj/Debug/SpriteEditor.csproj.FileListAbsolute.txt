@@ -19,3 +19,4 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEd
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.exe
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Debug\BigGustave.dll
+C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\BigGustave.dll
