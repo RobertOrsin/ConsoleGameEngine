@@ -30,7 +30,9 @@ namespace SpriteEditor
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
         Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy, btnReplaceColor;
+        Button btnAddGrid;
         TextBox tb_Width, tb_Height, tb_SaveName;
+        TextBox tb_GridWidth, tb_GridHeight;
         ListBox lb_SavedFiles;
         AnimationPreview animationPreview;
 
@@ -55,19 +57,22 @@ namespace SpriteEditor
         public override bool OnUserCreate()
         {
             ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 7, 9);
+            ConsoleGameEngine.TextWriter.LoadSmallFont("small font.txt", 6, 6);
+            ConsoleGameEngine.TextWriter.fontPadding = new ConsoleGameEngine.TextWriter.FontPadding(1, 1, 0, 0);
 
             btnClear = new Button(105, 8, "clear / new", method: BtnClearClicked);
-
             tb_Width = new TextBox(119, 7, 6, "Width:");
             tb_Height = new TextBox(129, 7, 6, "Height:", simple: true);
 
-            btnSave = new Button(105, 12, " save ", method: BtnSaveClicked);
+            btnAddGrid = new Button(106, 12, "add grid", method: BtnAddGridClicked);
+            tb_GridWidth = new TextBox(119, 11, 6 , "Width:");
+            tb_GridHeight = new TextBox(129, 11, 6, "Height:");
 
-            tb_SaveName = new TextBox(105, 16, 30, "Save Name:");
-
-            animationPreview = new AnimationPreview(105, 48);
-
+            btnSave = new Button(106, 19, " save ", method: BtnSaveClicked);
             
+            tb_SaveName = new TextBox(106, 23, 30, "Save Name:");
+
+            animationPreview = new AnimationPreview(106, 48);
 
             btnMark = new Button(3, 61, " Mark ", method:BtnMarkClicked);
             btnCopy = new Button(12, 61, " Copy ", method: BtnCopyClicked);
@@ -82,9 +87,9 @@ namespace SpriteEditor
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.png"))
                 saveFiles.Add(Path.GetFileName(file));
 
-            lb_SavedFiles = new ListBox(106, 26, 32, 15, saveFiles, simple: true);
+            lb_SavedFiles = new ListBox(106, 28, 32, 15, saveFiles, simple: true);
 
-            btnLoad = new Button(129, 42, " load ", method: BtnLoadClicked);
+            btnLoad = new Button(129, 44, " load ", method: BtnLoadClicked);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -110,10 +115,12 @@ namespace SpriteEditor
                 tb_Width.UpdateInput(KeyStates, elapsedTime);
                 tb_Height.UpdateInput(KeyStates, elapsedTime);
                 tb_SaveName.UpdateInput(KeyStates, elapsedTime);
+                tb_GridHeight.UpdateInput(KeyStates, elapsedTime);
+                tb_GridWidth.UpdateInput(KeyStates, elapsedTime);
                 animationPreview.UpdateKeyInput(KeyStates, elapsedTime, sprite);
 
                 //evaluate keyinputs of no textbox is selected
-                if (!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected)
+                if (!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected && !tb_GridWidth.selected && !tb_GridHeight.selected)
                 {
                     if (GetKeyState(ConsoleKey.W).Held && keyInputDelay >= keyInputTime)
                     {
@@ -152,6 +159,10 @@ namespace SpriteEditor
             EvaluateGUIClick();
 
             Clear();
+
+            
+
+
             
             //GUI
             DrawColorPalette(1, 1, "Foregroundcolor");
@@ -164,6 +175,7 @@ namespace SpriteEditor
             DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
             DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
             DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
+            DrawSprite(btnAddGrid.x, btnAddGrid.y, btnAddGrid.outputSprite);
 
             if (colorPickerActive)
                 DrawASCIIRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 2, btnColorPicker.height + 2, foreground: (short)COLOR.FG_RED);
@@ -172,6 +184,8 @@ namespace SpriteEditor
             DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
             DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
             DrawSprite(tb_SaveName.x, tb_SaveName.y, tb_SaveName.outputSprite);
+            DrawSprite(tb_GridWidth.x, tb_GridWidth.y, tb_GridWidth.outputSprite);
+            DrawSprite(tb_GridHeight.x, tb_GridHeight.y, tb_GridHeight.outputSprite);
 
             DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
 
@@ -204,6 +218,9 @@ namespace SpriteEditor
             Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
             Print(0, Height - 1, $"marking active:{markingActive}; draging:{markingDraging}");
 
+
+            DrawSprite(20, 30, ConsoleGameEngine.TextWriter.GenerateTextSprite("Small Text!", ConsoleGameEngine.TextWriter.Textalignment.Left, 1, fontType: ConsoleGameEngine.TextWriter.FontType.small));
+
             return true;
         }
 
@@ -215,6 +232,7 @@ namespace SpriteEditor
             btnLoad.Update(r);
             btnColorPicker.Update(r);
             btnReplaceColor.Update(r);
+            btnAddGrid.Update(r);
 
             btnMark.Update(r);
             btnCopy.Update(r);
@@ -225,6 +243,8 @@ namespace SpriteEditor
             tb_Width.UpdateSelection(r);
             tb_Height.UpdateSelection(r);
             tb_SaveName.UpdateSelection(r);
+            tb_GridHeight.UpdateSelection(r);
+            tb_GridWidth.UpdateSelection(r);
 
             lb_SavedFiles.Update(r);
 
@@ -731,7 +751,6 @@ namespace SpriteEditor
             
             return true;
         }
-
         private bool BtnReplaceClicked()
         {
             short color = (short)((backgroundColor << 4) + foregroundColor);
@@ -750,6 +769,31 @@ namespace SpriteEditor
 
             return true;
         }
+        private bool BtnAddGridClicked()
+        {
+            if(tb_GridHeight.content != "" && tb_GridWidth.content != "")
+            {
+                int gridheight = Convert.ToInt32(tb_GridHeight.content);
+                int gridwidth = Convert.ToInt32(tb_GridWidth.content);
+
+                for(int i = 0; i < Width; i+=gridwidth)
+                {
+                    for (int j = 0; j < Height; j++)
+                        sprite.SetPixel(i, j, (char)PIXELS.PIXEL_SOLID, 0x44);
+
+                }
+
+                for(int i = 0; i <Height; i+=gridheight)
+                {
+                    for(int j = 0; j < Width; j++)
+                    {
+                        sprite.SetPixel(j, i, (char)PIXELS.PIXEL_SOLID, 0x44);
+                    }
+                }
+            }
+            return true;
+        }
+
         #endregion
 
         #region DRAWING UI
@@ -909,7 +953,7 @@ namespace SpriteEditor
                 #endregion
 
                 #region animationFrame
-                outputSprite.AddSpriteToSprite(1, 1, sprite.ReturnPartialSprite(frameCounter * spriteW, 0, spriteW, spriteH));
+                outputSprite.AddSpriteToSprite(1, 1, sprite.ReturnPartialSprite(frameCounter * (tb_SpriteW.content == "" ? spriteW : Convert.ToInt32(tb_SpriteW.content)), 0, (tb_SpriteW.content == "" ? spriteW : Convert.ToInt32(tb_SpriteW.content)), (tb_SpriteH.content == "" ? spriteH : Convert.ToInt32(tb_SpriteH.content))));
 
                 #endregion
             }
