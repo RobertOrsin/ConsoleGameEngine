@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3DEngine.cs" />
     <Compile Include="animation.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="ComboBox.cs" />

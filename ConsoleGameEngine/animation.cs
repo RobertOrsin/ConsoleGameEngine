@@ -62,6 +62,7 @@ namespace ConsoleGameEngine
             this.frameWidth = frameWidth;
             this.frameHeight = frameHeight;
             outputSprite = sprites[0].ReturnPartialSprite(shownFrame * frameWidth, frameHeight, frameWidth, frameHeight);
+            this.frameCount = sprites[0].Width / frameWidth;
         }
 
         public void Update()
@@ -70,8 +71,6 @@ namespace ConsoleGameEngine
             {
                 lastUpdate = DateTime.Now;
                 shownFrame++;
-
-
 
                 if (!animationFromOneFrame)
                 {

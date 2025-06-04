@@ -219,7 +219,7 @@ namespace SpriteEditor
             Print(0, Height - 1, $"marking active:{markingActive}; draging:{markingDraging}");
 
 
-            DrawSprite(20, 30, ConsoleGameEngine.TextWriter.GenerateTextSprite("Small Text!", ConsoleGameEngine.TextWriter.Textalignment.Left, 1, fontType: ConsoleGameEngine.TextWriter.FontType.small));
+          //  DrawSprite(20, 30, ConsoleGameEngine.TextWriter.GenerateTextSprite("Small Text!", ConsoleGameEngine.TextWriter.Textalignment.Left, 1, fontType: ConsoleGameEngine.TextWriter.FontType.small));
 
             return true;
         }
@@ -661,7 +661,7 @@ namespace SpriteEditor
 
                 for (int j = 0; j < sprite.Height; j++)
                 {
-                    for (int i = 0; i < sprite.Width; i++)
+                    for (int i = 0; i < sprite.Width; i++) //sprite.Width
                     {
                         outputfile.Write($"{sprite.GetChar(i, j)},");
                     }
@@ -670,7 +670,7 @@ namespace SpriteEditor
 
                 for (int j = 0; j < sprite.Height; j++)
                 {
-                    for (int i = 0; i < sprite.Width; i++)
+                    for (int i = 0; i < sprite.Width; i++) //sprite.Width
                     {
                         outputfile.Write($"{sprite.GetColor(i, j)},");
                     }

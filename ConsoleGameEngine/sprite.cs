@@ -104,6 +104,35 @@ namespace ConsoleGameEngine
             return returnSprite;
         }
 
+        public Sprite FlipHorizontally()
+        {
+            Sprite returnSprite = new Sprite(Width, Height);
+
+            for(int x = 0; x < Width; x++)
+            {
+                for(int y = 0; y < Height; y++)
+                {
+                    returnSprite.SetChar(x,y, _spritedata.GetData((Width - 1) - x, y));
+                    returnSprite.SetColor(x, y, _spritecolors.GetData((Width - 1) - x, y));
+                }
+            }
+            return returnSprite;
+        }
+        public Sprite FlipVertically()
+        {
+            Sprite returnSprite = new Sprite(Width, Height);
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    returnSprite.SetChar(x, y, _spritedata.GetData(x, (Height - 1) - y));
+                    returnSprite.SetColor(x, y, _spritecolors.GetData(x, (Height - 1) - y));
+                }
+            }
+            return returnSprite;
+        }
+
         public List<Sprite> ReturnTileList(int w, int h, int rows, int columns)
         {
             List<Sprite> retList = new List<Sprite>();

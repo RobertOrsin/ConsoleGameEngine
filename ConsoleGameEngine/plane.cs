@@ -44,5 +44,6 @@ namespace ConsoleGameEngine
         {
             return _data[GetOffset(x, y)];
         }
+
     }
 }

@@ -249,9 +249,9 @@ namespace ConsoleGameEngine
 
 
                     if (fontType == FontType.small)
-                        letter = spriteSheetSMALL.ReturnPartialSprite(coords.x * _width + (fontPadding.left * (coords.x + 1)), coords.y * _height + (fontPadding.top * (coords.y + 1)), _width, _height);
+                        letter = spriteSheetSMALL.ReturnPartialSprite(coords.x * _width + (fontPadding.left + (coords.x + 1)), coords.y * _height + (fontPadding.top + (coords.y + 1)), _width, _height);
                     else if (fontType == FontType.standard)
-                        letter = spriteSheet.ReturnPartialSprite(coords.x * _width + (fontPadding.left * (coords.x + 1)), coords.y * _height + (fontPadding.top * (coords.y + 1)), _width, _height);
+                        letter = spriteSheet.ReturnPartialSprite(coords.x * _width + (fontPadding.left + (coords.x + 1)), coords.y * _height + (fontPadding.top + (coords.y + 1)), _width, _height);
 
                     for (int x = 0; x < letter.Width; x++)
                     {

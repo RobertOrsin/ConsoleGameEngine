@@ -5,6 +5,6 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\bin\Debug\ConsoleGameEn
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\bin\Debug\ConsoleGameEngine.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\obj\Debug\MapEditor.csproj.AssemblyReference.cache
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\obj\Debug\MapEditor.csproj.CoreCompileInputs.cache
-C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\obj\Debug\MapEditor.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\obj\Debug\MapEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\obj\Debug\MapEditor.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\MapEditor\obj\Debug\MapEditor.csproj.Up2Date

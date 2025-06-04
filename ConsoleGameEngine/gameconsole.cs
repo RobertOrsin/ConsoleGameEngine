@@ -421,6 +421,11 @@ namespace ConsoleGameEngine
         {
             return (char)_screenbuf.GetData(x, y).Char.UnicodeChar;
         }
+        public short GetColor(int x, int y)
+        {
+            var offset = _screenbuf.GetOffset(x, y);
+            return _screenbuf.Data[offset].Attributes;
+        }
 
         public void Start()
         {
