@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A9927B7D-559F-4980-BCAC-B5F98B7CB34F}|JumpAndRun\\JumpAndRun.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\jumpandrun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9927B7D-559F-4980-BCAC-B5F98B7CB34F}|JumpAndRun\\JumpAndRun.csproj|solutionrelative:jumpandrun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\JumpAndRun\\Program.cs",
+              "RelativeDocumentMoniker": "JumpAndRun\\Program.cs",
+              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\JumpAndRun\\Program.cs",
+              "RelativeToolTip": "JumpAndRun\\Program.cs",
+              "ViewState": "AQIAAKYAAAAAAAAAAAAIwMQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T09:14:32.356Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

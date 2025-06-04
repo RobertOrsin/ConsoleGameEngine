@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Data;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -17,10 +18,13 @@ namespace JumpAndRun
     class JumpAndRun : GameConsole
     {
         Player player;
+        Level level;
         TimeSpan keyInputDelay = new TimeSpan(), keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
         IntPtr inHandle;
         int cursorX = 0, cursorY = 0;
         bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
+
+        bool startLevel = false;
 
         public JumpAndRun()
           : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
@@ -43,6 +47,7 @@ namespace JumpAndRun
 
 
             player = new Player();
+            level = new Level();
             player.LoadAnimation("runnin ninja.txt");
             //Load sprites, setup variables and whatever
             return true;
@@ -51,17 +56,29 @@ namespace JumpAndRun
         {
             keyInputDelay += elapsedTime;
             player.Update(KeyStates, elapsedTime, this);
+
+            if (startLevel) level.Update(elapsedTime);
             
             Clear();
             DrawSprite((int)player.xPosition, (int)player.yPosition, player.outputSprite);
+            DrawSprite(0, 0, TextWriter.GenerateTextSprite($"   NINJA TOWER CLIMBER THINGY!    ", TextWriter.Textalignment.Left, 1));
 
-            DrawSprite(50, 70, new Sprite(70, 1, GameConsole.COLOR.BG_DARK_GREEN));
-            DrawSprite(90, 100, new Sprite(70, 1, GameConsole.COLOR.BG_DARK_GREEN));
-            DrawSprite(0, 119, new Sprite(199, 1, GameConsole.COLOR.BG_DARK_GREEN));
-            DrawSprite(150, 40, new Sprite(35, 1, GameConsole.COLOR.BG_DARK_GREEN));
-            DrawSprite(130, 55, new Sprite(20, 1, GameConsole.COLOR.BG_DARK_GREEN));
+            //draw plattforms
+            foreach (Level.Plattform p in level.plattforms)
+            {
+                DrawSprite(p.x, p.y, new Sprite(p.l, 1, GameConsole.COLOR.BG_DARK_GREEN));
+            }
 
-            DrawSprite(0, 0, TextWriter.GenerateTextSprite($"X: {cursorX}; Y: {cursorY}", TextWriter.Textalignment.Left, 1));
+            //draw walls
+            //foreach (Level.Plattform p in level.walls)
+            //{
+            //    DrawSprite(p.x, p.y, new Sprite(1, p.l, GameConsole.COLOR.BG_DARK_GREEN));
+            //}
+
+
+            if(player.yPosition < 50) startLevel = true;
+            if (player.yPosition > 120) startLevel = false;
+
             return true;
         }
 
@@ -82,6 +99,8 @@ namespace JumpAndRun
         public Sprite outputSprite;
         private Sprite spriteSheet;
         private animation walkingAnimation;
+
+        private bool airjumpused = false;
 
         private double velocityMax = 30;
 
@@ -153,7 +172,7 @@ namespace JumpAndRun
             int bottomright_x = (int)xPosition + outputSprite.Width;
             int bottom_y = (int)yPosition + outputSprite.Height + 1;
 
-            if (gameConsole.GetColor(bottomleft_x, bottom_y) != (short)GameConsole.COLOR.BG_DARK_GREEN && gameConsole.GetColor(bottomright_x, bottom_y) != (short)GameConsole.COLOR.BG_DARK_GREEN)
+            if ( (gameConsole.GetColor(bottomleft_x, bottom_y) != (short)GameConsole.COLOR.BG_DARK_GREEN && gameConsole.GetColor(bottomright_x, bottom_y) != (short)GameConsole.COLOR.BG_DARK_GREEN))
             {
                 playerSpeedY += gravity_acceleration;
                 playerSpeedY = ClampF(playerSpeedY, -acceleration, acceleration);
@@ -161,14 +180,19 @@ namespace JumpAndRun
             else
             {
                 playerSpeedY = 0.0;
+                airjumpused = false;
             }
             #endregion
 
             if (GetKeyState(ConsoleKey.Spacebar).Pressed)
             {
-                //disable double jumps
                 if (gameConsole.GetColor(bottomleft_x, bottom_y) == (short)GameConsole.COLOR.BG_DARK_GREEN || gameConsole.GetColor(bottomright_x, bottom_y) == (short)GameConsole.COLOR.BG_DARK_GREEN)
                     playerSpeedY = -40;
+                else if(!airjumpused)
+                {
+                    airjumpused = true;
+                    playerSpeedY = -40;
+                }
             }
 
             yPosition += playerSpeedY;
@@ -192,7 +216,66 @@ namespace JumpAndRun
 
     class Level
     {
+        public List<Plattform> plattforms;
+        public List<Plattform> walls;
+        TimeSpan _elapsedTime = new TimeSpan();
+        TimeSpan updateDelay = new TimeSpan(0, 0, 0, 0, 80);
+        const int MAXplattformcount = 7;
+        Random random = new Random();
+        Rect boundaries = new Rect(0,9,200,111);
 
+        public Level()
+        {
+            plattforms = new List<Plattform>();
+            walls = new List<Plattform>();
+
+            //ground-plattform
+            plattforms.Add(new Plattform { x = 0, y = 120, l = 200 });
+            //intro plattforms
+            plattforms.Add(new Plattform { x = 50, y = 70, l = 70 });
+            plattforms.Add(new Plattform { x = 90, y = 100, l = 70 });
+            plattforms.Add(new Plattform { x = 150, y = 40, l = 35 });
+            plattforms.Add(new Plattform { x = 130, y = 55, l = 20 });
+
+            //walls
+            walls.Add(new Plattform { x = 0, y = 0, l = 120 });
+            walls.Add(new Plattform { x = 200, y = 0, l = 120 });
+        }
+
+        public void Update(TimeSpan elapsedTime)
+        {
+            _elapsedTime += elapsedTime;
+
+            if( _elapsedTime > updateDelay )
+            {
+                _elapsedTime = new TimeSpan();
+
+                //move plattforms down
+                List<Plattform> updatedPlattforms = new List<Plattform>();
+                for(int i = 0; i < plattforms.Count; i++)
+                {
+                    Plattform p = plattforms[i];
+                    p.y += 1;
+
+                    if(p.y <= 120) updatedPlattforms.Add(p);
+                }
+                plattforms = updatedPlattforms;
+                //check if new plattforms can be added
+                for(int x = plattforms.Count; x < MAXplattformcount; x++)
+                {
+                    plattforms.Add(new Plattform { x = random.Next(0,200), y = random.Next((int)boundaries.Top, 50), l = random.Next(20,70) });
+                }
+            }
+        }
+
+        public struct Plattform
+        {
+            public int x;
+            public int y;
+            public int l;
+
+            public (int left, int right, int y) Bounds() => (x, x + l, y);
+        }
     }
 
 
