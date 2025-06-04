@@ -3,7 +3,6 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\bin\Release\Con
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\bin\Release\BigGustave.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.csproj.AssemblyReference.cache
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.csproj.CoreCompileInputs.cache
-C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.pdb
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\ConsoleGameEngine\bin\Release\ConsoleGameEngine.dll
@@ -14,3 +13,4 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\ConsoleGameEngine\obj\Release\C
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.csproj.CopyComplete
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.dll
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleGameEngine.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\ConsoleGameEngine\obj\Release\ConsoleG.1C542326.Up2Date
