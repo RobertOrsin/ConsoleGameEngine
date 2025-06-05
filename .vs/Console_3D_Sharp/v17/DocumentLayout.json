@@ -5,14 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3D985E7F-7F43-460E-B04B-342CB9A4F870}|YouTubeStream\\YouTubeStream.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\youtubestream\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D985E7F-7F43-460E-B04B-342CB9A4F870}|YouTubeStream\\YouTubeStream.csproj|solutionrelative:youtubestream\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A9927B7D-559F-4980-BCAC-B5F98B7CB34F}|JumpAndRun\\JumpAndRun.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\jumpandrun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A9927B7D-559F-4980-BCAC-B5F98B7CB34F}|JumpAndRun\\JumpAndRun.csproj|solutionrelative:jumpandrun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|solutionrelative:spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,21 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
-              "RelativeDocumentMoniker": "SpriteEditor\\Program.cs",
-              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
-              "RelativeToolTip": "SpriteEditor\\Program.cs",
-              "ViewState": "AQIAAHsCAAAAAAAAAAA4wLcCAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T11:46:57.87Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -45,22 +24,9 @@
               "RelativeDocumentMoniker": "YouTubeStream\\Program.cs",
               "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\YouTubeStream\\Program.cs",
               "RelativeToolTip": "YouTubeStream\\Program.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAAmwCAAAAAoAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACoAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-04T11:02:25.297Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\JumpAndRun\\Program.cs",
-              "RelativeDocumentMoniker": "JumpAndRun\\Program.cs",
-              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\JumpAndRun\\Program.cs",
-              "RelativeToolTip": "JumpAndRun\\Program.cs",
-              "ViewState": "AQIAAC0AAAAAAAAAAAAowBAAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T09:14:32.356Z",
               "EditorCaption": ""
             }
           ]
