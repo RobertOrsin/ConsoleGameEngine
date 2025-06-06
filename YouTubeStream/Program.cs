@@ -32,6 +32,8 @@ namespace YouTubeStream
         VideoCapture videoCapture;
         Process ffmpeg;
 
+        int points = 0;
+
 
         public YouTubeStream(string videoURL)
           : base(256, 154, "YouTube", fontwidth: 4, fontheight: 4)

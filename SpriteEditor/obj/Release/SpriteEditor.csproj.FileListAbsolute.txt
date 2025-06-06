@@ -5,7 +5,6 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Release\ConsoleG
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Release\ConsoleGameEngine.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.AssemblyReference.cache
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.CoreCompileInputs.cache
-C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Release\BigGustave.dll
@@ -20,3 +19,5 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\Sprite
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.CopyComplete
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.exe
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEditor.csproj.ResolveComReference.cache
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Release\SpriteEd.17D6197B.Up2Date

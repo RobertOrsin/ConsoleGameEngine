@@ -25,6 +25,8 @@ namespace JumpAndRun
         bool leftMousebuttonClicked = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
 
         bool startLevel = false;
+        int points = 0;
+        int lastHeight = 0;
 
         public JumpAndRun()
           : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
@@ -57,11 +59,14 @@ namespace JumpAndRun
             keyInputDelay += elapsedTime;
             player.Update(KeyStates, elapsedTime, this);
 
-            if (startLevel) level.Update(elapsedTime);
+            if (startLevel)
+            {
+                level.Update(elapsedTime);
+            }
             
             Clear();
             DrawSprite((int)player.xPosition, (int)player.yPosition, player.outputSprite);
-            DrawSprite(0, 0, TextWriter.GenerateTextSprite($"   NINJA TOWER CLIMBER THINGY!    ", TextWriter.Textalignment.Left, 1));
+            DrawSprite(0, 0, TextWriter.GenerateTextSprite($"   NINJA TOWER   {level.points} ", TextWriter.Textalignment.Left, 1));
 
             //draw plattforms
             foreach (Level.Plattform p in level.plattforms)
@@ -219,10 +224,11 @@ namespace JumpAndRun
         public List<Plattform> plattforms;
         public List<Plattform> walls;
         TimeSpan _elapsedTime = new TimeSpan();
-        TimeSpan updateDelay = new TimeSpan(0, 0, 0, 0, 80);
+        TimeSpan updateDelay = new TimeSpan(0, 0, 0, 0, 40);
         const int MAXplattformcount = 7;
         Random random = new Random();
         Rect boundaries = new Rect(0,9,200,111);
+        public int points = 0;
 
         public Level()
         {
@@ -249,6 +255,7 @@ namespace JumpAndRun
             if( _elapsedTime > updateDelay )
             {
                 _elapsedTime = new TimeSpan();
+                points++;
 
                 //move plattforms down
                 List<Plattform> updatedPlattforms = new List<Plattform>();

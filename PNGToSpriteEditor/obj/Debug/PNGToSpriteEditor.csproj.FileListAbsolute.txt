@@ -4,7 +4,6 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\PNGTo
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\PNGToSpriteEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\PNGToSpriteEditor.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\BigGustave.dll
-C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.exe
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\bin\Debug\ConsoleGameEngine.dll
@@ -20,3 +19,4 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNG
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.csproj.CopyComplete
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.exe
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpriteEditor.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\PNGToSpriteEditor\obj\Debug\PNGToSpr.A78D4ED4.Up2Date

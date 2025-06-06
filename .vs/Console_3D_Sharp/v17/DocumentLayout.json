@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D985E7F-7F43-460E-B04B-342CB9A4F870}|YouTubeStream\\YouTubeStream.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\youtubestream\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D985E7F-7F43-460E-B04B-342CB9A4F870}|YouTubeStream\\YouTubeStream.csproj|solutionrelative:youtubestream\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A9927B7D-559F-4980-BCAC-B5F98B7CB34F}|JumpAndRun\\JumpAndRun.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\jumpandrun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A9927B7D-559F-4980-BCAC-B5F98B7CB34F}|JumpAndRun\\JumpAndRun.csproj|solutionrelative:jumpandrun\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,13 +20,13 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\YouTubeStream\\Program.cs",
-              "RelativeDocumentMoniker": "YouTubeStream\\Program.cs",
-              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\YouTubeStream\\Program.cs",
-              "RelativeToolTip": "YouTubeStream\\Program.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAAACoAAAAQAAAA",
+              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\JumpAndRun\\Program.cs",
+              "RelativeDocumentMoniker": "JumpAndRun\\Program.cs",
+              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\JumpAndRun\\Program.cs",
+              "RelativeToolTip": "JumpAndRun\\Program.cs",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAgwFUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-04T11:02:25.297Z",
+              "WhenOpened": "2025-06-05T10:28:49.214Z",
               "EditorCaption": ""
             }
           ]

@@ -20,3 +20,4 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEd
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\bin\Debug\BigGustave.dll
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\SpriteEditor\bin\Debug\BigGustave.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEd.17D6197B.Up2Date
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\SpriteEditor\obj\Debug\SpriteEditor.csproj.ResolveComReference.cache

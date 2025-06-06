@@ -7,7 +7,6 @@ C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Consol
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Console_3D_Sharp.pdb
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\Topshelf.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\Topshelf.xml
-C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Console_3D_Sharp.csproj.CopyComplete
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System.Buffers.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System.Memory.dll
 C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\bin\Debug\System.Numerics.Vectors.dll
@@ -38,3 +37,4 @@ C:\Users\rober\Documents\GitHub\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Cons
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Console_3D_Sharp.csproj.CopyComplete
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Console_3D_Sharp.exe
 C:\Users\rober\Documents\GitHub\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Console_3D_Sharp.pdb
+C:\Users\ZessinR\source\repos\Console_3D_Sharp\Console_3D_Sharp\obj\Debug\Console_.E89BB9E4.Up2Date
