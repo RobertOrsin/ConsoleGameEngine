@@ -33,8 +33,16 @@ namespace ConsoleGameEngine
             this.backgroundColor = backgroundColor;
             this.foregroundColor = foregroundColor;
 
-            btn_MoveDOWN = new Button(x+ w - 3, y + h - 4, "v", this.backgroundColor, this.foregroundColor);
-            btn_MoveUP = new Button(x +w - 3, y + 1, "^", this.backgroundColor, this.foregroundColor);
+            if (simple)
+            {
+                btn_MoveDOWN = new Button(x + w - 3, y + h - 4, "v", this.backgroundColor, this.foregroundColor);
+                btn_MoveUP = new Button(x + w - 3, y + 1, "^", this.backgroundColor, this.foregroundColor);
+            }
+            else
+            {
+                btn_MoveDOWN = new Button(x + w - 3, y + h - 4, TextWriter.GenerateTextSprite("v",TextWriter.Textalignment.Center,1));
+                btn_MoveUP = new Button(x + w - 3, y + 1, TextWriter.GenerateTextSprite("A", TextWriter.Textalignment.Center, 1));
+            }
 
             btn_MoveDOWN.OnButtonClicked(Btn_MoveDOWNClicked);
             btn_MoveUP.OnButtonClicked(Btn_MoveUPClicked);
@@ -49,9 +57,19 @@ namespace ConsoleGameEngine
 
             if (mouseState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
             {
-                if(mouseX >= x && mouseY >= y && mouseX <= x + w - 4 && mouseY <= y + h - 2)
+                if (simple)
                 {
-                    selectedEntry = mouseY - y - 1 + firstEntry;
+                    if (mouseX >= x && mouseY >= y && mouseX <= x + w - 4 && mouseY <= y + h - 2)
+                    {
+                        selectedEntry = mouseY - y - 1 + firstEntry;
+                    }
+                }
+                else
+                {
+                    if (mouseX >= x && mouseY >= y && mouseX <= x + w - 4 && mouseY <= y + h - 2)
+                    {
+                        selectedEntry = (mouseY - y) / TextWriter.height + firstEntry;
+                    }
                 }
             }
 
@@ -117,10 +135,46 @@ namespace ConsoleGameEngine
             else
             {
                 //frame
-
+                for (int i = 0; i < retSprite.Width - 1; i++)
+                {
+                    retSprite.SetPixel(i, 0, (char)PIXELS.PIXEL_SOLID, (short)COLOR.FG_WHITE); //top
+                    retSprite.SetPixel(i, retSprite.Height - 1, (char)PIXELS.PIXEL_SOLID, (short)COLOR.FG_WHITE); //bottom
+                    for (int j = 0; j < retSprite.Height - 1; j++)
+                    {
+                        retSprite.SetPixel(0, j, (char)PIXELS.PIXEL_SOLID, (short)COLOR.FG_WHITE); //left
+                        if (entries.Count > retSprite.Height - 2)
+                            retSprite.SetPixel(retSprite.Width - 3, j, (char)PIXELS.PIXEL_SOLID, (short)COLOR.FG_WHITE); //border between entries and scrollbar
+                        retSprite.SetPixel(retSprite.Width - 1, j, (char)PIXELS.PIXEL_SOLID, (short)COLOR.FG_WHITE); //right
+                    }
+                }
                 //scrollbar
+                if (entries.Count * TextWriter.width > retSprite.Height - 2)
+                {
+                    retSprite.AddSpriteToSprite(w - btn_MoveUP.outputSprite.Width, 1, btn_MoveUP.outputSprite);
+                    retSprite.AddSpriteToSprite(w - btn_MoveUP.outputSprite.Width, h - btn_MoveUP.outputSprite.Height, btn_MoveDOWN.outputSprite);
+
+                    int scrollbarHeight = h - 8;
+
+                    int scrollbarPosition = (int)((double)scrollbarHeight * (((double)firstEntry / (((double)entries.Count) - ((double)h - 2.0)))));
+
+                    retSprite.SetPixel(w - 2, scrollbarPosition + 4, '█', (short)COLOR.FG_DARK_GREY);
+                }
 
                 //entrys
+                int entryCount = 0;
+                for (int i = firstEntry; i < entries.Count && (i - firstEntry) < h - 2; i++)
+                {
+                    bool selected = i == selectedEntry;
+                    if(!selected) retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1,(short)COLOR.BG_BLACK,(short)COLOR.FG_WHITE));
+                    else retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1, (short)COLOR.BG_WHITE, (short)COLOR.FG_BLACK));
+                    for (int j = 0; j < entries[i].Length && j < w - 4; j++)
+                    {
+                        
+                        //SetPixel(j + 1, entryCount + 1, entries[i][j], color);
+                    }
+
+                    entryCount++;
+                }
             }
 
             return retSprite;

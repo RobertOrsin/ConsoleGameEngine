@@ -85,8 +85,10 @@ namespace ConsoleGameEngine
                 {
                     if (!simple)
                     {
-                        if(hooverSprite != null)
+                        if (hooverSprite != null)
                             outputSprite = hooverSprite;
+                        else
+                            outputSprite = sprite;
                     }
                     else
                         outputSprite = BuildSimpleSprite(false, true);

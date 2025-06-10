@@ -15,7 +15,7 @@ namespace ConsoleGameEngine
     {
         static Sprite spriteSheet, spriteSheetSMALL;
         public static FontPadding fontPadding = new FontPadding(0, 0, 0, 0);
-        static int width, height, widthSMALL, heightSMALL;
+        public static int width, height, widthSMALL, heightSMALL;
         static Dictionary<char, Coords> dictionary = new Dictionary<char, Coords> { { ' ', new Coords {x= 0, y=0 } },
                                                                                     { '!', new Coords {x= 1, y=0 } },
                                                                                     { '"', new Coords {x= 2, y=0 } },
@@ -202,7 +202,7 @@ namespace ConsoleGameEngine
             dictionary = _dictionary;
         }
 
-        public static Sprite GenerateTextSprite(string text, Textalignment textalignment, int fontSize, short backgroundColor = (short)GameConsole.COLOR.FG_WHITE, short foregroundColor = (short)GameConsole.COLOR.FG_BLACK, FontType fontType = FontType.standard)
+        public static Sprite GenerateTextSprite(string text, Textalignment textalignment = Textalignment.Left, int fontSize = 1, short backgroundColor = (short)GameConsole.COLOR.FG_WHITE, short foregroundColor = (short)GameConsole.COLOR.FG_BLACK, FontType fontType = FontType.standard)
         {
             Sprite sprite;
 
