@@ -4,6 +4,9 @@ Based on the awesome work by [Javidx9](https://github.com/OneLoneCoder) and cont
 See example-projects for use. Detailed descriptions are coming to the wiki soon...
 
 
+Original DMG-Emulator from [BluestormDNA](https://github.com/BluestormDNA/ProjectDMG)!
+
+
 
 
 
