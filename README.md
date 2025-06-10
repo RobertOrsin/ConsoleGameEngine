@@ -3,7 +3,6 @@ Based on the awesome work by [Javidx9](https://github.com/OneLoneCoder) and cont
 
 See example-projects for use. Detailed descriptions are coming to the wiki soon...
 
-Because of the newest Memes. Exe-Files are in each Folder /bin/Release!
 
 
 
