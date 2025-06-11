@@ -1,81 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleGameEngine
 {
     public class GameObject
     {
-        List<animation> animations = new List<animation>();
-        int activeAnimationIndex {get; set;}
+        readonly List<Animation> _animations = new List<Animation>();
+        int ActiveAnimationIndex {get; set;}
         public Sprite outputSprite = null;
 
 
         public GameObject() 
         {
             outputSprite = new Sprite(16,16);
-            AddAnimation(new animation(outputSprite, new TimeSpan(0, 0, 0, 0, 100), 16, 16, 0));
-            activeAnimationIndex = 0;
+            AddAnimation(new Animation(outputSprite, new TimeSpan(0, 0, 0, 0, 100), 16, 16, 0));
+            ActiveAnimationIndex = 0;
         }
         public GameObject(Sprite spriteSheet, int w, int h, TimeSpan timeSpan, List<int> frameCounts)
         {
-            animations = new List<animation>();
-            animations = LoadSpriteSheet(spriteSheet, w, h, timeSpan, frameCounts);
+            _animations = new List<Animation>();
+            _animations = LoadSpriteSheet(spriteSheet, w, h, timeSpan, frameCounts);
         }
 
         public void Update()
         {
-            animations[activeAnimationIndex].Update();
-            outputSprite = animations[activeAnimationIndex].outputSprite;
+            _animations[ActiveAnimationIndex].Update();
+            outputSprite = _animations[ActiveAnimationIndex].outputSprite;
         }
 
-        public void AddAnimation(animation animation)
+        public void AddAnimation(Animation animation)
         {
-            animations.Add(animation);
+            _animations.Add(animation);
         }
 
-        private List<animation> LoadSpriteSheet(Sprite spriteSheet, int w, int h, TimeSpan timeSpan, List<int> frameCounts)
+        private List<Animation> LoadSpriteSheet(Sprite spriteSheet, int w, int h, TimeSpan timeSpan, List<int> frameCounts)
         {
-            List<animation> animations = new List<animation>();
+            var animations = new List<Animation>();
 
-            int width = spriteSheet.Width;
-            int height = spriteSheet.Height;
+            var width = spriteSheet.Width;
+            var height = spriteSheet.Height;
 
-            for(int i = 0; i < height / h; i++)
+            for(var i = 0; i < height / h; i++)
             {
-                Sprite newSprite = new Sprite(width, h);
+                var newSprite = new Sprite(width, h);
 
-                for(int x = 0; x < width; x++)
+                for(var x = 0; x < width; x++)
                 {
-                    for(int y = i * h; y < i * h + h; y++)
+                    for(var y = i * h; y < i * h + h; y++)
                     {
-                        newSprite.SetPixel(x,y - i*h,spriteSheet.GetChar(x,y), spriteSheet.GetColor(x,y));
+                        newSprite.SetPixel(x, y - i * h, spriteSheet.GetChar(x,y), spriteSheet.GetColor(x,y));
                     }
                 }
 
-                animations.Add(new animation(newSprite, timeSpan, w, h, frameCounts[i]));
+                animations.Add(new Animation(newSprite, timeSpan, w, h, frameCounts[i]));
             }
             return animations;
         }
 
         public void DecAnimationIndex()
         {
-            activeAnimationIndex--;
+            ActiveAnimationIndex--;
 
-            if (activeAnimationIndex < 0)
-                activeAnimationIndex = animations.Count - 1;
+            if (ActiveAnimationIndex < 0)
+                ActiveAnimationIndex = _animations.Count - 1;
         }
         public void IncAnimationIndex()
         {
-            activeAnimationIndex++;
+            ActiveAnimationIndex++;
 
-            if(activeAnimationIndex > animations.Count - 1) 
-                activeAnimationIndex = 0;
+            if(ActiveAnimationIndex > _animations.Count - 1) 
+                ActiveAnimationIndex = 0;
         }
     }
 }

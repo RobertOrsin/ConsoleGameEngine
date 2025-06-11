@@ -14,7 +14,7 @@ namespace ConsoleGameEngine
     public static class TextWriter
     {
         static Sprite spriteSheet, spriteSheetSMALL;
-        public static FontPadding fontPadding = new FontPadding(0, 0, 0, 0);
+        public static FontPadding fontPadding = new FontPadding(0, 0, 0, 0), fontPaddingSmall = new FontPadding(0, 0, 0, 0);
         public static int width, height, widthSMALL, heightSMALL;
         static Dictionary<char, Coords> dictionary = new Dictionary<char, Coords> { { ' ', new Coords {x= 0, y=0 } },
                                                                                     { '!', new Coords {x= 1, y=0 } },

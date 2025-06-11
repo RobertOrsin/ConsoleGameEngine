@@ -200,11 +200,16 @@ namespace ConsoleGameEngine
             TRANSPARENT = 0x00FF,
         }
 
-        public GameConsole(short width, short height, string title = null, string font = "Consolas", short fontwidth = 8, short fontheight = 8)
+        public GameConsole(short width, 
+                           short height, 
+                           string title = null, 
+                           string font = "Consolas", 
+                           short fontwidth = 8, 
+                           short fontheight = 8)
         {
             Width = width;
             Height = height;
-            Title = title;
+            Title = title ?? string.Empty;
 
             KeyStates = new KeyState[KEYSTATES];
 
@@ -235,8 +240,6 @@ namespace ConsoleGameEngine
             Console.WindowWidth = width;
             Console.WindowHeight = height;
             Console.CursorVisible = false;
-            //Console.OutputEncoding = Encoding.Unicode;
-             // Console.OutputEncoding = Encoding.UTF8;
 
             _gamethread = new Thread(() =>
             {
@@ -284,7 +287,7 @@ namespace ConsoleGameEngine
             {
                 for(int j = 0; j < h; j++)
                 {
-                    SetChar(x + i, y + j, sprite.GetChar(i + ox, j + oy), sprite.GetColor(i+ox, j+oy));
+                    SetChar(x + i, y + j, sprite.GetChar(i + ox, j + oy), sprite.GetColor(i + ox, j + oy));
                 }
             }
         }

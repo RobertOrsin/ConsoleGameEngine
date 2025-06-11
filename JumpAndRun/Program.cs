@@ -103,7 +103,7 @@ namespace JumpAndRun
         public double xPosition, yPosition, xVelocity, yVelocity;
         public Sprite outputSprite;
         private Sprite spriteSheet;
-        private animation walkingAnimation;
+        private Animation walkingAnimation;
 
         private bool airjumpused = false;
 
@@ -123,7 +123,7 @@ namespace JumpAndRun
 
         public void LoadAnimation(string file)
         {
-            walkingAnimation = new animation("running ninja.txt", new TimeSpan(0, 0, 0, 0, 100), 16, 16);
+            walkingAnimation = new Animation("running ninja.txt", new TimeSpan(0, 0, 0, 0, 100), 16, 16);
             spriteSheet = new Sprite("running ninja.txt");
         }
 

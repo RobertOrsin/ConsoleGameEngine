@@ -37,7 +37,7 @@ class Program
         };
 
         List<sObject> listObjects;
-        animation coinAnim, diddy;
+        Animation coinAnim, diddy;
 
         public override bool OnUserCreate()
         {
@@ -81,7 +81,7 @@ class Program
             fireball = new Sprite(@"FireBall.txt");
             fDepthBuffer = new double[Width];
 
-            coinAnim = new animation(new List<string> { @"Coin1.txt", @"Coin2.txt", @"Coin3.txt", @"Coin4.txt" }, new TimeSpan(0, 0, 0, 0, 500));
+            coinAnim = new Animation(new List<string> { @"Coin1.txt", @"Coin2.txt", @"Coin3.txt", @"Coin4.txt" }, new TimeSpan(0, 0, 0, 0, 500));
             listObjects = new List<sObject>
             {
                 new sObject() { x = 8.5f, y = 8.5f, vx = 0.0f, vy = 0.0f, bRemove = false, sprite = lamp },

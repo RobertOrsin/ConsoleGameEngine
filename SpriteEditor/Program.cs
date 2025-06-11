@@ -27,6 +27,7 @@ namespace SpriteEditor
         short foregroundColor = 0x00, backgroundColor = 0x00;
         short foregroundColorReplaceBrush = 0x00, backgroundColorReplaceBrush = 0x00;
         char brush = '▓', replaceBrush = '▓';
+        List<char> otherBrushes = new List<char> { '─', '│', '┌', '┐', '└', '┘', '┬', '┴', '├', '┤', '┼' };
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
         Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy, btnReplaceColor;
@@ -160,10 +161,6 @@ namespace SpriteEditor
 
             Clear();
 
-            
-
-
-            
             //GUI
             DrawColorPalette(1, 1, "Foregroundcolor");
             DrawColorPalette(40, 1, "Backgroundcolor");
@@ -597,6 +594,17 @@ namespace SpriteEditor
                         }
                     }
                 }
+                else if(cursorY == 4) //other brushes
+                {
+                    if (cursorX >= 80 && cursorX <= 90) 
+                    {
+                        if (leftMousebuttonClicked)
+                            brush = otherBrushes[cursorX - 80];
+                        else if(rightMousebuttonClicked)
+                            replaceBrush = otherBrushes[cursorX - 80];
+
+                    }
+                }
                 //draw on sprite
                 else if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
                 {
@@ -815,6 +823,7 @@ namespace SpriteEditor
         {
             Print(x,y,headline);
 
+            //Mainbrushes
             char[] brushes = new char[4] { '░', '▒', '▓', '█' };
             for(int i = 0; i < 8; i+=2)
             {
@@ -823,7 +832,9 @@ namespace SpriteEditor
                 SetChar(x + i + 1, y + 1, brushes[i / 2]);
                 SetChar(x + i + 1, y + 2, brushes[i / 2]);
             }
-
+            //Other
+            for(int i = 0; i < otherBrushes.Count; i++)
+                SetChar(x+i, y+3, otherBrushes[i]);
         }
         private void DrawActiveBrush(int x, int y, string headline, short foregroundColor, short backgroundColor, char brush)
         {

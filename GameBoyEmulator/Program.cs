@@ -41,7 +41,7 @@ namespace GameBoyEmulator
             ConsoleListener.Start();
 
             ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 6, 8);
-
+            ConsoleGameEngine.TextWriter.LoadSmallFont("small font.txt", 6, 6);
             dmg = new ProjectDMG.ProjectDMG(this);
 
             //Load Rom-File-Paths
@@ -89,9 +89,9 @@ namespace GameBoyEmulator
                 DrawSprite(btn_LoadRom.x, btn_LoadRom.y, btn_LoadRom.outputSprite);
 
 
-                DrawSprite(0, 115, ConsoleGameEngine.TextWriter.GenerateTextSprite("DPAD - WASD, A/B - J/K"));
-                DrawSprite(0, 123, ConsoleGameEngine.TextWriter.GenerateTextSprite("STRT/SLCT - C/V"));
-                DrawSprite(0, 131, ConsoleGameEngine.TextWriter.GenerateTextSprite("Close - BCKSPC"));
+                DrawSprite(0, 115, ConsoleGameEngine.TextWriter.GenerateTextSprite("DPAD - WASD, A/B - J/K",backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
+                DrawSprite(0, 123, ConsoleGameEngine.TextWriter.GenerateTextSprite("STRT/SLCT - C/V", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
+                DrawSprite(0, 131, ConsoleGameEngine.TextWriter.GenerateTextSprite("Close - BCKSPC", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
             }
 
             //game loop, draw and evaluate inputs

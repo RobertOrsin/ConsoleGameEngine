@@ -9,7 +9,7 @@ namespace CGE_Animation
 {
     class ConsoleAnimation : GameConsole
     {
-        animation diddysAnimation;
+        Animation diddysAnimation;
 
 
         public ConsoleAnimation()
@@ -17,7 +17,7 @@ namespace CGE_Animation
         { }
         public override bool OnUserCreate()
         {
-            diddysAnimation = new animation("diddy_idle.txt", new TimeSpan(0, 0, 0, 0, 100), 37, 48);
+            diddysAnimation = new Animation("diddy_idle.txt", new TimeSpan(0, 0, 0, 0, 100), 37, 48);
 
             return true;
         }
