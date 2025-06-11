@@ -14,6 +14,7 @@ namespace ConsoleGameEngine
         public int w, h;
         public List<string> entries = new List<string>();
         bool simple = false;
+        ConsoleGameEngine.TextWriter.FontType _fontType;
         short foregroundColor, backgroundColor;
         public Sprite outputSprite = new Sprite(1, 1);
         int firstEntry = 0;
@@ -22,7 +23,7 @@ namespace ConsoleGameEngine
 
         Button btn_MoveUP, btn_MoveDOWN;
 
-        public ListBox(int x, int y, int w, int h, List<string> entries, bool simple = false, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE)
+        public ListBox(int x, int y, int w, int h, List<string> entries, bool simple = false, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE, TextWriter.FontType fontType = TextWriter.FontType.standard)
         {
             this.x = x;
             this.y = y;
@@ -32,6 +33,7 @@ namespace ConsoleGameEngine
             this.simple = simple;
             this.backgroundColor = backgroundColor;
             this.foregroundColor = foregroundColor;
+            _fontType = fontType;
 
             if (simple)
             {
@@ -40,7 +42,7 @@ namespace ConsoleGameEngine
             }
             else
             {
-                btn_MoveDOWN = new Button(x + w - 3, y + h - 4, TextWriter.GenerateTextSprite("v",TextWriter.Textalignment.Center,1));
+                btn_MoveDOWN = new Button(x + w - 3, y + h - 4, TextWriter.GenerateTextSprite("v", TextWriter.Textalignment.Center, 1));
                 btn_MoveUP = new Button(x + w - 3, y + 1, TextWriter.GenerateTextSprite("A", TextWriter.Textalignment.Center, 1));
             }
 
@@ -48,6 +50,7 @@ namespace ConsoleGameEngine
             btn_MoveUP.OnButtonClicked(Btn_MoveUPClicked);
 
             outputSprite = BuildSprite();
+            _fontType = fontType;
         }
 
         public void Update(MOUSE_EVENT_RECORD r)
@@ -154,7 +157,6 @@ namespace ConsoleGameEngine
                     retSprite.AddSpriteToSprite(w - btn_MoveUP.outputSprite.Width, h - btn_MoveUP.outputSprite.Height, btn_MoveDOWN.outputSprite);
 
                     int scrollbarHeight = h - 8;
-
                     int scrollbarPosition = (int)((double)scrollbarHeight * (((double)firstEntry / (((double)entries.Count) - ((double)h - 2.0)))));
 
                     retSprite.SetPixel(w - 2, scrollbarPosition + 4, '█', (short)COLOR.FG_DARK_GREY);
@@ -165,13 +167,8 @@ namespace ConsoleGameEngine
                 for (int i = firstEntry; i < entries.Count && (i - firstEntry) < h - 2; i++)
                 {
                     bool selected = i == selectedEntry;
-                    if(!selected) retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1,(short)COLOR.BG_BLACK,(short)COLOR.FG_WHITE));
-                    else retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1, (short)COLOR.BG_WHITE, (short)COLOR.FG_BLACK));
-                    for (int j = 0; j < entries[i].Length && j < w - 4; j++)
-                    {
-                        
-                        //SetPixel(j + 1, entryCount + 1, entries[i][j], color);
-                    }
+                    if(!selected) retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1,(short)COLOR.BG_BLACK,(short)COLOR.FG_WHITE, fontType: _fontType));
+                    else retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1, (short)COLOR.BG_WHITE, (short)COLOR.FG_BLACK, fontType: _fontType));
 
                     entryCount++;
                 }
