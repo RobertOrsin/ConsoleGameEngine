@@ -40,8 +40,9 @@ namespace GameBoyEmulator
 
             ConsoleListener.Start();
 
-            ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 6, 8);
-            ConsoleGameEngine.TextWriter.LoadSmallFont("small font.txt", 6, 6);
+            ConsoleGameEngine.TextWriter.InitTextWriter();
+         //   ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 6, 8);
+          //  ConsoleGameEngine.TextWriter.LoadSmallFont("small font.txt", 6, 6);
             dmg = new ProjectDMG.ProjectDMG(this);
 
             //Load Rom-File-Paths

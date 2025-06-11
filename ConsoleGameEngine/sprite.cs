@@ -73,6 +73,13 @@ namespace ConsoleGameEngine
             if(!Load(file, w, h , startRow, count)) Create(8,8);
         }
 
+        public Sprite(string chars, string colors, int w, int h)
+        {
+            _width = w;
+            _height = h;
+            if(!Load(chars, colors)) Create(_width,_height);
+        }
+
         public Sprite ReturnPartialSprite(int x, int y, int w, int h)
         {
             Sprite returnSprite = new Sprite(w, h);
@@ -132,7 +139,6 @@ namespace ConsoleGameEngine
             }
             return returnSprite;
         }
-
         public List<Sprite> ReturnTileList(int w, int h, int rows, int columns)
         {
             List<Sprite> retList = new List<Sprite>();
@@ -148,7 +154,6 @@ namespace ConsoleGameEngine
 
             return retList;
         }
-
         public void AddSpriteToSprite(int x, int y, Sprite sprite)
         {
             for(int i = x; i < x + sprite.Width; i++)
@@ -234,6 +239,28 @@ namespace ConsoleGameEngine
             return true;
         }
 
+        public bool Load(string chars, string colors)
+        {
+            _spritedata = new Plane<char>(_width, _height);
+            _spritecolors = new Plane<short>(_width, _height);
+
+            int i = 0;
+            foreach (string pixel in chars.Split(','))
+            {
+                if (pixel != "")
+                    _spritedata.SetData(i, pixel[0]);
+                i++;
+            }
+            i = 0;
+            foreach (string pixel in colors.Split(','))
+            {
+                if (pixel != "")
+                    _spritecolors.SetData(i, Convert.ToByte(pixel));
+                i++;
+            }
+
+            return true;
+        }
         public bool Load(string file, int w, int h, int startRow, int count)
         {
             _width = w; _height = h;
