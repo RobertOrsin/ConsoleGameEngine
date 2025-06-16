@@ -118,7 +118,7 @@ namespace GameBoyEmulator
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new GameBoyEmu())
                 f.Start();

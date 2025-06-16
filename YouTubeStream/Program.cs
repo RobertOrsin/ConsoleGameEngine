@@ -170,7 +170,7 @@ namespace YouTubeStream
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             if (args.Length > 0)
             {
