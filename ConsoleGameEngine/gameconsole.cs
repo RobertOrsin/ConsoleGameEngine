@@ -35,11 +35,12 @@ namespace ConsoleGameEngine
             ref SmallRect lpWriteRegion
         );
 
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         private static extern IntPtr GetForegroundWindow();
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Coord
@@ -105,17 +106,7 @@ namespace ConsoleGameEngine
 
         public static bool ApplicationIsActivated()
         {
-            var activatedHandle = GetForegroundWindow();
-            if (activatedHandle == IntPtr.Zero)
-            {
-                return false;       // No window is currently activated
-            }
-
-            var procId = Process.GetCurrentProcess().Id;
-            int activeProcId;
-            GetWindowThreadProcessId(activatedHandle, out activeProcId);
-
-            return activeProcId == procId;
+            return GetConsoleWindow() == GetForegroundWindow();
         }
 
 
