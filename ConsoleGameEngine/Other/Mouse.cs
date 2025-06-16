@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 
-namespace ConsoleGameEngine
+namespace ConsoleGameEngine.Other
 {
     public static class ConsoleListener
     {
@@ -184,17 +184,17 @@ namespace ConsoleGameEngine
             ENABLE_ECHO_INPUT = 0x0004,
             ENABLE_WINDOW_INPUT = 0x0008; //more
 
-        [DllImportAttribute("kernel32.dll")]
+        [DllImport("kernel32.dll")]
         public static extern bool GetConsoleMode(IntPtr hConsoleInput, ref uint lpMode);
 
-        [DllImportAttribute("kernel32.dll")]
+        [DllImport("kernel32.dll")]
         public static extern bool SetConsoleMode(IntPtr hConsoleInput, uint dwMode);
 
 
-        [DllImportAttribute("kernel32.dll", CharSet = CharSet.Unicode)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         public static extern bool ReadConsoleInput(IntPtr hConsoleInput, [Out] INPUT_RECORD[] lpBuffer, uint nLength, ref uint lpNumberOfEventsRead);
 
-        [DllImportAttribute("kernel32.dll", CharSet = CharSet.Unicode)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         public static extern bool WriteConsoleInput(IntPtr hConsoleInput, INPUT_RECORD[] lpBuffer, uint nLength, ref uint lpNumberOfEventsWritten);
 
     }

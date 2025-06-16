@@ -6,8 +6,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
+using ConsoleGameEngine.Other;
 using ProjectDMG;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 
 namespace GameBoyEmulator
 {
@@ -39,7 +40,7 @@ namespace GameBoyEmulator
             ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
             ConsoleListener.Start();
 
-            ConsoleGameEngine.TextWriter.InitTextWriter();
+            ConsoleGameEngine.Other.TextWriter.InitTextWriter();
 
             dmg = new ProjectDMG.ProjectDMG(this);
 
@@ -47,7 +48,7 @@ namespace GameBoyEmulator
             foreach (string file in Directory.EnumerateFiles(@"ROMS\", "*.gb"))
                 romFiles.Add(Path.GetFileName(file));
             lb_RomFiles = new ListBox(20, 2, 120, 100, romFiles);
-            btn_LoadRom = new Button(125, 105, ConsoleGameEngine.TextWriter.GenerateTextSprite("Load",ConsoleGameEngine.TextWriter.Textalignment.Center,1), ConsoleGameEngine.TextWriter.GenerateTextSprite("Load", ConsoleGameEngine.TextWriter.Textalignment.Center, 1, (short)COLOR.BG_WHITE, (short)COLOR.FG_WHITE), method: BtnLoadRomClicked);
+            btn_LoadRom = new Button(125, 105, ConsoleGameEngine.Other.TextWriter.GenerateTextSprite("Load",ConsoleGameEngine.Other.TextWriter.Textalignment.Center,1), ConsoleGameEngine.Other.TextWriter.GenerateTextSprite("Load", ConsoleGameEngine.Other.TextWriter.Textalignment.Center, 1, (short)COLOR.BG_WHITE, (short)COLOR.FG_WHITE), method: BtnLoadRomClicked);
             return true;
         }
         public override bool OnUserUpdate(TimeSpan elapsedTime)
@@ -88,9 +89,9 @@ namespace GameBoyEmulator
                 DrawSprite(btn_LoadRom.x, btn_LoadRom.y, btn_LoadRom.outputSprite);
 
 
-                DrawSprite(0, 115, ConsoleGameEngine.TextWriter.GenerateTextSprite("DPAD - WASD, A/B - J/K",backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
-                DrawSprite(0, 123, ConsoleGameEngine.TextWriter.GenerateTextSprite("STRT/SLCT - C/V", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
-                DrawSprite(0, 131, ConsoleGameEngine.TextWriter.GenerateTextSprite("Close - BCKSPC", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
+                DrawSprite(0, 115, ConsoleGameEngine.Other.TextWriter.GenerateTextSprite("DPAD - WASD, A/B - J/K",backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.Other.TextWriter.FontType.small));
+                DrawSprite(0, 123, ConsoleGameEngine.Other.TextWriter.GenerateTextSprite("STRT/SLCT - C/V", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.Other.TextWriter.FontType.small));
+                DrawSprite(0, 131, ConsoleGameEngine.Other.TextWriter.GenerateTextSprite("Close - BCKSPC", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.Other.TextWriter.FontType.small));
             }
 
             return true;

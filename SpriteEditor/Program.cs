@@ -9,8 +9,9 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 using BigGustave;
+using ConsoleGameEngine.Other;
 
 namespace SpriteEditor
 {
@@ -57,7 +58,7 @@ namespace SpriteEditor
         { }
         public override bool OnUserCreate()
         {
-            ConsoleGameEngine.TextWriter.InitTextWriter();
+            ConsoleGameEngine.Other.TextWriter.InitTextWriter();
 
             btnClear = new Button(105, 8, "clear / new", method: BtnClearClicked);
             tb_Width = new TextBox(119, 7, 6, "Width:");

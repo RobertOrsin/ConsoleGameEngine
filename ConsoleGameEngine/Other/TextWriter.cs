@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace ConsoleGameEngine
+namespace ConsoleGameEngine.Other
 {
     public static class TextWriter
     {
@@ -269,9 +269,9 @@ namespace ConsoleGameEngine
                     Sprite letter = new Sprite(1,1);
 
                     if (fontType == FontType.small)
-                        letter = spriteSheetSMALL.ReturnPartialSprite(coords.x * _width + (fontPadding.left + (coords.x + 1)), coords.y * _height + (fontPadding.top + (coords.y + 1)), _width, _height);
+                        letter = spriteSheetSMALL.ReturnPartialSprite(coords.x * _width + fontPadding.left + coords.x + 1, coords.y * _height + fontPadding.top + coords.y + 1, _width, _height);
                     else if (fontType == FontType.standard)
-                        letter = spriteSheet.ReturnPartialSprite(coords.x * _width + (fontPadding.left + (coords.x + 1)), coords.y * _height + (fontPadding.top + (coords.y + 1)), _width, _height);
+                        letter = spriteSheet.ReturnPartialSprite(coords.x * _width + fontPadding.left + coords.x + 1, coords.y * _height + fontPadding.top + coords.y + 1, _width, _height);
 
                     for (int x = 0; x < letter.Width; x++)
                     {

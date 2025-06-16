@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
-using static ConsoleGameEngine.NativeMethods;
+using ConsoleGameEngine.Other;
+using static ConsoleGameEngine.Other.NativeMethods;
 
 namespace CGE_PopUp
 {

@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\other\\pixels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\other\\pixels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\other\\textwriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\other\\textwriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\other\\mouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\other\\mouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\ui-elements\\textbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\ui-elements\\textbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\ui-elements\\combobox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\ui-elements\\combobox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|solutionrelative:spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\textbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\textbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Msbuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
@@ -25,24 +41,76 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PIXELS.cs",
+              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\Other\\PIXELS.cs",
+              "RelativeDocumentMoniker": "ConsoleGameEngine\\Other\\PIXELS.cs",
+              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\Other\\PIXELS.cs",
+              "RelativeToolTip": "ConsoleGameEngine\\Other\\PIXELS.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T17:11:17.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TextWriter.cs",
+              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\Other\\TextWriter.cs",
+              "RelativeDocumentMoniker": "ConsoleGameEngine\\Other\\TextWriter.cs",
+              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\Other\\TextWriter.cs",
+              "RelativeToolTip": "ConsoleGameEngine\\Other\\TextWriter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T17:11:09.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Mouse.cs",
+              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\Other\\Mouse.cs",
+              "RelativeDocumentMoniker": "ConsoleGameEngine\\Other\\Mouse.cs",
+              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\Other\\Mouse.cs",
+              "RelativeToolTip": "ConsoleGameEngine\\Other\\Mouse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T17:11:01.331Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ComboBox.cs",
+              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\UI-Elements\\ComboBox.cs",
+              "RelativeDocumentMoniker": "ConsoleGameEngine\\UI-Elements\\ComboBox.cs",
+              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\UI-Elements\\ComboBox.cs",
+              "RelativeToolTip": "ConsoleGameEngine\\UI-Elements\\ComboBox.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-16T17:09:12.216Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TextBox.cs",
-              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\TextBox.cs",
-              "RelativeDocumentMoniker": "ConsoleGameEngine\\TextBox.cs",
-              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\TextBox.cs",
-              "RelativeToolTip": "ConsoleGameEngine\\TextBox.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAowHIAAAAIAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\UI-Elements\\TextBox.cs",
+              "RelativeDocumentMoniker": "ConsoleGameEngine\\UI-Elements\\TextBox.cs",
+              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\UI-Elements\\TextBox.cs",
+              "RelativeToolTip": "ConsoleGameEngine\\UI-Elements\\TextBox.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAowHMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-16T16:34:46.95Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Msbuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Msbuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
@@ -55,26 +123,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "gameconsole.cs",
               "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\gameconsole.cs",
               "RelativeDocumentMoniker": "ConsoleGameEngine\\gameconsole.cs",
               "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\gameconsole.cs",
               "RelativeToolTip": "ConsoleGameEngine\\gameconsole.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAowCsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAApwG8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-16T16:29:20.473Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
               "RelativeDocumentMoniker": "SpriteEditor\\Program.cs",
               "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
               "RelativeToolTip": "SpriteEditor\\Program.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAAAHoAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-16T16:24:25.876Z",
               "EditorCaption": ""

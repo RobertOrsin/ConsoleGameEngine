@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ConsoleGameEngine.Other;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ConsoleGameEngine.GameConsole;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 
 namespace ConsoleGameEngine
 {
@@ -14,7 +15,7 @@ namespace ConsoleGameEngine
         public int w, h;
         public List<string> entries = [];
         bool simple = false;
-        ConsoleGameEngine.TextWriter.FontType _fontType;
+        TextWriter.FontType _fontType;
         short foregroundColor, backgroundColor;
         public Sprite outputSprite = new Sprite(1, 1);
         int firstEntry = 0;

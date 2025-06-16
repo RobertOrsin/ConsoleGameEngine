@@ -14,12 +14,13 @@ using NAudio.Wave;
 using ConsoleGameEngine;
 using static ConsoleGameEngine._3DEngine;
 using static ConsoleGameEngine.GameConsole;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 using System.Reflection.Emit;
 using System.IO;
 using System.Diagnostics;
 using Xabe.FFmpeg;
 using System.Threading;
+using ConsoleGameEngine.Other;
 
 namespace YouTubeStream
 {

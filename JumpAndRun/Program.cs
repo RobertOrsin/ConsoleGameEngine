@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using ConsoleGameEngine;
 using static ConsoleGameEngine._3DEngine;
 using static ConsoleGameEngine.GameConsole;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 using Windows.Foundation;
+using ConsoleGameEngine.Other;
 
 
 namespace JumpAndRun

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ConsoleGameEngine.Other;
+using System;
 using static ConsoleGameEngine.GameConsole;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 
 namespace ConsoleGameEngine
 {

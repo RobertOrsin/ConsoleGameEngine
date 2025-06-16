@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleGameEngine;
+using ConsoleGameEngine.Other;
 using static ConsoleGameEngine.GameConsole;
-using static ConsoleGameEngine.NativeMethods;
+using static ConsoleGameEngine.Other.NativeMethods;
 
 namespace MapEditor
 {
