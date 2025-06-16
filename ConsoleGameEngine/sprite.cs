@@ -201,6 +201,42 @@ namespace ConsoleGameEngine
                 }
             }
         }
+
+        public void FillBucket(int startX, int startY, char targetC, short targetCol, char oldC, short oldCol)
+        {
+            //nothing to fill
+            if (targetC == oldC && targetCol == oldCol)
+                return;
+
+            Queue<(int,int)> queue = new Queue<(int,int)> ();
+            queue.Enqueue((startX, startY));
+
+            int[,] directions = new int[,]
+            {
+                {-1, 0},  // up
+                {1, 0},   // down
+                {0, -1},  // left
+                {0, 1}    // right
+            };
+
+            while(queue.Count > 0)
+            {
+                var (x,y) = queue.Dequeue();
+
+                SetPixel(x, y, targetC, targetCol);
+
+                for(int i = 0; i < directions.GetLength(0); i++)
+                {
+                    int nx = x + directions[i, 0];
+                    int ny = y + directions[i, 1];
+
+                    if(nx >= 0 && nx < Width && ny >= 0 && ny < Height && GetColor(nx,ny) == oldCol)
+                    {
+                        queue.Enqueue((nx,ny));
+                    }
+                }
+            }
+        }
         #endregion
 
         #region load/save/create

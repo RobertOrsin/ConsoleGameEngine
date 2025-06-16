@@ -30,14 +30,14 @@ namespace SpriteEditor
         List<char> otherBrushes = new List<char> { '─', '│', '┌', '┐', '└', '┘', '┬', '┴', '├', '┤', '┼' };
 
         Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy, btnReplaceColor;
+        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy, btnReplaceColor, btnFillBucket;
         Button btnAddGrid;
         TextBox tb_Width, tb_Height, tb_SaveName;
         TextBox tb_GridWidth, tb_GridHeight;
         ListBox lb_SavedFiles;
         AnimationPreview animationPreview;
 
-        bool colorPickerActive = false, markingActive = false;
+        bool colorPickerActive = false, markingActive = false, fillBucketActive = false;
 
         List<string> saveFiles = new List<string>();
 
@@ -78,6 +78,8 @@ namespace SpriteEditor
             btnAbortMarkAndCopy = new Button(21, 61, "Abort", method:BtnAbortClicked);
             btnConfirmMarkAndCopy = new Button(30, 61, " Set ", method: BtnConfirmClicked);
             btnColorPicker = new Button(39, 61, "pick color", method: BtnColorPickerClicked);
+            btnFillBucket = new Button(57, 61, "bucket", method: btnFillBucketClicked);
+
             btnReplaceColor = new Button(120, 2, "replace", method: BtnReplaceClicked);
 
             //load savefiles from savefile-folder
@@ -192,6 +194,12 @@ namespace SpriteEditor
             DrawSprite(btnAbortMarkAndCopy.x, btnAbortMarkAndCopy.y, btnAbortMarkAndCopy.outputSprite);
             DrawSprite(btnConfirmMarkAndCopy.x, btnConfirmMarkAndCopy.y, btnConfirmMarkAndCopy.outputSprite);
 
+
+
+            if (fillBucketActive)
+                DrawASCIIRectangle(btnFillBucket.x - 1, btnFillBucket.y - 1, btnFillBucket.width + 2, btnFillBucket.height + 2, foreground: (short)COLOR.FG_RED);
+            DrawSprite(btnFillBucket.x, btnFillBucket.y, btnFillBucket.outputSprite);
+
             //DrawArea
             DrawRectangle(3, 8, 100, 50, (short)COLOR.FG_WHITE);
             DrawRectangle(4, 9, 98, 48, (short)COLOR.FG_DARK_GREY);
@@ -213,9 +221,6 @@ namespace SpriteEditor
             Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
             Print(0, Height - 1, $"marking active:{markingActive}; draging:{markingDraging}");
 
-
-          //  DrawSprite(20, 30, ConsoleGameEngine.TextWriter.GenerateTextSprite("Small Text!", ConsoleGameEngine.TextWriter.Textalignment.Left, 1, fontType: ConsoleGameEngine.TextWriter.FontType.small));
-
             return true;
         }
 
@@ -228,6 +233,7 @@ namespace SpriteEditor
             btnColorPicker.Update(r);
             btnReplaceColor.Update(r);
             btnAddGrid.Update(r);
+            btnFillBucket.Update(r);
 
             btnMark.Update(r);
             btnCopy.Update(r);
@@ -608,7 +614,7 @@ namespace SpriteEditor
                 {
                     if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
                     {
-                        if (!colorPickerActive && !markingActive)
+                        if (!colorPickerActive && !markingActive && !fillBucketActive)
                         {
                             if (leftMousebuttonClicked || leftMousebuttonHeld)
                             {
@@ -616,23 +622,34 @@ namespace SpriteEditor
                                 color += foregroundColor;
                                 sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
                             }
-                            else if(rightMousebuttonClicked)
+                            else if (rightMousebuttonClicked)
                             {
                                 short color = (short)(backgroundColorReplaceBrush << 4);
                                 color += foregroundColorReplaceBrush;
                                 sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, replaceBrush, color);
                             }
                         }
-                        else if(markingActive)
+                        else if (markingActive)
                         {
-                            
+
                         }
-                        else if(colorPickerActive)
+                        else if (colorPickerActive)
                         {
                             short colorToPick = sprite.GetColor(cursorX - 5 + spriteCursorX, cursorY - 10);
                             foregroundColor = (short)(colorToPick & 0x0F);
                             backgroundColor = (short)(colorToPick >> 4);
                             brush = sprite.GetChar(cursorX - 5 + spriteCursorX, cursorY - 10);
+                        }
+                        else if (fillBucketActive)
+                        {
+                            short color = (short)(backgroundColor << 4);
+                            color += foregroundColor;
+
+                            int x = cursorX - 5 + spriteCursorX;
+                            int y = cursorY - 10 + spriteCursorY;
+
+
+                            sprite.FillBucket(x, y, brush, color, sprite.GetChar(x, y), sprite.GetColor(x, y));
                         }
                     }
                 }
@@ -726,11 +743,13 @@ namespace SpriteEditor
         private bool BtnColorPickerClicked()
         {
             markingActive = false;
+            fillBucketActive = false;
             colorPickerActive = !colorPickerActive;
             return true;
         }
         private bool BtnMarkClicked()
         {
+            fillBucketActive = false;   
             colorPickerActive = false;
             markingActive = !markingActive;
             return true;
@@ -799,7 +818,13 @@ namespace SpriteEditor
             }
             return true;
         }
-
+        private bool btnFillBucketClicked()
+        {
+            colorPickerActive = false;
+            markingActive = false;
+            fillBucketActive = !fillBucketActive;
+            return true;
+        }
         #endregion
 
         #region DRAWING UI
