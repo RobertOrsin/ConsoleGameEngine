@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
-
 using OpenCvSharp;
 using BigGustave;
 using NAudio.Wave;
-
 using ConsoleGameEngine;
-using static ConsoleGameEngine._3DEngine;
-using static ConsoleGameEngine.GameConsole;
 using static ConsoleGameEngine.Other.NativeMethods;
-using System.Reflection.Emit;
 using System.IO;
 using System.Diagnostics;
-using Xabe.FFmpeg;
 using System.Threading;
 using ConsoleGameEngine.Other;
 

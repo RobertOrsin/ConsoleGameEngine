@@ -1,14 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-
 using ConsoleGameEngine;
-using static ConsoleGameEngine._3DEngine;
 using static ConsoleGameEngine.GameConsole;
 using static ConsoleGameEngine.Other.NativeMethods;
 using Windows.Foundation;
