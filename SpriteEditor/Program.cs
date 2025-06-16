@@ -10,41 +10,40 @@ namespace SpriteEditor
 {
     class SpriteEditor : GameConsole
     {
-        IntPtr inHandle;
+        private IntPtr inHandle;
+        private MOUSE_EVENT_RECORD oldMouseState;
         delegate void MyDelegate();
-        MOUSE_EVENT_RECORD oldMouseState;
 
+        private int _cursorX, _cursorY;
+        private bool _leftMousebuttonClicked, _leftMousebuttonHeld, _leftMouseButtonReleased, _mouseWheelClicked, _rightMousebuttonClicked;
+        private short _foregroundColor, _backgroundColor;
+        private short _foregroundColorReplaceBrush, _backgroundColorReplaceBrush;
+        private char _brush = '▓', _replaceBrush = '▓';
+        private List<char> _otherBrushes = ['─', '│', '┌', '┐', '└', '┘', '┬', '┴', '├', '┤', '┼'];
 
-        int cursorX = 0, cursorY = 0;
-        bool leftMousebuttonClicked = false, leftMousebuttonHeld = false, leftMouseButtonReleased = false, mouseWheelClicked = false, rightMousebuttonClicked = false;
+        private Sprite _sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
+        private Button _btnClear, _btnSave, _btnLoad, _btnColorPicker, _btnMark, _btnCopy, _btnAbortMarkAndCopy, _btnConfirmMarkAndCopy, _btnReplaceColor, _btnFillBucket;
+        private Button _btnAddGrid;
+        private TextBox _tb_Width, _tb_Height, _tb_SaveName;
+        private TextBox _tb_GridWidth, _tb_GridHeight;
+        private ListBox _lb_SavedFiles;
+        private AnimationPreview _animationPreview;
 
-        short foregroundColor = 0x00, backgroundColor = 0x00;
-        short foregroundColorReplaceBrush = 0x00, backgroundColorReplaceBrush = 0x00;
-        char brush = '▓', replaceBrush = '▓';
-        List<char> otherBrushes = new List<char> { '─', '│', '┌', '┐', '└', '┘', '┬', '┴', '├', '┤', '┼' };
+        private bool _colorPickerActive, _markingActive, _fillBucketActive;
 
-        Sprite sprite = new Sprite(32, 32, '█', COLOR.BG_BLACK);
-        Button btnClear, btnSave, btnLoad, btnColorPicker, btnMark, btnCopy, btnAbortMarkAndCopy, btnConfirmMarkAndCopy, btnReplaceColor, btnFillBucket;
-        Button btnAddGrid;
-        TextBox tb_Width, tb_Height, tb_SaveName;
-        TextBox tb_GridWidth, tb_GridHeight;
-        ListBox lb_SavedFiles;
-        AnimationPreview animationPreview;
+        private List<string> _saveFiles = [];
 
-        bool colorPickerActive = false, markingActive = false, fillBucketActive = false;
+        private readonly int _spriteAreaW = 95, _spriteAreaH = 47;
+        private readonly int _spriteCursorX = 0, _spriteCursorY = 0;
+        private readonly int _spriteDrawX = 5, _spriteDrawY = 10;
 
-        List<string> saveFiles = new List<string>();
+        private bool _marking_visible, _markingDraging;
+        private int _markingStartX, _markingStartY, _markingEndX, _markingEndY;
+        private int _markingSpriteX, _markingSpriteY;
+        private Sprite _markingSprite;
 
-        int spriteAreaW = 95, spriteAreaH = 47;
-        int spriteCursorX = 0, spriteCursorY = 0;
-        int spriteDrawX = 5, spriteDrawY = 10;
-
-        bool marking_visible = false, markingDraging = false;
-        int markingStartX, markingStartY, markingEndX, markingEndY;
-        int markingSpriteX, markingSpriteY;
-        Sprite markingSprite;
-
-        TimeSpan keyInputDelay = new TimeSpan(), keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
+        private readonly TimeSpan _keyInputDelay = new();
+        private TimeSpan _keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
 
         public SpriteEditor()
           : base(140, 70, "Fonts", fontwidth: 12, fontheight: 12)
@@ -53,28 +52,28 @@ namespace SpriteEditor
         {
             ConsoleGameEngine.Other.TextWriter.InitTextWriter();
 
-            btnClear = new Button(105, 8, "clear / new", method: BtnClearClicked);
-            tb_Width = new TextBox(119, 7, 6, "Width:");
-            tb_Height = new TextBox(129, 7, 6, "Height:", simple: true);
+            _btnClear = new Button(105, 8, "clear / new", method: BtnClearClicked);
+            _tb_Width = new TextBox(119, 7, 6, "Width:");
+            _tb_Height = new TextBox(129, 7, 6, "Height:", simple: true);
 
-            btnAddGrid = new Button(106, 12, "add grid", method: BtnAddGridClicked);
-            tb_GridWidth = new TextBox(119, 11, 6 , "Width:");
-            tb_GridHeight = new TextBox(129, 11, 6, "Height:");
+            _btnAddGrid = new Button(106, 12, "add grid", method: BtnAddGridClicked);
+            _tb_GridWidth = new TextBox(119, 11, 6 , "Width:");
+            _tb_GridHeight = new TextBox(129, 11, 6, "Height:");
 
-            btnSave = new Button(106, 19, " save ", method: BtnSaveClicked);
+            _btnSave = new Button(106, 19, " save ", method: BtnSaveClicked);
             
-            tb_SaveName = new TextBox(106, 23, 30, "Save Name:");
+            _tb_SaveName = new TextBox(106, 23, 30, "Save Name:");
 
-            animationPreview = new AnimationPreview(106, 48);
+            _animationPreview = new AnimationPreview(106, 48);
 
-            btnMark = new Button(3, 61, " Mark ", method:BtnMarkClicked);
-            btnCopy = new Button(12, 61, " Copy ", method: BtnCopyClicked);
-            btnAbortMarkAndCopy = new Button(21, 61, "Abort", method:BtnAbortClicked);
-            btnConfirmMarkAndCopy = new Button(30, 61, " Set ", method: BtnConfirmClicked);
-            btnColorPicker = new Button(39, 61, "pick color", method: BtnColorPickerClicked);
-            btnFillBucket = new Button(57, 61, "bucket", method: btnFillBucketClicked);
+            _btnMark = new Button(3, 61, " Mark ", method:BtnMarkClicked);
+            _btnCopy = new Button(12, 61, " Copy ", method: BtnCopyClicked);
+            _btnAbortMarkAndCopy = new Button(21, 61, "Abort", method:BtnAbortClicked);
+            _btnConfirmMarkAndCopy = new Button(30, 61, " Set ", method: BtnConfirmClicked);
+            _btnColorPicker = new Button(39, 61, "pick color", method: BtnColorPickerClicked);
+            _btnFillBucket = new Button(57, 61, "bucket", method: BtnFillBucketClicked);
 
-            btnReplaceColor = new Button(120, 2, "replace", method: BtnReplaceClicked);
+            _btnReplaceColor = new Button(120, 2, "replace", method: BtnReplaceClicked);
 
             //load savefiles from savefile-folder
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
@@ -82,9 +81,9 @@ namespace SpriteEditor
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.png"))
                 saveFiles.Add(Path.GetFileName(file));
 
-            lb_SavedFiles = new ListBox(106, 28, 32, 15, saveFiles, simple: true);
+            _lb_SavedFiles = new ListBox(106, 28, 32, 15, saveFiles, simple: true);
 
-            btnLoad = new Button(129, 44, " load ", method: BtnLoadClicked);
+            _btnLoad = new Button(129, 44, " load ", method: BtnLoadClicked);
 
             inHandle = NativeMethods.GetStdHandle(NativeMethods.STD_INPUT_HANDLE);
             uint mode = 0;
@@ -107,45 +106,45 @@ namespace SpriteEditor
 
             if (ApplicationIsActivated())
             {
-                tb_Width.UpdateInput(KeyStates, elapsedTime);
-                tb_Height.UpdateInput(KeyStates, elapsedTime);
-                tb_SaveName.UpdateInput(KeyStates, elapsedTime);
-                tb_GridHeight.UpdateInput(KeyStates, elapsedTime);
-                tb_GridWidth.UpdateInput(KeyStates, elapsedTime);
-                animationPreview.UpdateKeyInput(KeyStates, elapsedTime, sprite);
+                _tb_Width.UpdateInput(KeyStates, elapsedTime);
+                _tb_Height.UpdateInput(KeyStates, elapsedTime);
+                _tb_SaveName.UpdateInput(KeyStates, elapsedTime);
+                _tb_GridHeight.UpdateInput(KeyStates, elapsedTime);
+                _tb_GridWidth.UpdateInput(KeyStates, elapsedTime);
+                _animationPreview.UpdateKeyInput(KeyStates, elapsedTime, _sprite);
 
                 //evaluate keyinputs of no textbox is selected
-                if (!tb_Height.selected && !tb_Width.selected && !tb_SaveName.selected && !tb_GridWidth.selected && !tb_GridHeight.selected)
+                if (!_tb_Height.selected && !_tb_Width.selected && !_tb_SaveName.selected && !_tb_GridWidth.selected && !_tb_GridHeight.selected)
                 {
-                    if (GetKeyState(ConsoleKey.W).Held && keyInputDelay >= keyInputTime)
+                    if (GetKeyState(ConsoleKey.W).Held && _keyInputDelay >= _keyInputTime)
                     {
                         spriteCursorY -= 5;
-                        if (spriteCursorY < 0)
+                        if (_spriteCursorY < 0)
                             spriteCursorY = 0;
 
                         keyInputDelay = new TimeSpan();
                     }
-                    if (GetKeyState(ConsoleKey.A).Held && keyInputDelay >= keyInputTime)
+                    if (GetKeyState(ConsoleKey.A).Held && _keyInputDelay >= _keyInputTime)
                     {
                         spriteCursorX -= 5;
-                        if (spriteCursorX < 0)
+                        if (_spriteCursorX < 0)
                             spriteCursorX = 0;
 
                         keyInputDelay = new TimeSpan();
                     }
-                    if (GetKeyState(ConsoleKey.S).Held && keyInputDelay >= keyInputTime)
+                    if (GetKeyState(ConsoleKey.S).Held && _keyInputDelay >= _keyInputTime)
                     {
                         spriteCursorY += 5;
-                        if (spriteCursorY >= sprite.Height - spriteAreaH)
-                            spriteCursorY = sprite.Height - spriteAreaH - 1;
+                        if (_spriteCursorY >= _sprite.Height - _spriteAreaH)
+                            spriteCursorY = _sprite.Height - _spriteAreaH - 1;
 
                         keyInputDelay = new TimeSpan();
                     }
-                    if (GetKeyState(ConsoleKey.D).Held && keyInputDelay >= keyInputTime)
+                    if (GetKeyState(ConsoleKey.D).Held && _keyInputDelay >= _keyInputTime)
                     {
                         spriteCursorX += 5;
-                        if (spriteCursorX >= sprite.Width - spriteAreaW)
-                            spriteCursorX = sprite.Width - spriteAreaW - 1;
+                        if (_spriteCursorX >= _sprite.Width - _spriteAreaW)
+                            spriteCursorX = _sprite.Width - _spriteAreaW - 1;
 
                         keyInputDelay = new TimeSpan();
                     }
@@ -159,61 +158,61 @@ namespace SpriteEditor
             DrawColorPalette(1, 1, "Foregroundcolor");
             DrawColorPalette(40, 1, "Backgroundcolor");
             DrawBrushes(80, 1, "Brushes");
-            DrawActiveBrush(90, 1, "Active Brush", foregroundColor, backgroundColor, brush);
-            DrawActiveBrush(105, 1, "Replace with", foregroundColorReplaceBrush, backgroundColorReplaceBrush, replaceBrush);
+            DrawActiveBrush(90, 1, "Active Brush", _foregroundColor, _backgroundColor, _brush);
+            DrawActiveBrush(105, 1, "Replace with", _foregroundColorReplaceBrush, _backgroundColorReplaceBrush, _replaceBrush);
 
-            DrawSprite(btnReplaceColor.x, btnReplaceColor.y, btnReplaceColor.outputSprite);
-            DrawSprite(btnClear.x, btnClear.y, btnClear.outputSprite);
-            DrawSprite(btnSave.x, btnSave.y, btnSave.outputSprite);
-            DrawSprite(btnLoad.x, btnLoad.y, btnLoad.outputSprite);
-            DrawSprite(btnAddGrid.x, btnAddGrid.y, btnAddGrid.outputSprite);
+            DrawSprite(_btnReplaceColor.x, _btnReplaceColor.y, _btnReplaceColor.outputSprite);
+            DrawSprite(_btnClear.x, _btnClear.y, _btnClear.outputSprite);
+            DrawSprite(_btnSave.x, _btnSave.y, _btnSave.outputSprite);
+            DrawSprite(_btnLoad.x, _btnLoad.y, _btnLoad.outputSprite);
+            DrawSprite(_btnAddGrid.x, _btnAddGrid.y, _btnAddGrid.outputSprite);
 
-            if (colorPickerActive)
-                DrawASCIIRectangle(btnColorPicker.x - 1, btnColorPicker.y - 1, btnColorPicker.width + 2, btnColorPicker.height + 2, foreground: (short)COLOR.FG_RED);
-            DrawSprite(btnColorPicker.x, btnColorPicker.y, btnColorPicker.outputSprite);
+            if (_colorPickerActive)
+                DrawASCIIRectangle(_btnColorPicker.x - 1, _btnColorPicker.y - 1, _btnColorPicker.width + 2, _btnColorPicker.height + 2, foreground: (short)COLOR.FG_RED);
+            DrawSprite(_btnColorPicker.x, _btnColorPicker.y, _btnColorPicker.outputSprite);
 
-            DrawSprite(tb_Width.x, tb_Width.y, tb_Width.outputSprite);
-            DrawSprite(tb_Height.x, tb_Height.y, tb_Height.outputSprite);
-            DrawSprite(tb_SaveName.x, tb_SaveName.y, tb_SaveName.outputSprite);
-            DrawSprite(tb_GridWidth.x, tb_GridWidth.y, tb_GridWidth.outputSprite);
-            DrawSprite(tb_GridHeight.x, tb_GridHeight.y, tb_GridHeight.outputSprite);
+            DrawSprite(_tb_Width.x, _tb_Width.y, _tb_Width.outputSprite);
+            DrawSprite(_tb_Height.x, _tb_Height.y, _tb_Height.outputSprite);
+            DrawSprite(_tb_SaveName.x, _tb_SaveName.y, _tb_SaveName.outputSprite);
+            DrawSprite(_tb_GridWidth.x, _tb_GridWidth.y, _tb_GridWidth.outputSprite);
+            DrawSprite(_tb_GridHeight.x, _tb_GridHeight.y, _tb_GridHeight.outputSprite);
 
-            DrawSprite(lb_SavedFiles.x, lb_SavedFiles.y, lb_SavedFiles.outputSprite);
+            DrawSprite(_lb_SavedFiles.x, _lb_SavedFiles.y, _lb_SavedFiles.outputSprite);
 
-            DrawSprite(animationPreview.x, animationPreview.y, animationPreview.outputSprite);
+            DrawSprite(_animationPreview.x, _animationPreview.y, _animationPreview.outputSprite);
 
-            DrawSprite(btnMark.x, btnMark.y, btnMark.outputSprite);
+            DrawSprite(_btnMark.x, _btnMark.y, _btnMark.outputSprite);
             
-            DrawSprite(btnCopy.x, btnCopy.y, btnCopy.outputSprite);
-            DrawSprite(btnAbortMarkAndCopy.x, btnAbortMarkAndCopy.y, btnAbortMarkAndCopy.outputSprite);
-            DrawSprite(btnConfirmMarkAndCopy.x, btnConfirmMarkAndCopy.y, btnConfirmMarkAndCopy.outputSprite);
+            DrawSprite(_btnCopy.x, _btnCopy.y, _btnCopy.outputSprite);
+            DrawSprite(_btnAbortMarkAndCopy.x, _btnAbortMarkAndCopy.y, _btnAbortMarkAndCopy.outputSprite);
+            DrawSprite(_btnConfirmMarkAndCopy.x, _btnConfirmMarkAndCopy.y, _btnConfirmMarkAndCopy.outputSprite);
 
 
 
-            if (fillBucketActive)
-                DrawASCIIRectangle(btnFillBucket.x - 1, btnFillBucket.y - 1, btnFillBucket.width + 2, btnFillBucket.height + 2, foreground: (short)COLOR.FG_RED);
-            DrawSprite(btnFillBucket.x, btnFillBucket.y, btnFillBucket.outputSprite);
+            if (_fillBucketActive)
+                DrawASCIIRectangle(_btnFillBucket.x - 1, _btnFillBucket.y - 1, _btnFillBucket.width + 2, _btnFillBucket.height + 2, foreground: (short)COLOR.FG_RED);
+            DrawSprite(_btnFillBucket.x, _btnFillBucket.y, _btnFillBucket.outputSprite);
 
             //DrawArea
             DrawRectangle(3, 8, 100, 50, (short)COLOR.FG_WHITE);
             DrawRectangle(4, 9, 98, 48, (short)COLOR.FG_DARK_GREY);
 
-            if (sprite.Width > spriteAreaW || sprite.Height > spriteAreaH)
-                DrawPartialSprite(spriteDrawX, spriteDrawY, sprite, spriteCursorX, spriteCursorY, spriteAreaW, spriteAreaH);
+            if (_sprite.Width > _spriteAreaW || _sprite.Height > _spriteAreaH)
+                DrawPartialSprite(_spriteDrawX, _spriteDrawY, _sprite, _spriteCursorX, _spriteCursorY, _spriteAreaW, _spriteAreaH);
             else
-                DrawSprite(spriteDrawX, spriteDrawY, sprite);
+                DrawSprite(_spriteDrawX, _spriteDrawY, _sprite);
 
-            if(marking_visible)
+            if(_marking_visible)
             {
-                markingSprite = sprite.ReturnPartialSpriteInverted(markingStartX, markingStartY, markingEndX - markingStartX + 1, markingEndY - markingStartY + 1);
-                DrawSprite(markingSpriteX, markingSpriteY, markingSprite);
+                _markingSprite = _sprite.ReturnPartialSpriteInverted(_markingStartX, _markingStartY, _markingEndX - _markingStartX + 1, _markingEndY - _markingStartY + 1);
+                DrawSprite(_markingSpriteX, _markingSpriteY, _markingSprite);
             }
 
-            if (markingActive)
-                DrawASCIIRectangle(btnMark.x - 1, btnMark.y - 1, btnMark.width + 2, btnMark.height + 2, foreground: (short)COLOR.FG_RED);
+            if (_markingActive)
+                DrawASCIIRectangle(_btnMark.x - 1, _btnMark.y - 1, _btnMark.width + 2, _btnMark.height + 2, foreground: (short)COLOR.FG_RED);
 
-            Print(3, 7, $"{cursorX - spriteDrawX};{cursorY - spriteDrawY}");
-            Print(0, Height - 1, $"marking active:{markingActive}; draging:{markingDraging}");
+            Print(3, 7, $"{_cursorX - _spriteDrawX};{_cursorY - _spriteDrawY}");
+            Print(0, Height - 1, $"marking active:{_markingActive}; draging:{_markingDraging}");
 
             return true;
         }
@@ -221,429 +220,429 @@ namespace SpriteEditor
         #region INPUTS
         private void ConsoleListener_MouseEvent(MOUSE_EVENT_RECORD r)
         {
-            btnClear.Update(r);
-            btnSave.Update(r);
-            btnLoad.Update(r);
-            btnColorPicker.Update(r);
-            btnReplaceColor.Update(r);
-            btnAddGrid.Update(r);
-            btnFillBucket.Update(r);
+            _btnClear.Update(r);
+            _btnSave.Update(r);
+            _btnLoad.Update(r);
+            _btnColorPicker.Update(r);
+            _btnReplaceColor.Update(r);
+            _btnAddGrid.Update(r);
+            _btnFillBucket.Update(r);
 
-            btnMark.Update(r);
-            btnCopy.Update(r);
-            btnAbortMarkAndCopy.Update(r);
-            btnConfirmMarkAndCopy.Update(r);
+            _btnMark.Update(r);
+            _btnCopy.Update(r);
+            _btnAbortMarkAndCopy.Update(r);
+            _btnConfirmMarkAndCopy.Update(r);
 
 
-            tb_Width.UpdateSelection(r);
-            tb_Height.UpdateSelection(r);
-            tb_SaveName.UpdateSelection(r);
-            tb_GridHeight.UpdateSelection(r);
-            tb_GridWidth.UpdateSelection(r);
+            _tb_Width.UpdateSelection(r);
+            _tb_Height.UpdateSelection(r);
+            _tb_SaveName.UpdateSelection(r);
+            _tb_GridHeight.UpdateSelection(r);
+            _tb_GridWidth.UpdateSelection(r);
 
-            lb_SavedFiles.Update(r);
+            _lb_SavedFiles.Update(r);
 
-            animationPreview.UpdateMouseInput(r);
+            _animationPreview.UpdateMouseInput(r);
 
-            cursorX = r.dwMousePosition.X;
-            cursorY = r.dwMousePosition.Y;
+            _cursorX = r.dwMousePosition.X;
+            _cursorY = r.dwMousePosition.Y;
 
-            leftMousebuttonClicked = false;
-            leftMouseButtonReleased = false;
+            _leftMousebuttonClicked = false;
+            _leftMouseButtonReleased = false;
 
             if(r.dwButtonState != oldMouseState.dwButtonState)
             {
                 if (r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_1ST_BUTTON_PRESSED)
                 {
-                    leftMousebuttonClicked = !leftMousebuttonHeld;
-                    leftMousebuttonHeld = true;
+                    _leftMousebuttonClicked = !_leftMousebuttonHeld;
+                    _leftMousebuttonHeld = true;
                 }
                 else
                 {
-                    leftMouseButtonReleased = true;
-                    leftMousebuttonHeld = false;
+                    _leftMouseButtonReleased = true;
+                    _leftMousebuttonHeld = false;
                 }
             }
             oldMouseState = r;
 
-            mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
-            rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
+            _mouseWheelClicked = r.dwButtonState == MOUSE_EVENT_RECORD.FROM_LEFT_2ND_BUTTON_PRESSED;
+            _rightMousebuttonClicked = r.dwButtonState == MOUSE_EVENT_RECORD.RIGHTMOST_BUTTON_PRESSED;
         }
         private void EvaluateGUIClick()
         {
-            if(markingActive && !markingDraging)
+            if(_markingActive && !_markingDraging)
             {
-                if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
+                if (_cursorX >= 5 && _cursorX <= 102 && _cursorY >= 10 && _cursorY <= 57)
                 {
-                    if (leftMousebuttonClicked)
+                    if (_leftMousebuttonClicked)
                     {
-                        markingStartX = cursorX - 5;
-                        markingStartY = cursorY - 10;
+                        _markingStartX = _cursorX - 5;
+                        _markingStartY = _cursorY - 10;
 
-                        markingSpriteX = cursorX;
-                        markingSpriteY = cursorY;
+                        _markingSpriteX = _cursorX;
+                        _markingSpriteY = _cursorY;
 
-                        markingEndX = cursorX - 5;
-                        markingEndY = cursorY - 10;
+                        _markingEndX = _cursorX - 5;
+                        _markingEndY = _cursorY - 10;
 
-                        marking_visible = true;
+                        _marking_visible = true;
                     }
 
-                    if (leftMousebuttonHeld && !markingDraging)
+                    if (_leftMousebuttonHeld && !_markingDraging)
                     {
-                        markingEndX = cursorX - 5;
-                        markingEndY = cursorY - 10;
+                        _markingEndX = _cursorX - 5;
+                        _markingEndY = _cursorY - 10;
                     }
-                    else if (leftMouseButtonReleased)
+                    else if (_leftMouseButtonReleased)
                     {
-                        markingDraging = true;
-                        markingSpriteX = markingStartX + 5;
-                        markingSpriteY = markingStartY + 10;
+                        _markingDraging = true;
+                        _markingSpriteX = _markingStartX + 5;
+                        _markingSpriteY = _markingStartY + 10;
                     }
                 }
             }
-            else if(markingDraging)
+            else if(_markingDraging)
             {
-                if (leftMousebuttonClicked || leftMousebuttonHeld)
+                if (_leftMousebuttonClicked || _leftMousebuttonHeld)
                 {
-                    markingSpriteX = cursorX - markingSprite.Width / 2;
-                    markingSpriteY = cursorY - markingSprite.Height / 2;
+                    _markingSpriteX = _cursorX - _markingSprite.Width / 2;
+                    _markingSpriteY = _cursorY - _markingSprite.Height / 2;
                 }
             }
-            else if (leftMousebuttonClicked || leftMousebuttonHeld || rightMousebuttonClicked)
+            else if (_leftMousebuttonClicked || _leftMousebuttonHeld || _rightMousebuttonClicked)
             {
                 //color or brush picking
-                if (cursorY == 2 || cursorY == 3)
+                if (_cursorY == 2 || _cursorY == 3)
                 {
                     //foreground color
-                    if (cursorX >= 1 && cursorX <= 32)
+                    if (_cursorX >= 1 && _cursorX <= 32)
                     {
-                        switch (cursorX)
+                        switch (_cursorX)
                         {
                             case 1:
                             case 2: 
-                                if(leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_BLACK; 
-                                else if(rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_BLACK;
+                                if(_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_BLACK; 
+                                else if(_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_BLACK;
                                 break;
                                 
                             case 3:
                             case 4:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_BLUE;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_BLUE;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_BLUE;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_BLUE;
                                 break;
                             case 5:
                             case 6: 
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_GREEN;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_GREEN;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_GREEN;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_GREEN;
                                 break;
                             case 7:
                             case 8:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_CYAN;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_CYAN;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_CYAN;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_CYAN;
                                 break;
                             case 9:
                             case 10:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_RED;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_RED;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_RED;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_RED;
                                 break;
                             case 11:
                             case 12:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_MAGENTA;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_MAGENTA;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_MAGENTA;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_MAGENTA;
                                 break;
                             case 13:
                             case 14:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_YELLOW;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_YELLOW;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_YELLOW;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_YELLOW;
                                 break;
                             case 15:
                             case 16:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_GREY;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_GREY;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_GREY;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_GREY;
                                 break;
                             case 17:
                             case 18:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_DARK_GREY;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_DARK_GREY;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_DARK_GREY;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_DARK_GREY;
                                 break;
                             case 19:
                             case 20:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_BLUE;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_BLUE;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_BLUE;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_BLUE;
                                 break;
                             case 21:
                             case 22:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_GREEN;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_GREEN;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_GREEN;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_GREEN;
                                 break;
                             case 23:
                             case 24:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_CYAN;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_CYAN;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_CYAN;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_CYAN;
                                 break;
                             case 25:
                             case 26:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_RED;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_RED;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_RED;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_RED;
                                 break;
                             case 27:
                             case 28:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_MAGENTA;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_MAGENTA;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_MAGENTA;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_MAGENTA;
                                 break;
                             case 29:
                             case 30:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_YELLOW; 
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_YELLOW;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_YELLOW; 
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_YELLOW;
                                 break;
                             case 31:
                             case 32:
-                                if (leftMousebuttonClicked)
-                                    foregroundColor = (short)COLOR.FG_WHITE;
-                                else if (rightMousebuttonClicked)
-                                    foregroundColorReplaceBrush = (short)COLOR.FG_WHITE;
+                                if (_leftMousebuttonClicked)
+                                    _foregroundColor = (short)COLOR.FG_WHITE;
+                                else if (_rightMousebuttonClicked)
+                                    _foregroundColorReplaceBrush = (short)COLOR.FG_WHITE;
                                 break;
                         }
                     }
                     //background color
-                    else if (cursorX >= 40 && cursorX <= 71)
+                    else if (_cursorX >= 40 && _cursorX <= 71)
                     {
-                        switch (cursorX)
+                        switch (_cursorX)
                         {
                             case 40:
                             case 41:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_BLACK;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_BLACK;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_BLACK;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_BLACK;
                                 break;
 
                             case 42:
                             case 43:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_BLUE;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_BLUE;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_BLUE;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_BLUE;
                                 break;
                             case 44:
                             case 45:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_GREEN;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_GREEN;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_GREEN;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_GREEN;
                                 break;
                             case 46:
                             case 47:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_CYAN;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_CYAN;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_CYAN;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_CYAN;
                                 break;
                             case 48:
                             case 49:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_RED;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_RED;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_RED;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_RED;
                                 break;
                             case 50:
                             case 51:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_MAGENTA;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_MAGENTA;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_MAGENTA;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_MAGENTA;
                                 break;
                             case 52:
                             case 53:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_YELLOW;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_YELLOW;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_YELLOW;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_YELLOW;
                                 break;
                             case 54:
                             case 55:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_GREY;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_GREY;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_GREY;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_GREY;
                                 break;
                             case 56:
                             case 57:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_DARK_GREY;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_DARK_GREY;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_DARK_GREY;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_DARK_GREY;
                                 break;
                             case 58:
                             case 59:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_BLUE;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_BLUE;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_BLUE;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_BLUE;
                                 break;
                             case 60:
                             case 61:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_GREEN;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_GREEN;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_GREEN;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_GREEN;
                                 break;
                             case 62:
                             case 63:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_CYAN;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_CYAN;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_CYAN;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_CYAN;
                                 break;
                             case 64:
                             case 65:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_RED;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_RED;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_RED;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_RED;
                                 break;
                             case 66:
                             case 67:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_MAGENTA;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_MAGENTA;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_MAGENTA;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_MAGENTA;
                                 break;
                             case 68:
                             case 69:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_YELLOW;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_YELLOW;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_YELLOW;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_YELLOW;
                                 break;
                             case 70:
                             case 71:
-                                if (leftMousebuttonClicked)
-                                    backgroundColor = (short)COLOR.FG_WHITE;
-                                else if (rightMousebuttonClicked)
-                                    backgroundColorReplaceBrush = (short)COLOR.FG_WHITE;
+                                if (_leftMousebuttonClicked)
+                                    _backgroundColor = (short)COLOR.FG_WHITE;
+                                else if (_rightMousebuttonClicked)
+                                    _backgroundColorReplaceBrush = (short)COLOR.FG_WHITE;
                                 break;
                         }
                     }
                     //brush
-                    else if (cursorX >= 80 && cursorX <= 87)
+                    else if (_cursorX >= 80 && _cursorX <= 87)
                     {
-                        switch (cursorX)
+                        switch (_cursorX)
                         {
                             case 80:
                             case 81:
-                                if (leftMousebuttonClicked) 
-                                    brush = '░';
-                                else if (rightMousebuttonClicked)
-                                    replaceBrush = '░';
+                                if (_leftMousebuttonClicked) 
+                                    _brush = '░';
+                                else if (_rightMousebuttonClicked)
+                                    _replaceBrush = '░';
                                 break;
                             case 82:
                             case 83: 
-                                if (leftMousebuttonClicked)
-                                    brush = '▒';
-                                else if (rightMousebuttonClicked)
-                                    replaceBrush = '▒';
+                                if (_leftMousebuttonClicked)
+                                    _brush = '▒';
+                                else if (_rightMousebuttonClicked)
+                                    _replaceBrush = '▒';
                                 break;
                             case 84:
                             case 85:
-                                if (leftMousebuttonClicked)
-                                    brush = '▓';
-                                else if (rightMousebuttonClicked)
-                                    replaceBrush = '▓';
+                                if (_leftMousebuttonClicked)
+                                    _brush = '▓';
+                                else if (_rightMousebuttonClicked)
+                                    _replaceBrush = '▓';
                                 break;
 
                             case 86:
                             case 87: 
-                                if (leftMousebuttonClicked)
-                                    brush = '█';
-                                else if (rightMousebuttonClicked)
-                                    replaceBrush = '█';
+                                if (_leftMousebuttonClicked)
+                                    _brush = '█';
+                                else if (_rightMousebuttonClicked)
+                                    _replaceBrush = '█';
                                 break;
                         }
                     }
                 }
-                else if(cursorY == 4) //other brushes
+                else if(_cursorY == 4) //other brushes
                 {
-                    if (cursorX >= 80 && cursorX <= 90) 
+                    if (_cursorX >= 80 && _cursorX <= 90) 
                     {
-                        if (leftMousebuttonClicked)
-                            brush = otherBrushes[cursorX - 80];
-                        else if(rightMousebuttonClicked)
-                            replaceBrush = otherBrushes[cursorX - 80];
+                        if (_leftMousebuttonClicked)
+                            _brush = _otherBrushes[_cursorX - 80];
+                        else if(_rightMousebuttonClicked)
+                            _replaceBrush = _otherBrushes[_cursorX - 80];
 
                     }
                 }
                 //draw on sprite
-                else if (cursorX >= 5 && cursorX <= 102 && cursorY >= 10 && cursorY <= 57)
+                else if (_cursorX >= 5 && _cursorX <= 102 && _cursorY >= 10 && _cursorY <= 57)
                 {
-                    if (cursorX - 5 < sprite.Width && cursorY - 10 < sprite.Height)
+                    if (_cursorX - 5 < _sprite.Width && _cursorY - 10 < _sprite.Height)
                     {
-                        if (!colorPickerActive && !markingActive && !fillBucketActive)
+                        if (!_colorPickerActive && !_markingActive && !_fillBucketActive)
                         {
-                            if (leftMousebuttonClicked || leftMousebuttonHeld)
+                            if (_leftMousebuttonClicked || _leftMousebuttonHeld)
                             {
-                                short color = (short)(backgroundColor << 4);
-                                color += foregroundColor;
-                                sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, brush, color);
+                                short color = (short)(_backgroundColor << 4);
+                                color += _foregroundColor;
+                                _sprite.SetPixel(_cursorX - 5 + _spriteCursorX, _cursorY - 10 + _spriteCursorY, _brush, color);
                             }
-                            else if (rightMousebuttonClicked)
+                            else if (_rightMousebuttonClicked)
                             {
-                                short color = (short)(backgroundColorReplaceBrush << 4);
-                                color += foregroundColorReplaceBrush;
-                                sprite.SetPixel(cursorX - 5 + spriteCursorX, cursorY - 10 + spriteCursorY, replaceBrush, color);
+                                short color = (short)(_backgroundColorReplaceBrush << 4);
+                                color += _foregroundColorReplaceBrush;
+                                _sprite.SetPixel(_cursorX - 5 + _spriteCursorX, _cursorY - 10 + _spriteCursorY, _replaceBrush, color);
                             }
                         }
-                        else if (markingActive)
+                        else if (_markingActive)
                         {
 
                         }
-                        else if (colorPickerActive)
+                        else if (_colorPickerActive)
                         {
-                            short colorToPick = sprite.GetColor(cursorX - 5 + spriteCursorX, cursorY - 10);
-                            foregroundColor = (short)(colorToPick & 0x0F);
-                            backgroundColor = (short)(colorToPick >> 4);
-                            brush = sprite.GetChar(cursorX - 5 + spriteCursorX, cursorY - 10);
+                            short colorToPick = _sprite.GetColor(_cursorX - 5 + _spriteCursorX, _cursorY - 10);
+                            _foregroundColor = (short)(colorToPick & 0x0F);
+                            _backgroundColor = (short)(colorToPick >> 4);
+                            _brush = _sprite.GetChar(_cursorX - 5 + _spriteCursorX, _cursorY - 10);
                         }
-                        else if (fillBucketActive)
+                        else if (_fillBucketActive)
                         {
-                            short color = (short)(backgroundColor << 4);
-                            color += foregroundColor;
+                            short color = (short)(_backgroundColor << 4);
+                            color += _foregroundColor;
 
-                            int x = cursorX - 5 + spriteCursorX;
-                            int y = cursorY - 10 + spriteCursorY;
+                            int x = _cursorX - 5 + _spriteCursorX;
+                            int y = _cursorY - 10 + _spriteCursorY;
 
 
-                            sprite.FillBucket(x, y, brush, color, sprite.GetChar(x, y), sprite.GetColor(x, y));
+                            _sprite.FillBucket(x, y, _brush, color, _sprite.GetChar(x, y), _sprite.GetColor(x, y));
                         }
                     }
                 }
@@ -652,44 +651,44 @@ namespace SpriteEditor
         }
         private bool BtnClearClicked()
         {
-            if (tb_Width.content != "" && tb_Height.content != "")
-                sprite = new Sprite(Convert.ToInt32(tb_Width.content), Convert.ToInt32(tb_Height.content), '█', COLOR.BG_BLACK);
+            if (_tb_Width.content != "" && _tb_Height.content != "")
+                _sprite = new Sprite(Convert.ToInt32(_tb_Width.content), Convert.ToInt32(_tb_Height.content), '█', COLOR.BG_BLACK);
 
             spriteCursorX = 0;
             spriteCursorY = 0;
 
-            tb_Width.content = "";
-            tb_Height.content = "";
+            _tb_Width.content = "";
+            _tb_Height.content = "";
 
             return true;
         }
         private bool BtnSaveClicked()
         {
-            string exportPath = tb_SaveName.content != "" ? @"Savefiles\" + tb_SaveName.content + ".txt" : @"Savefiles\" + "NewFile" + ".txt";
+            string exportPath = _tb_SaveName.content != "" ? @"Savefiles\" + _tb_SaveName.content + ".txt" : @"Savefiles\" + "NewFile" + ".txt";
 
             if(!File.Exists(exportPath))
                 saveFiles.Add(Path.GetFileName(exportPath));
 
-            tb_SaveName.content = Path.GetFileNameWithoutExtension(exportPath);
+            _tb_SaveName.content = Path.GetFileNameWithoutExtension(exportPath);
 
             using (StreamWriter outputfile = new StreamWriter(exportPath))
             {
-                outputfile.Write($"{sprite.Width};{sprite.Height};");
+                outputfile.Write($"{_sprite.Width};{_sprite.Height};");
 
-                for (int j = 0; j < sprite.Height; j++)
+                for (int j = 0; j < _sprite.Height; j++)
                 {
-                    for (int i = 0; i < sprite.Width; i++) //sprite.Width
+                    for (int i = 0; i < _sprite.Width; i++) //sprite.Width
                     {
-                        outputfile.Write($"{sprite.GetChar(i, j)},");
+                        outputfile.Write($"{_sprite.GetChar(i, j)},");
                     }
                 }
                 outputfile.Write(";");
 
-                for (int j = 0; j < sprite.Height; j++)
+                for (int j = 0; j < _sprite.Height; j++)
                 {
-                    for (int i = 0; i < sprite.Width; i++) //sprite.Width
+                    for (int i = 0; i < _sprite.Width; i++) //sprite.Width
                     {
-                        outputfile.Write($"{sprite.GetColor(i, j)},");
+                        outputfile.Write($"{_sprite.GetColor(i, j)},");
                     }
                 }
             }
@@ -700,17 +699,17 @@ namespace SpriteEditor
         private bool BtnLoadClicked()
         {
 
-            string ext = Path.GetExtension(saveFiles[lb_SavedFiles.selectedEntry]);
+            string ext = Path.GetExtension(saveFiles[_lb_SavedFiles.selectedEntry]);
             //check extension of file
-            switch (Path.GetExtension(saveFiles[lb_SavedFiles.selectedEntry]))
+            switch (Path.GetExtension(saveFiles[_lb_SavedFiles.selectedEntry]))
             {
                 case ".txt":
-                    sprite = new Sprite("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+                    _sprite = new Sprite("Savefiles\\" + saveFiles[_lb_SavedFiles.selectedEntry]);
                     break;
                 case ".png":
-                    Png png = Png.Open("Savefiles\\" + saveFiles[lb_SavedFiles.selectedEntry]);
+                    Png png = Png.Open("Savefiles\\" + saveFiles[_lb_SavedFiles.selectedEntry]);
 
-                    sprite = new Sprite(png.Width, png.Height);
+                    _sprite = new Sprite(png.Width, png.Height);
 
                     for (int x = 0; x < png.Width; x++)
                     {
@@ -722,7 +721,7 @@ namespace SpriteEditor
 
                             short col = ClosedConsoleColor3Bit(red, green, blue, out char pixel);
 
-                            sprite.SetPixel(x, y, pixel, col);
+                            _sprite.SetPixel(x, y, pixel, col);
                         }
                     }
                     break;
@@ -730,22 +729,22 @@ namespace SpriteEditor
                     return false;
             }
 
-            tb_SaveName.content = Path.GetFileNameWithoutExtension(saveFiles[lb_SavedFiles.selectedEntry]);
+            _tb_SaveName.content = Path.GetFileNameWithoutExtension(saveFiles[_lb_SavedFiles.selectedEntry]);
 
             return true;
         }
         private bool BtnColorPickerClicked()
         {
-            markingActive = false;
-            fillBucketActive = false;
-            colorPickerActive = !colorPickerActive;
+            _markingActive = false;
+            _fillBucketActive = false;
+            _colorPickerActive = !_colorPickerActive;
             return true;
         }
         private bool BtnMarkClicked()
         {
-            fillBucketActive = false;   
-            colorPickerActive = false;
-            markingActive = !markingActive;
+            _fillBucketActive = false;   
+            _colorPickerActive = false;
+            _markingActive = !_markingActive;
             return true;
         }
         private bool BtnCopyClicked()
@@ -754,34 +753,34 @@ namespace SpriteEditor
         }
         private bool BtnAbortClicked()
         {
-            marking_visible = false;
-            markingSprite = null;
-            markingDraging = false;
+            _marking_visible = false;
+            _markingSprite = null;
+            _markingDraging = false;
             return true;
         }
         private bool BtnConfirmClicked()
         {
-            if(markingSprite != null)
-                sprite.AddSpriteToSprite(markingSpriteX - 5, markingSpriteY - 10, markingSprite.ReturnPartialSpriteInverted(0, 0, markingSprite.Width, markingSprite.Height));
-            marking_visible = false;
-            markingSprite = null;
-            markingDraging = false;
-            markingActive = false;
+            if(_markingSprite != null)
+                _sprite.AddSpriteToSprite(_markingSpriteX - 5, _markingSpriteY - 10, _markingSprite.ReturnPartialSpriteInverted(0, 0, _markingSprite.Width, _markingSprite.Height));
+            _marking_visible = false;
+            _markingSprite = null;
+            _markingDraging = false;
+            _markingActive = false;
             
             return true;
         }
         private bool BtnReplaceClicked()
         {
-            short color = (short)((backgroundColor << 4) + foregroundColor);
-            short replaceColor = (short)((backgroundColorReplaceBrush << 4) + foregroundColorReplaceBrush);
+            short color = (short)((_backgroundColor << 4) + _foregroundColor);
+            short replaceColor = (short)((_backgroundColorReplaceBrush << 4) + _foregroundColorReplaceBrush);
 
-            for (int x = 0; x < sprite.Width; x++)
+            for (int x = 0; x < _sprite.Width; x++)
             {
-                for(int y = 0; y < sprite.Height; y++)
+                for(int y = 0; y < _sprite.Height; y++)
                 {
-                    if(sprite.GetColor(x,y) == color && sprite.GetChar(x,y) == brush)
+                    if(_sprite.GetColor(x,y) == color && _sprite.GetChar(x,y) == _brush)
                     {
-                        sprite.SetPixel(x, y, replaceBrush, replaceColor);
+                        _sprite.SetPixel(x, y, _replaceBrush, replaceColor);
                     }
                 }
             }
@@ -790,15 +789,15 @@ namespace SpriteEditor
         }
         private bool BtnAddGridClicked()
         {
-            if(tb_GridHeight.content != "" && tb_GridWidth.content != "")
+            if(_tb_GridHeight.content != "" && _tb_GridWidth.content != "")
             {
-                int gridheight = Convert.ToInt32(tb_GridHeight.content);
-                int gridwidth = Convert.ToInt32(tb_GridWidth.content);
+                int gridheight = Convert.ToInt32(_tb_GridHeight.content);
+                int gridwidth = Convert.ToInt32(_tb_GridWidth.content);
 
                 for(int i = 0; i < Width; i+=gridwidth)
                 {
                     for (int j = 0; j < Height; j++)
-                        sprite.SetPixel(i, j, (char)PIXELS.PIXEL_SOLID, 0x44);
+                        _sprite.SetPixel(i, j, (char)PIXELS.PIXEL_SOLID, 0x44);
 
                 }
 
@@ -806,17 +805,17 @@ namespace SpriteEditor
                 {
                     for(int j = 0; j < Width; j++)
                     {
-                        sprite.SetPixel(j, i, (char)PIXELS.PIXEL_SOLID, 0x44);
+                        _sprite.SetPixel(j, i, (char)PIXELS.PIXEL_SOLID, 0x44);
                     }
                 }
             }
             return true;
         }
-        private bool btnFillBucketClicked()
+        private bool BtnFillBucketClicked()
         {
-            colorPickerActive = false;
-            markingActive = false;
-            fillBucketActive = !fillBucketActive;
+            _colorPickerActive = false;
+            _markingActive = false;
+            _fillBucketActive = !_fillBucketActive;
             return true;
         }
         #endregion
@@ -850,8 +849,8 @@ namespace SpriteEditor
                 SetChar(x + i + 1, y + 2, brushes[i / 2]);
             }
             //Other
-            for(int i = 0; i < otherBrushes.Count; i++)
-                SetChar(x+i, y+3, otherBrushes[i]);
+            for(int i = 0; i < _otherBrushes.Count; i++)
+                SetChar(x+i, y+3, _otherBrushes[i]);
         }
         private void DrawActiveBrush(int x, int y, string headline, short foregroundColor, short backgroundColor, char brush)
         {
@@ -876,17 +875,17 @@ namespace SpriteEditor
             public int x, y;
             private int spriteW, spriteH;
 
-            short foregroundColor, backgroundColor;
+            private short foregroundColor, backgroundColor;
 
-            Button btn_Start, btn_Stop, btn_Forward, btn_Backwards;
-            TextBox tb_SpriteW, tb_SpriteH, tb_FrameDelay, tb_FrameCount;
+            private Button btn_Start, btn_Stop, btn_Forward, btn_Backwards;
+            private TextBox tb_SpriteW, tb_SpriteH, tb_FrameDelay, tb_FrameCount;
 
             public Sprite outputSprite;
-            int frameCounter = 0;
-            bool loop = false;
+            private int frameCounter = 0;
+            private bool loop = false;
 
-            TimeSpan frameDelay = new TimeSpan(0, 0, 0, 0, 0);
-            DateTime lastUpdate = DateTime.Now;
+            private TimeSpan frameDelay = new TimeSpan(0, 0, 0, 0, 0);
+            private DateTime lastUpdate = DateTime.Now;
 
             public AnimationPreview(int x, int y, int spriteW = 16, int spriteH = 16, short backgroundColor = (short)COLOR.FG_BLACK, short foregroundColor = (short)COLOR.FG_WHITE)
             {
