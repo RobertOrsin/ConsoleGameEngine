@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using static Console_3D_Sharp.NativeMethods;
 
-namespace Console_3D_Sharp__
+namespace Console_3D_Sharp
 {
     public static class ConsoleListener
     {

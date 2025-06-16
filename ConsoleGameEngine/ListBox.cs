@@ -167,8 +167,8 @@ namespace ConsoleGameEngine
                 for (int i = firstEntry; i < entries.Count && (i - firstEntry) < h - 2; i++)
                 {
                     bool selected = i == selectedEntry;
-                    if(!selected) retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1,(short)COLOR.BG_BLACK,(short)COLOR.FG_WHITE, fontType: _fontType));
-                    else retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1, (short)COLOR.BG_WHITE, (short)COLOR.FG_BLACK, fontType: _fontType));
+                    if(!selected) retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1,(short)COLOR.FG_BLACK,(short)COLOR.FG_WHITE, fontType: _fontType));
+                    else retSprite.AddSpriteToSprite(1, (entryCount * TextWriter.height) + 1, TextWriter.GenerateTextSprite(entries[i], TextWriter.Textalignment.Left, 1, (short)COLOR.FG_WHITE, (short)COLOR.FG_BLACK, fontType: _fontType));
 
                     entryCount++;
                 }

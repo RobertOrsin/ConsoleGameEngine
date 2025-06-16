@@ -269,14 +269,17 @@ namespace ConsoleGameEngine
 
         public void DrawSprite(int x, int y, Sprite sprite, char alphaChar = '\0', short alphaColor = 0x0000)
         {
-            for (int py = 0; py < sprite.Height; py++)
+            if (sprite != null)
             {
-                for (int px = 0; px < sprite.Width; px++)
+                for (int py = 0; py < sprite.Height; py++)
                 {
-                    var c = sprite.GetChar(px, py);
-                    var col = sprite.GetColor(px, py);
-                    if (c != alphaChar && col != alphaColor)
-                        SetChar(x + px, y + py, sprite.GetChar(px, py), sprite.GetColor(px, py));
+                    for (int px = 0; px < sprite.Width; px++)
+                    {
+                        var c = sprite.GetChar(px, py);
+                        var col = sprite.GetColor(px, py);
+                        if (c != alphaChar && col != alphaColor)
+                            SetChar(x + px, y + py, sprite.GetChar(px, py), sprite.GetColor(px, py));
+                    }
                 }
             }
         }
