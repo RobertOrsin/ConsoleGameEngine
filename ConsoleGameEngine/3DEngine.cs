@@ -11,13 +11,13 @@ namespace ConsoleGameEngine
 {
     public class _3DEngine
     {
-        private double[] cos = new double[360];
-        private double[] sin = new double[360];
+        private readonly double[] _cos = new double[360];
+        private readonly double[] _sin = new double[360];
 
-        private int screenHeight, screenWidth;
+        private readonly int _screenHeight, _screenWidth;
 
-        TimeSpan buttonDelay = new TimeSpan();
-        TimeSpan buttonTime = new TimeSpan(0, 0, 0, 0, 60);
+        TimeSpan _buttonDelay = new TimeSpan();
+        readonly TimeSpan _buttonTime = new TimeSpan(0, 0, 0, 0, 60);
 
         public Sprite screen;
 
@@ -86,15 +86,15 @@ namespace ConsoleGameEngine
 
         public _3DEngine(int _screenHeight, int _screenWidth)
         {
-            screenHeight = _screenHeight;
-            screenWidth = _screenWidth;
+            this._screenHeight = _screenHeight;
+            this._screenWidth = _screenWidth;
 
-            screen = new Sprite(screenWidth, screenHeight);
+            screen = new Sprite(this._screenWidth, this._screenHeight);
             //sin/cos lookup-table
             for(int x  = 0; x < 360; x++)
             {
-                cos[x] = Math.Cos(x / 180.0 * Math.PI);
-                sin[x] = Math.Sin(x / 180.0 * Math.PI);
+                _cos[x] = Math.Cos(x / 180.0 * Math.PI);
+                _sin[x] = Math.Sin(x / 180.0 * Math.PI);
             }
             //init player
             player = new Player();
@@ -126,8 +126,8 @@ namespace ConsoleGameEngine
         }
         public void MovePlayer(TimeSpan elapsedTime)
         {
-            buttonDelay += elapsedTime;
-            if (buttonDelay >= buttonTime)
+            _buttonDelay += elapsedTime;
+            if (_buttonDelay >= _buttonTime)
             {
                 //Move up, down, left, right
                 if (GameConsole.GetKeyState(ConsoleKey.A).Held && !GameConsole.GetKeyState(ConsoleKey.M).Held)
@@ -142,8 +142,8 @@ namespace ConsoleGameEngine
                     if (player.a > 359)
                         player.a -= 360;
                 }
-                int dx = Convert.ToInt32(sin[player.a] * 10.0);
-                int dy = Convert.ToInt32(cos[player.a] * 10.0);
+                int dx = Convert.ToInt32(_sin[player.a] * 10.0);
+                int dy = Convert.ToInt32(_cos[player.a] * 10.0);
                 if (GameConsole.GetKeyState(ConsoleKey.W).Held && !GameConsole.GetKeyState(ConsoleKey.M).Held)
                 {
                     player.x += dx;
@@ -177,7 +177,7 @@ namespace ConsoleGameEngine
                 if (GameConsole.GetKeyState(ConsoleKey.S).Held && GameConsole.GetKeyState(ConsoleKey.M).Held)
                     player.z += 4;
 
-                buttonDelay = new TimeSpan();
+                _buttonDelay = new TimeSpan();
             }
         }
         private void ClipBehindPlayer(int x1, int y1, int z1, int x2, int y2, int z2)
@@ -200,7 +200,7 @@ namespace ConsoleGameEngine
         public void Draw3D()
         {
             //Clear screen
-            screen = new Sprite(screenWidth, screenHeight);
+            screen = new Sprite(_screenWidth, _screenHeight);
 
             //sort sectors
             for (int s = 0; s < sectors.Count() - 1; s++)
@@ -216,11 +216,11 @@ namespace ConsoleGameEngine
                 }
             }
 
-            double SW2 = screenWidth / 2, SH2 = screenHeight / 2;
+            double SW2 = _screenWidth / 2, SH2 = _screenHeight / 2;
             int[] wx = new int[4];
             int[] wy = new int[4];
             int[] wz = new int[4];
-            double CS = cos[player.a], SN = sin[player.a];
+            double CS = _cos[player.a], SN = _sin[player.a];
             int cycles;
 
             //draw sectors
@@ -231,13 +231,13 @@ namespace ConsoleGameEngine
                 if (player.z < sectors[s].bottomHeight) //bottom surface
                 { 
                     sectors[s].surface = 1; cycles = 2;
-                    for (int x = 0; x < screenWidth; x++)
-                        sectors[s].surfacePoints[x] = screenHeight;
+                    for (int x = 0; x < _screenWidth; x++)
+                        sectors[s].surfacePoints[x] = _screenHeight;
                 } 
                 else if (player.z > sectors[s].topHeight) //top surface
                 { 
                     sectors[s].surface = 2; cycles = 2;
-                    for (int x = 0; x < screenWidth; x++)
+                    for (int x = 0; x < _screenWidth; x++)
                         sectors[s].surfacePoints[x] = 0;
                 } 
                 else { sectors[s].surface = 0; cycles = 1; }    //no surfaces
@@ -321,8 +321,8 @@ namespace ConsoleGameEngine
             //CLIP X
             if (x1 < 1) x1 = 1;
             if (x2 < 1) x2 = 1;
-            if(x1 >screenWidth - 1) x1 = screenWidth - 1;
-            if(x2 >screenWidth - 1)x2 = screenWidth - 1;
+            if(x1 >_screenWidth - 1) x1 = _screenWidth - 1;
+            if(x2 >_screenWidth - 1)x2 = _screenWidth - 1;
             //draw x vertile lines
             for(int x = x1; x < x2; x++)
             {
@@ -333,8 +333,8 @@ namespace ConsoleGameEngine
                 //CLIP Y
                 if (y1 < 1) y1 = 1;
                 if (y2 < 1) y2 = 1;
-                if (y1 > screenHeight - 1) y1 = screenHeight - 1;
-                if (y2 > screenHeight - 1) y2 = screenHeight - 1;
+                if (y1 > _screenHeight - 1) y1 = _screenHeight - 1;
+                if (y2 > _screenHeight - 1) y2 = _screenHeight - 1;
 
                 //surface
                 if (sectors[s].surface == 1) { sectors[s].surfacePoints[x] = y1; continue; }

@@ -254,7 +254,7 @@ namespace ConsoleGameEngine
             double fNearY2 = fWorldY + Math.Sin(fWorldA + fFoVHalf) * fNear;
 
             // Starting with furthest away line and work towards the camera point
-            for (int y = 0; y < Height / 2; y++)
+            for (int y = 1; y < Height / 2; y++)
             {
                 // Take a sample point for depth linearly related to rows down screen
                 double fSampleDepth = (double)y / Height / 2.0;

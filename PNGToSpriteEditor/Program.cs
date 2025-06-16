@@ -8,7 +8,6 @@ using ConsoleGameEngine;
 
 namespace PNGToSpriteEditor
 {
-
     class PNGToSpriteEditor : GameConsole
     {
         string importPath;
@@ -57,11 +56,7 @@ namespace PNGToSpriteEditor
 
                             short col = ClosedConsoleColor3Bit(red, green, blue, out char pixel);
 
-                            //use white as alpha value
-                            //if (col == 0x00F0 || col == 0x0007)
-                            //    sprite.SetPixel(x, y, ' ', 0x0000);
-                            //else
-                                sprite.SetPixel(x, y, pixel, col);
+                            sprite.SetPixel(x, y, pixel, col);
                         }
                     }
                     break;
@@ -528,7 +523,7 @@ namespace PNGToSpriteEditor
 
         static void Main(string[] args)
         {
-            Encoding cp437 = Encoding.GetEncoding(437);
+            Encoding cp437 = Encoding.Unicode;
 
             Console.WriteLine("Drag and drop a PNG- or Sprite (.txt)-File in here and press Enter");
             Console.WriteLine("For a new file type New:Width;Height");

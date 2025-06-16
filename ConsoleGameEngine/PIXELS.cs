@@ -21,6 +21,5 @@
             LINE_TSECTION_RIGHT = '┤',
             LINE_CROSSSECTION = '┼',
         }
-        #endregion
     }
 }

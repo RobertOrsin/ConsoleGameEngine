@@ -16,7 +16,7 @@ namespace CGE_PopUp
         Button button;
         PopUp popUp;
         Sprite popUpSprite;
-        PopUpState popUpState;
+        PopUpState popUpState, lastPopUpState;
 
         public CGE_PopUp()
           : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
@@ -33,7 +33,7 @@ namespace CGE_PopUp
 
             ConsoleListener.Start();
 
-            TextWriter.LoadFont("fontsheet.txt", 7, 9);
+            TextWriter.InitTextWriter();
 
             button = new Button(0, 0, TextWriter.GenerateTextSprite("open PopUp", TextWriter.Textalignment.Left, 1));
             button.OnButtonClicked(ButtonClicked);
@@ -55,7 +55,17 @@ namespace CGE_PopUp
 
             if(popUpState != PopUpState.none)
             {
+                lastPopUpState = popUpState;
                 popUp.visible = false;
+            }
+
+            if (lastPopUpState == PopUpState.okClicked)
+            {
+                DrawSprite(0, 100, TextWriter.GenerateTextSprite("OK Clicked!", TextWriter.Textalignment.Left));
+            }
+            else if (lastPopUpState == PopUpState.cancleClicked)
+            {
+                DrawSprite(0, 100, TextWriter.GenerateTextSprite("cancle Clicked!", TextWriter.Textalignment.Left));
             }
 
             return true;
@@ -78,7 +88,7 @@ namespace CGE_PopUp
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new CGE_PopUp())
                 f.Start();

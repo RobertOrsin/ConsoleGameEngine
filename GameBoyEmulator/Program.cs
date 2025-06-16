@@ -37,12 +37,10 @@ namespace GameBoyEmulator
             NativeMethods.SetConsoleMode(inHandle, mode);
 
             ConsoleListener.MouseEvent += ConsoleListener_MouseEvent;
-
             ConsoleListener.Start();
 
             ConsoleGameEngine.TextWriter.InitTextWriter();
-          //  ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 6, 8);
-          //  ConsoleGameEngine.TextWriter.LoadSmallFont("small font.txt", 6, 6);
+
             dmg = new ProjectDMG.ProjectDMG(this);
 
             //Load Rom-File-Paths
@@ -95,7 +93,6 @@ namespace GameBoyEmulator
                 DrawSprite(0, 131, ConsoleGameEngine.TextWriter.GenerateTextSprite("Close - BCKSPC", backgroundColor: (short)COLOR.BG_BLACK, foregroundColor: (short)COLOR.FG_WHITE, fontType: ConsoleGameEngine.TextWriter.FontType.small));
             }
 
-            //game loop, draw and evaluate inputs
             return true;
         }
 

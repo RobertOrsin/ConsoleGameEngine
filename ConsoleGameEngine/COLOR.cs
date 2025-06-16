@@ -38,6 +38,5 @@
             BG_WHITE = 0x00F0,
             TRANSPARENT = 0x00FF,
         }
-        #endregion
     }
 }

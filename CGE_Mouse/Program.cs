@@ -37,14 +37,14 @@ namespace CGE_Mouse
 
                 ConsoleListener.Start();
 
-                TextWriter.LoadFont("fontsheet.txt", 7, 9);
+                TextWriter.InitTextWriter();
 
                 return true;
             }
 
             public override bool OnUserUpdate(TimeSpan elapsedTime)
             {
-                //Clear();
+                Clear();
 
                 DrawSprite(0, 0, TextWriter.GenerateTextSprite($"X: {cursorX}; Y: {cursorY}", TextWriter.Textalignment.Left, 1));
 
@@ -74,7 +74,7 @@ namespace CGE_Mouse
 
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new CGE_Mouse())
                 f.Start();

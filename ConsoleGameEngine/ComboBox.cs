@@ -13,7 +13,7 @@ namespace ConsoleGameEngine
     {
 
         public int x, y;
-        public List<string> entries = new List<string>();
+        public List<string> entries = [];
         public Sprite outputSprite = null;
 
         bool simple, lbShown = false;

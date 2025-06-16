@@ -12,7 +12,7 @@ namespace ConsoleGameEngine
     {
         public int x, y;
         public int w, h;
-        public List<string> entries = new List<string>();
+        public List<string> entries = [];
         bool simple = false;
         ConsoleGameEngine.TextWriter.FontType _fontType;
         short foregroundColor, backgroundColor;

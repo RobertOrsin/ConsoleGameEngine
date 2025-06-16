@@ -24,8 +24,6 @@ namespace CGE_UIElements_Simple
 
         List<string> entries = new List<string>() { "Entry 1", "Entry 2", "Entry 3", "Entry 4", "Entry 5", "Entry 6" };
 
-
-
         public CGE_UIElements_Simple()
           : base(80, 50, "Fonts", fontwidth: 10, fontheight: 10)
         { }
@@ -77,14 +75,11 @@ namespace CGE_UIElements_Simple
             return true;
         }
     }
-
-
-
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new CGE_UIElements_Simple())
                 f.Start();

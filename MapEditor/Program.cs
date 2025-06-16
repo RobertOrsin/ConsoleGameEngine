@@ -10,6 +10,7 @@ using static ConsoleGameEngine.NativeMethods;
 
 namespace MapEditor
 {
+    //THIS IS NOT WORKING
     class MapEditor : GameConsole
     {
         IntPtr inHandle;
@@ -194,7 +195,7 @@ namespace MapEditor
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new MapEditor())
                 f.Start();

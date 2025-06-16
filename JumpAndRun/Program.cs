@@ -11,6 +11,7 @@ using ConsoleGameEngine;
 using static ConsoleGameEngine._3DEngine;
 using static ConsoleGameEngine.GameConsole;
 using static ConsoleGameEngine.NativeMethods;
+using Windows.Foundation;
 
 
 namespace JumpAndRun
@@ -29,7 +30,7 @@ namespace JumpAndRun
         int lastHeight = 0;
 
         public JumpAndRun()
-          : base(200, 120, "Fonts", fontwidth: 4, fontheight: 4)
+          : base(200, 120, "JumpAndRun", fontwidth: 4, fontheight: 4)
         { }
         public override bool OnUserCreate()
         {
@@ -45,7 +46,7 @@ namespace JumpAndRun
 
             ConsoleListener.Start();
 
-            TextWriter.LoadFont("fontsheet.txt", 6, 8);
+            TextWriter.InitTextWriter();
 
 
             player = new Player();
@@ -73,13 +74,6 @@ namespace JumpAndRun
             {
                 DrawSprite(p.x, p.y, new Sprite(p.l, 1, GameConsole.COLOR.BG_DARK_GREEN));
             }
-
-            //draw walls
-            //foreach (Level.Plattform p in level.walls)
-            //{
-            //    DrawSprite(p.x, p.y, new Sprite(1, p.l, GameConsole.COLOR.BG_DARK_GREEN));
-            //}
-
 
             if(player.yPosition < 50) startLevel = true;
             if (player.yPosition > 120) startLevel = false;
@@ -291,8 +285,7 @@ namespace JumpAndRun
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
-
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
             using (var f = new JumpAndRun())
                 f.Start();
         }

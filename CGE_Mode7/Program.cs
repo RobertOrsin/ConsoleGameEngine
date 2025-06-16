@@ -71,7 +71,7 @@ namespace CGE_Mode7
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new ConsoleMode7())
                 f.Start();

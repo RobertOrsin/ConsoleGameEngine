@@ -12,8 +12,6 @@ namespace CGE_GameObject
         GameObject playerCharacter;
         Sprite spriteSheet;
 
-
-
         public ConsoleGameObject()
           : base(200, 120, "GameObject", fontwidth: 4, fontheight: 4)
         { }
@@ -49,7 +47,7 @@ namespace CGE_GameObject
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new ConsoleGameObject())
                 f.Start();

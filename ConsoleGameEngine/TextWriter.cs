@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace ConsoleGameEngine
@@ -285,8 +286,11 @@ namespace ConsoleGameEngine
                             }
                             else if (spritesColor == (short)GameConsole.COLOR.FG_GREY) //Background
                             {
-                                spritesChar = letter.GetChar(x, y);
-                                spritesColor = backgroundColor;
+                                if (backgroundColor != (short)GameConsole.COLOR.TRANSPARENT)
+                                {
+                                    spritesChar = letter.GetChar(x, y);
+                                    spritesColor = backgroundColor;
+                                }
                             }
 
                             sprite.SetBlock(i * _width * fontSize + x*fontSize + allignmentOffset,row*_height*fontSize + y *fontSize, fontSize, fontSize, spritesChar, spritesColor);

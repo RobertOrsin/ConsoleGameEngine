@@ -57,9 +57,7 @@ namespace SpriteEditor
         { }
         public override bool OnUserCreate()
         {
-            ConsoleGameEngine.TextWriter.LoadFont("fontsheet.txt", 7, 9);
-            ConsoleGameEngine.TextWriter.LoadSmallFont("small font.txt", 6, 6);
-            ConsoleGameEngine.TextWriter.fontPadding = new ConsoleGameEngine.TextWriter.FontPadding(1, 1, 0, 0);
+            ConsoleGameEngine.TextWriter.InitTextWriter();
 
             btnClear = new Button(105, 8, "clear / new", method: BtnClearClicked);
             tb_Width = new TextBox(119, 7, 6, "Width:");
@@ -1004,7 +1002,7 @@ namespace SpriteEditor
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new SpriteEditor())
                 f.Start();

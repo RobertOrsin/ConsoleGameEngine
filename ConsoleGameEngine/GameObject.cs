@@ -18,7 +18,7 @@ namespace ConsoleGameEngine
         }
         public GameObject(Sprite spriteSheet, int w, int h, TimeSpan timeSpan, List<int> frameCounts)
         {
-            _animations = new List<Animation>();
+            _animations = [];
             _animations = LoadSpriteSheet(spriteSheet, w, h, timeSpan, frameCounts);
         }
 
@@ -35,7 +35,7 @@ namespace ConsoleGameEngine
 
         private List<Animation> LoadSpriteSheet(Sprite spriteSheet, int w, int h, TimeSpan timeSpan, List<int> frameCounts)
         {
-            var animations = new List<Animation>();
+            List<Animation> animations = [];
 
             var width = spriteSheet.Width;
             var height = spriteSheet.Height;

@@ -19,7 +19,6 @@ namespace CGE_3DEngine
         {
             _3DEngine = new _3DEngine(120,200);
 
-
             return true;
         }
 
@@ -27,12 +26,10 @@ namespace CGE_3DEngine
         {
             Clear();
 
-
             _3DEngine.MovePlayer(fElapsedTime);
             _3DEngine.Draw3D();
 
             DrawSprite(0, 0, _3DEngine.screen);
-
 
             return true;
         }
@@ -42,7 +39,7 @@ namespace CGE_3DEngine
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new ConsoleAnimation())
                 f.Start();

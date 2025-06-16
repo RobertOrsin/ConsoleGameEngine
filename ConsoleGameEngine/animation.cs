@@ -25,7 +25,7 @@ namespace ConsoleGameEngine
         public Animation(Sprite sprite, TimeSpan frameDelay, int frameWidth, int frameHeight, int frameCount)
         {
             _animationFromOneFrame = true;
-            _sprites = new List<Sprite> { sprite };
+            _sprites = [sprite];
             this._frameDelay = frameDelay;
             this._shownFrame = 0;
             _lastUpdate = DateTime.Now;
@@ -37,7 +37,7 @@ namespace ConsoleGameEngine
 
         public Animation(List<string> sprites, TimeSpan frameDelay)
         {
-            this._sprites = new List<Sprite>();
+            this._sprites = [];
             foreach (string sprite in sprites)
             {
                 this._sprites.Add(new Sprite(sprite));
@@ -51,7 +51,7 @@ namespace ConsoleGameEngine
         public Animation(string sprite, TimeSpan frameDelay, int frameWidth, int frameHeight)
         {
             _animationFromOneFrame = true;
-            _sprites = new List<Sprite> { new Sprite(sprite) };
+            _sprites = [new(sprite)];
             this._frameDelay = frameDelay;
             this._shownFrame = 0;
             _lastUpdate = DateTime.Now;

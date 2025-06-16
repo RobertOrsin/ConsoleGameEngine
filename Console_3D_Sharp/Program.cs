@@ -350,7 +350,7 @@ class Program
     [STAThread]
     static void Main()
     {
-        Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+        Console.OutputEncoding = System.Text.Encoding.Unicode;
 
         using (var f = new ConsoleFPS())
             f.Start();

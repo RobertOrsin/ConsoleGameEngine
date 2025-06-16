@@ -14,15 +14,15 @@ namespace CGE_Fonts
         { }
         public override bool OnUserCreate()
         {
-            TextWriter.LoadFont("fontsheet.txt", 7 , 9);
+            TextWriter.InitTextWriter();
 
             return true;
         }
-
         public override bool OnUserUpdate(TimeSpan elapsedTime)
         {
             Clear();
 
+            //Generating some Textsprites in different sizes and colors
             DrawSprite(0, 0, TextWriter.GenerateTextSprite("Size: 1", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.FG_YELLOW, foregroundColor: (short)COLOR.FG_RED));
             DrawSprite(0, 10, TextWriter.GenerateTextSprite("Size: 2", TextWriter.Textalignment.Left, 2));
             DrawSprite(0, 29, TextWriter.GenerateTextSprite("Size: 3", TextWriter.Textalignment.Left, 3));
@@ -35,13 +35,11 @@ namespace CGE_Fonts
             return true;
         }
     }
-
-
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new Fonts())
                 f.Start();

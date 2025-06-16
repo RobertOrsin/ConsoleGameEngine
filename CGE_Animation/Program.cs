@@ -10,8 +10,6 @@ namespace CGE_Animation
     class ConsoleAnimation : GameConsole
     {
         Animation diddysAnimation;
-
-
         public ConsoleAnimation()
           : base(200, 120, "Animation", fontwidth: 4, fontheight: 4)
         { }
@@ -32,11 +30,11 @@ namespace CGE_Animation
         }
     }
 
-        internal class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(437);
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             using (var f = new ConsoleAnimation())
                 f.Start();
