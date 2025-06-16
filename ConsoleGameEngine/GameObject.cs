@@ -5,7 +5,7 @@ namespace ConsoleGameEngine
 {
     public class GameObject
     {
-        readonly List<Animation> _animations = new List<Animation>();
+        readonly List<Animation> _animations = [];
         int ActiveAnimationIndex {get; set;}
         public Sprite outputSprite = null;
 
