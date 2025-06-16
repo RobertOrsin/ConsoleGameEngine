@@ -6,6 +6,8 @@ See example-projects for use. Detailed descriptions are coming to the wiki soon.
 
 Original DMG-Emulator from [BluestormDNA](https://github.com/BluestormDNA/ProjectDMG)!
 
+Ressources added in every project folder.
+
 
 
 
