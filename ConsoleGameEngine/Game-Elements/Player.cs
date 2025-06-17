@@ -134,7 +134,7 @@ namespace ConsoleGameEngine
             if (spriteSheet != null)
             {
                 if (sign == 0)
-                    outputSprite.AddSpriteToSprite(playerSpriteX, playerspriteY, spriteSheet.ReturnPartialSprite(0, 0, 16, 16));
+                    outputSprite.AddSpriteToSprite(playerSpriteX, playerspriteY, spriteSheet.ReturnPartialSprite(64, 0, 16, 16));
                 else if (sign == 1)
                 {
                     outputSprite.AddSpriteToSprite(playerSpriteX, playerspriteY, walkingAnimation.outputSprite);

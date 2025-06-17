@@ -100,7 +100,7 @@ namespace UdtLikeClientApp
 
                 foreach (ConsoleGameEngine.Player otherPlayer in _otherPlayers)
                 {
-                    otherPlayer.Update(KeyStates, elapsedTime, this);
+                    otherPlayer.Update(null, elapsedTime, this);
                     DrawSprite((int)otherPlayer.xPosition, (int)otherPlayer.yPosition, otherPlayer.outputSprite);
                 }
 
