@@ -34,7 +34,7 @@ namespace SpriteEditor
         private List<string> _saveFiles = [];
 
         private readonly int _spriteAreaW = 95, _spriteAreaH = 47;
-        private readonly int _spriteCursorX = 0, _spriteCursorY = 0;
+        private int _spriteCursorX = 0, _spriteCursorY = 0;
         private readonly int _spriteDrawX = 5, _spriteDrawY = 10;
 
         private bool _marking_visible, _markingDraging;
@@ -42,7 +42,7 @@ namespace SpriteEditor
         private int _markingSpriteX, _markingSpriteY;
         private Sprite _markingSprite;
 
-        private readonly TimeSpan _keyInputDelay = new();
+        private TimeSpan _keyInputDelay = new();
         private TimeSpan _keyInputTime = new TimeSpan(0, 0, 0, 0, 120);
 
         public SpriteEditor()
@@ -77,11 +77,11 @@ namespace SpriteEditor
 
             //load savefiles from savefile-folder
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.txt"))
-                saveFiles.Add(Path.GetFileName(file));
+                _saveFiles.Add(Path.GetFileName(file));
             foreach (string file in Directory.EnumerateFiles(@"Savefiles\", "*.png"))
-                saveFiles.Add(Path.GetFileName(file));
+                _saveFiles.Add(Path.GetFileName(file));
 
-            _lb_SavedFiles = new ListBox(106, 28, 32, 15, saveFiles, simple: true);
+            _lb_SavedFiles = new ListBox(106, 28, 32, 15, _saveFiles, simple: true);
 
             _btnLoad = new Button(129, 44, " load ", method: BtnLoadClicked);
 
@@ -102,7 +102,7 @@ namespace SpriteEditor
         }
         public override bool OnUserUpdate(TimeSpan elapsedTime)
         {
-            keyInputDelay += elapsedTime;
+            _keyInputDelay += elapsedTime;
 
             if (ApplicationIsActivated())
             {
@@ -118,35 +118,35 @@ namespace SpriteEditor
                 {
                     if (GetKeyState(ConsoleKey.W).Held && _keyInputDelay >= _keyInputTime)
                     {
-                        spriteCursorY -= 5;
+                        _spriteCursorY -= 5;
                         if (_spriteCursorY < 0)
-                            spriteCursorY = 0;
+                            _spriteCursorY = 0;
 
-                        keyInputDelay = new TimeSpan();
+                        _keyInputDelay = new TimeSpan();
                     }
                     if (GetKeyState(ConsoleKey.A).Held && _keyInputDelay >= _keyInputTime)
                     {
-                        spriteCursorX -= 5;
+                        _spriteCursorX -= 5;
                         if (_spriteCursorX < 0)
-                            spriteCursorX = 0;
+                            _spriteCursorX = 0;
 
-                        keyInputDelay = new TimeSpan();
+                        _keyInputDelay = new TimeSpan();
                     }
                     if (GetKeyState(ConsoleKey.S).Held && _keyInputDelay >= _keyInputTime)
                     {
-                        spriteCursorY += 5;
+                        _spriteCursorY += 5;
                         if (_spriteCursorY >= _sprite.Height - _spriteAreaH)
-                            spriteCursorY = _sprite.Height - _spriteAreaH - 1;
+                            _spriteCursorY = _sprite.Height - _spriteAreaH - 1;
 
-                        keyInputDelay = new TimeSpan();
+                        _keyInputDelay = new TimeSpan();
                     }
                     if (GetKeyState(ConsoleKey.D).Held && _keyInputDelay >= _keyInputTime)
                     {
-                        spriteCursorX += 5;
+                        _spriteCursorX += 5;
                         if (_spriteCursorX >= _sprite.Width - _spriteAreaW)
-                            spriteCursorX = _sprite.Width - _spriteAreaW - 1;
+                            _spriteCursorX = _sprite.Width - _spriteAreaW - 1;
 
-                        keyInputDelay = new TimeSpan();
+                        _keyInputDelay = new TimeSpan();
                     }
                 }
             }
@@ -654,8 +654,8 @@ namespace SpriteEditor
             if (_tb_Width.content != "" && _tb_Height.content != "")
                 _sprite = new Sprite(Convert.ToInt32(_tb_Width.content), Convert.ToInt32(_tb_Height.content), '█', COLOR.BG_BLACK);
 
-            spriteCursorX = 0;
-            spriteCursorY = 0;
+            _spriteCursorX = 0;
+            _spriteCursorY = 0;
 
             _tb_Width.content = "";
             _tb_Height.content = "";
@@ -667,7 +667,7 @@ namespace SpriteEditor
             string exportPath = _tb_SaveName.content != "" ? @"Savefiles\" + _tb_SaveName.content + ".txt" : @"Savefiles\" + "NewFile" + ".txt";
 
             if(!File.Exists(exportPath))
-                saveFiles.Add(Path.GetFileName(exportPath));
+                _saveFiles.Add(Path.GetFileName(exportPath));
 
             _tb_SaveName.content = Path.GetFileNameWithoutExtension(exportPath);
 
@@ -699,15 +699,15 @@ namespace SpriteEditor
         private bool BtnLoadClicked()
         {
 
-            string ext = Path.GetExtension(saveFiles[_lb_SavedFiles.selectedEntry]);
+            string ext = Path.GetExtension(_saveFiles[_lb_SavedFiles.selectedEntry]);
             //check extension of file
-            switch (Path.GetExtension(saveFiles[_lb_SavedFiles.selectedEntry]))
+            switch (Path.GetExtension(_saveFiles[_lb_SavedFiles.selectedEntry]))
             {
                 case ".txt":
-                    _sprite = new Sprite("Savefiles\\" + saveFiles[_lb_SavedFiles.selectedEntry]);
+                    _sprite = new Sprite("Savefiles\\" + _saveFiles[_lb_SavedFiles.selectedEntry]);
                     break;
                 case ".png":
-                    Png png = Png.Open("Savefiles\\" + saveFiles[_lb_SavedFiles.selectedEntry]);
+                    Png png = Png.Open("Savefiles\\" + _saveFiles[_lb_SavedFiles.selectedEntry]);
 
                     _sprite = new Sprite(png.Width, png.Height);
 
@@ -729,7 +729,7 @@ namespace SpriteEditor
                     return false;
             }
 
-            _tb_SaveName.content = Path.GetFileNameWithoutExtension(saveFiles[_lb_SavedFiles.selectedEntry]);
+            _tb_SaveName.content = Path.GetFileNameWithoutExtension(_saveFiles[_lb_SavedFiles.selectedEntry]);
 
             return true;
         }

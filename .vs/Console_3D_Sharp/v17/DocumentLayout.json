@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\",
+  "WorkspaceRootPath": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4A5F3DD9-D9E6-435B-85F1-CB1212059A56}|SpriteEditor\\SpriteEditor.csproj|solutionrelative:spriteeditor\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\rober\\documents\\github\\console_3d_sharp\\consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|c:\\users\\zessinr\\source\\repos\\console_3d_sharp\\consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A46B137E-5888-4592-84E5-4014EEAF3334}|ConsoleGameEngine\\ConsoleGameEngine.csproj|solutionrelative:consolegameengine\\gameconsole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -24,11 +24,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
               "RelativeDocumentMoniker": "SpriteEditor\\Program.cs",
-              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
+              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\SpriteEditor\\Program.cs",
               "RelativeToolTip": "SpriteEditor\\Program.cs",
-              "ViewState": "AgIAAGsDAAAAAAAAAAAAAHkDAACzAAAAAAAAAA==",
+              "ViewState": "AgIAAL4CAAAAAAAAAAAowNsCAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-16T19:16:26.187Z",
               "EditorCaption": ""
@@ -37,14 +37,13 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "gameconsole.cs",
-              "DocumentMoniker": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\gameconsole.cs",
+              "DocumentMoniker": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\ConsoleGameEngine\\gameconsole.cs",
               "RelativeDocumentMoniker": "ConsoleGameEngine\\gameconsole.cs",
-              "ToolTip": "C:\\Users\\rober\\Documents\\GitHub\\Console_3D_Sharp\\ConsoleGameEngine\\gameconsole.cs",
+              "ToolTip": "C:\\Users\\ZessinR\\source\\repos\\Console_3D_Sharp\\ConsoleGameEngine\\gameconsole.cs",
               "RelativeToolTip": "ConsoleGameEngine\\gameconsole.cs",
               "ViewState": "AgIAAHcAAAAAAAAAAAAAAHcAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-16T18:13:58.928Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-16T18:13:58.928Z"
             }
           ]
         }
