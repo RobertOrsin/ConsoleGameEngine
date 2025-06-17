@@ -628,10 +628,10 @@ namespace SpriteEditor
                         }
                         else if (_colorPickerActive)
                         {
-                            short colorToPick = _sprite.GetColor(_cursorX - 5 + _spriteCursorX, _cursorY - 10);
+                            short colorToPick = _sprite.GetColor(_cursorX - 5 + _spriteCursorX, _cursorY - 10 + _spriteCursorY);
                             _foregroundColor = (short)(colorToPick & 0x0F);
                             _backgroundColor = (short)(colorToPick >> 4);
-                            _brush = _sprite.GetChar(_cursorX - 5 + _spriteCursorX, _cursorY - 10);
+                            _brush = _sprite.GetChar(_cursorX - 5 + _spriteCursorX, _cursorY - 10 + _spriteCursorY);
                         }
                         else if (_fillBucketActive)
                         {

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CGEOnlineTools\CGEOnlineTools.csproj" />
+    <ProjectReference Include="..\ConsoleGameEngine\ConsoleGameEngine.csproj" />
   </ItemGroup>
 
 </Project>

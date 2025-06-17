@@ -13,6 +13,7 @@ namespace CGEOnlineTools
         public float X { get; set; }
         public float Y { get; set; }
         public IPEndPoint EndPoint { get; set; }
+        public DateTime LastUpdate { get; set; }
     }
 
 
@@ -22,8 +23,11 @@ namespace CGEOnlineTools
         private UdpClient udpServer;
         private Thread receiveThread;
         private Thread broadcastThread;
+        private Thread cleanupThread;
         private bool isRunning;
         private readonly Dictionary<string, ClientInfo> clients = new Dictionary<string, ClientInfo>();
+
+        private readonly TimeSpan clientTimeout = TimeSpan.FromSeconds(5);
 
         public CGEServer(int port)
         {
@@ -39,9 +43,11 @@ namespace CGEOnlineTools
 
             receiveThread = new Thread(ReceiveLoop);
             broadcastThread = new Thread(BroadcastLoop);
+            cleanupThread = new Thread(CleanupLoop);
 
             receiveThread.Start();
             broadcastThread.Start();
+            cleanupThread.Start();
 
             Console.WriteLine($"Server started on port {port}.");
         }
@@ -52,6 +58,7 @@ namespace CGEOnlineTools
             udpServer?.Close();
             receiveThread?.Join();
             broadcastThread?.Join();
+            cleanupThread?.Join();
 
             Console.WriteLine("Server stopped.");
         }
@@ -96,6 +103,7 @@ namespace CGEOnlineTools
                             clients[username].X = x;
                             clients[username].Y = y;
                             clients[username].EndPoint = sender;
+                            clients[username].LastUpdate = DateTime.UtcNow;
                         }
                         else
                         {
@@ -104,7 +112,8 @@ namespace CGEOnlineTools
                                 Username = username,
                                 X = x,
                                 Y = y,
-                                EndPoint = sender
+                                EndPoint = sender,
+                                LastUpdate = DateTime.UtcNow
                             };
                         }
                     }
@@ -124,7 +133,7 @@ namespace CGEOnlineTools
             {
                 try
                 {
-                    Thread.Sleep(20);
+                    Thread.Sleep(200);
 
                     string state = BuildStateMessage();
                     byte[] data = Encoding.UTF8.GetBytes(state);
@@ -140,6 +149,40 @@ namespace CGEOnlineTools
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Broadcast error: {ex.Message}");
+                }
+            }
+        }
+
+        private void CleanupLoop()
+        {
+            while (isRunning)
+            {
+                try
+                {
+                    Thread.Sleep(1000);
+
+                    List<string> toRemove = new List<string>();
+
+                    lock (clients)
+                    {
+                        foreach (var kvp in clients)
+                        {
+                            if (DateTime.UtcNow - kvp.Value.LastUpdate > clientTimeout)
+                            {
+                                toRemove.Add(kvp.Key);
+                            }
+                        }
+
+                        foreach (var username in toRemove)
+                        {
+                            clients.Remove(username);
+                            Console.WriteLine($"Removed client {username} due to timeout.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Cleanup error: {ex.Message}");
                 }
             }
         }

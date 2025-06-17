@@ -74,7 +74,7 @@ namespace ConsoleGameEngine
                         }
 
                     //seperators (,.;:-)
-                    if (KeyStates[108].Held && buttonDelay >= buttonTime)
+                    if (KeyStates[190].Held && buttonDelay >= buttonTime)
                     {
                         content += Console.CapsLock ? ':' : '.';
                         buttonDelay = new TimeSpan();

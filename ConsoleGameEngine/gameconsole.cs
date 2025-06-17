@@ -40,6 +40,9 @@ namespace ConsoleGameEngine
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetConsoleWindow();
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
+
         [StructLayout(LayoutKind.Sequential)]
         public struct Coord
         {
@@ -104,7 +107,13 @@ namespace ConsoleGameEngine
 
         public static bool ApplicationIsActivated()
         {
-            return GetConsoleWindow() == GetForegroundWindow();
+            var activatedHandle = GetForegroundWindow();
+            var procId = Process.GetCurrentProcess().Id;
+            int activeProcId;
+
+            GetWindowThreadProcessId(activatedHandle, out activeProcId);
+
+            return GetConsoleWindow() == GetForegroundWindow() || activeProcId == procId;
         }
 
 
