@@ -63,9 +63,6 @@ namespace UdtLikeClientApp
             _btnLogIn = new Button(50, 80, ConsoleGameEngine.Other.TextWriter.GenerateTextSprite("join"));
             _btnLogIn.OnButtonClicked(JoinButtonClicked);
 
-
-
-
             _backgroundSprite = new Sprite("Assets\\background.txt");
 
 
@@ -94,8 +91,8 @@ namespace UdtLikeClientApp
                 DrawSprite(0, 0, _backgroundSprite);
 
 
-                if(GameConsole.ApplicationIsActivated())
-                    _player.Update(KeyStates, elapsedTime, this);
+                //if(GameConsole.ApplicationIsActivated())
+                _player.Update(KeyStates, elapsedTime, this);
                 DrawSprite((int)_player.xPosition, (int)_player.yPosition, _player.outputSprite);
 
                 foreach (ConsoleGameEngine.Player otherPlayer in _otherPlayers)

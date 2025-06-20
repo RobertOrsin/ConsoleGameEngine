@@ -43,80 +43,79 @@ namespace ConsoleGameEngine
 
         public void Update(KeyState[] KeyStates, TimeSpan elapsedTime, GameConsole gameConsole)
         {
-            if(walkingAnimation != null)
+            if (walkingAnimation != null)
                 walkingAnimation.Update();
             BuildSprite();
 
-            #region reset
-            if (GetKeyState(ConsoleKey.R).Pressed)
+            if (KeyStates != null)
             {
-                xPosition = 100.0;
-                yPosition = 50.0;
-                playerSpeedX = 0.0;
-                playerSpeedY = 0.0;
-            }
-
-            #endregion
-
-            #region horizontal movement
-            if (GetKeyState(ConsoleKey.A).Held)
-            {
-                playerSpeedX -= acceleration;
-                playerSpeedX = ClampF(playerSpeedX, -acceleration, acceleration);
-                sign = -1;
-            }
-            else if(GetKeyState(ConsoleKey.D).Held)
-            {
-                playerSpeedX += acceleration;
-                playerSpeedX = ClampF(playerSpeedX, -acceleration, acceleration);
-                sign = 1;
-
-            }
-            else if(!(GetKeyState(ConsoleKey.A).Held) &&!(GetKeyState(ConsoleKey.D).Held))
-            {
-                playerSpeedX -= playerSpeedX / 2;
-                playerSpeedX = ClampF(playerSpeedX, -acceleration, acceleration);
-                sign = 0;
-            }
-
-            xPosition += playerSpeedX;
-
-            if(xPosition < 0) xPosition = 0;
-            if (xPosition > 300) xPosition = 300;
-            #endregion
-
-            #region vertical movement
-            #region gravity
-            //get bottom left koordinate of player-rect
-            int bottomleft_x = (int)xPosition;
-            int bottomright_x = (int)xPosition + outputSprite.Width;
-            int bottom_y = (int)yPosition + outputSprite.Height + 1;
-
-            if ( (gameConsole.GetColor(bottomleft_x, bottom_y) != (short)0x00AA && gameConsole.GetColor(bottomright_x, bottom_y) != (short)0x00AA))
-            {
-                playerSpeedY += gravity_acceleration;
-                playerSpeedY = ClampF(playerSpeedY, -acceleration, acceleration);
-            }
-            else
-            {
-                playerSpeedY = 0.0;
-                airjumpused = false;
-            }
-            #endregion
-
-            if (GetKeyState(ConsoleKey.Spacebar).Pressed)
-            {
-                if (gameConsole.GetColor(bottomleft_x, bottom_y) == (short)0x00AA || gameConsole.GetColor(bottomright_x, bottom_y) == (short)0x00AA)
-                    playerSpeedY = -40;
-                else if(!airjumpused)
+                #region reset
+                if (KeyStates[((int)ConsoleKey.R)].Pressed)
                 {
-                    airjumpused = true;
-                    playerSpeedY = -40;
+                    xPosition = 100.0;
+                    yPosition = 50.0;
+                    playerSpeedX = 0.0;
+                    playerSpeedY = 0.0;
                 }
-            }
 
-            yPosition += playerSpeedY;
-            #endregion
+                #endregion
+
+                #region horizontal movement
+                if (KeyStates[((int)ConsoleKey.A)].Held)
+                {
+                    playerSpeedX -= acceleration;
+                    playerSpeedX = ClampF(playerSpeedX, -acceleration, acceleration);
+                    sign = -1;
+                }
+                else if (KeyStates[((int)ConsoleKey.D)].Held)
+                {
+                    playerSpeedX += acceleration;
+                    playerSpeedX = ClampF(playerSpeedX, -acceleration, acceleration);
+                    sign = 1;
+
+                }
+                else if (!(KeyStates[((int)ConsoleKey.A)].Held) && !(KeyStates[((int)ConsoleKey.D)].Held))
+                {
+                    playerSpeedX -= playerSpeedX / 2;
+                    playerSpeedX = ClampF(playerSpeedX, -acceleration, acceleration);
+                    sign = 0;
+                }
+
+                xPosition += playerSpeedX;
+
+                if (xPosition < 0) xPosition = 0;
+                if (xPosition > 300) xPosition = 300;
+                #endregion
+                //get bottom left koordinate of player-rect
+                int bottomleft_x = (int)xPosition;
+                int bottomright_x = (int)xPosition + outputSprite.Width;
+                int bottom_y = (int)yPosition + outputSprite.Height + 1;
+
+                #region gravity
+                if ((gameConsole.GetColor(bottomleft_x, bottom_y) != (short)0x00AA && gameConsole.GetColor(bottomright_x, bottom_y) != (short)0x00AA))
+                {
+                    playerSpeedY += gravity_acceleration;
+                    playerSpeedY = ClampF(playerSpeedY, -acceleration, acceleration);
+                }
+                else
+                {
+                    playerSpeedY = 0.0;
+                    airjumpused = false;
+                }
+                #endregion
+
+                if (KeyStates[((int)ConsoleKey.Spacebar)].Pressed)
+                {
+                    if (gameConsole.GetColor(bottomleft_x, bottom_y) == (short)0x00AA || gameConsole.GetColor(bottomright_x, bottom_y) == (short)0x00AA)
+                        playerSpeedY = -40;
+                    else if (!airjumpused)
+                    {
+                        airjumpused = true;
+                        playerSpeedY = -40;
+                    }
+                }
+                yPosition += playerSpeedY;
+            }
         }
 
         public void BuildSprite()
