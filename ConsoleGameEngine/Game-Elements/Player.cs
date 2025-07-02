@@ -29,7 +29,7 @@ namespace ConsoleGameEngine
         public Player(string displayname)
         {
             displayName = displayname;
-            _displayNameSprite = Other.TextWriter.GenerateTextSprite(displayName, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_WHITE);
+            _displayNameSprite = Other.TextWriter.GenerateTextSprite(displayName, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_WHITE, fontType: Other.TextWriter.FontType.smallest);
             outputSprite = new Sprite(8, 8);
             xPosition = 100.0;
             yPosition = 50.0;
@@ -124,7 +124,7 @@ namespace ConsoleGameEngine
             //height is textblock.height + 3 pixels space + 16 for the sprite
             outputSprite = new Sprite(_displayNameSprite.Width > 16 ? _displayNameSprite.Width : 16, _displayNameSprite.Height + 3 + 16);
 
-            outputSprite.AddSpriteToSprite(0, 0, _displayNameSprite);
+            outputSprite.AddSpriteToSprite((outputSprite.Width - _displayNameSprite.Width) / 2, 0, _displayNameSprite);
 
             var playerspriteY = _displayNameSprite.Height + 3;
             var playerSpriteX = (outputSprite.Width - 16) / 2;

@@ -20,15 +20,17 @@ namespace CGE_Fonts
             Clear();
 
             //Generating some Textsprites in different sizes and colors
-            DrawSprite(0, 0, TextWriter.GenerateTextSprite("Size: 1", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.FG_YELLOW, foregroundColor: (short)COLOR.FG_RED));
-            DrawSprite(0, 10, TextWriter.GenerateTextSprite("Size: 2", TextWriter.Textalignment.Left, 2));
-            DrawSprite(0, 29, TextWriter.GenerateTextSprite("Size: 3", TextWriter.Textalignment.Left, 3));
-            DrawSprite(0, 57, TextWriter.GenerateTextSprite("Size: 4", TextWriter.Textalignment.Left, 4));
-            DrawSprite(20, 65, TextWriter.GenerateTextSprite("Alphatext", TextWriter.Textalignment.Left, 2, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
+            //DrawSprite(0, 0, TextWriter.GenerateTextSprite("Size: 1", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.FG_YELLOW, foregroundColor: (short)COLOR.FG_RED));
+            //DrawSprite(0, 10, TextWriter.GenerateTextSprite("Size: 2", TextWriter.Textalignment.Left, 2));
+            //DrawSprite(0, 29, TextWriter.GenerateTextSprite("Size: 3", TextWriter.Textalignment.Left, 3));
+            //DrawSprite(0, 57, TextWriter.GenerateTextSprite("Size: 4", TextWriter.Textalignment.Left, 4));
+            //DrawSprite(20, 65, TextWriter.GenerateTextSprite("Alphatext", TextWriter.Textalignment.Left, 2, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
 
-            DrawSprite(10, 90, TextWriter.GenerateTextSprite("Centered\ntext", TextWriter.Textalignment.Center, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
-            DrawSprite(90, 90, TextWriter.GenerateTextSprite("Text on the\nright", TextWriter.Textalignment.Right, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
+            //DrawSprite(10, 90, TextWriter.GenerateTextSprite("Centered\ntext", TextWriter.Textalignment.Center, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
+            //DrawSprite(90, 90, TextWriter.GenerateTextSprite("Text on the\nright", TextWriter.Textalignment.Right, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE));
 
+
+            DrawSprite(50, 110, TextWriter.GenerateTextSprite("Suuuper SMALL!", TextWriter.Textalignment.Left, 1, backgroundColor: (short)COLOR.TRANSPARENT, foregroundColor: (short)COLOR.FG_BLUE, fontType: TextWriter.FontType.smallest));
             return true;
         }
     }
